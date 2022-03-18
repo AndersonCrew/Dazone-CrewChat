@@ -1,0 +1,128 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+repositories {
+    maven { url "https://jitpack.io" }
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+android {
+
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
+
+    signingConfigs {
+        release {
+            storeFile file("DazoneKeyStore.jks")
+            storePassword 'tranquoctrung'
+            keyAlias 'dazone'
+            keyPassword 'tranquoctrung'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.crewcloud.apps.crewchat"
+        minSdkVersion 18
+        targetSdkVersion 28
+        versionCode 10421
+        versionName "4.1.2"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "ENABLE_DEBUG", "false"
+        }
+
+        debug {
+            buildConfigField "boolean", "ENABLE_DEBUG", "true"
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        serverVersion {
+            applicationId "com.crewcloud.apps.crewchat"
+            applicationVariants.each { variant ->
+                def file = variant.outputFile
+                variant.outputFile = new File(file.parent, file.name.replace(".apk", "_" + defaultConfig.versionName + ".apk"))
+            }
+        }
+
+        storeVersion {
+            applicationId "com.dazone.crewchat"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    dependencies {
+        implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+        implementation 'com.android.support:multidex:1.0.3'
+        implementation 'com.android.support:appcompat-v7:29.0.0'
+        implementation 'com.android.support:support-v4:29.0.0'
+        implementation 'com.android.support:design:29.0.0'
+        implementation 'com.android.support:recyclerview-v7:29.0.0'
+
+        implementation 'com.google.android.gms:play-services-places:10.2.1'
+        implementation 'com.google.android.gms:play-services-gcm:10.2.1'
+
+        implementation 'com.google.code.gson:gson:2.6.2'
+        implementation 'com.mcxiaoke.volley:library:1.0.19'
+        implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+        implementation 'com.nononsenseapps:filepicker:4.0.0-beta1'
+        implementation 'com.github.bumptech.glide:glide:3.7.0'
+        implementation 'com.github.AndroidDeveloperLB:AutoFitTextView:4'
+        implementation 'com.wdullaer:materialdatetimepicker:2.3.0'
+        implementation 'com.squareup.picasso:picasso:2.5.2'
+        implementation 'com.1gravity:android-contactpicker:1.0.3'
+        implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
+        implementation 'de.hdodenhof:circleimageview:2.1.0'
+        implementation 'jp.wasabeef:glide-transformations:2.0.1'
+        implementation 'com.jakewharton:butterknife:8.8.1'
+        annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+        implementation 'org.greenrobot:eventbus:3.1.1'
+        implementation 'com.jakewharton:butterknife:8.8.1'
+        annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+        implementation 'net.ypresto.androidtranscoder:android-transcoder:0.2.0'
+
+        // Extensions = ViewModel + LiveData
+        implementation "android.arch.lifecycle:extensions:1.1.0"
+        kapt "android.arch.lifecycle:compiler:1.1.0"
+        // Room
+        implementation "android.arch.persistence.room:runtime:1.0.0"
+        kapt "android.arch.persistence.room:compiler:1.0.0"
+
+        /*implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:" + rootProject.coroutines_core_version
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + rootProject.coroutines_core_version*/
+
+        //Retrofit
+        implementation 'com.squareup.okhttp3:okhttp:' + rootProject.okhttp3
+        implementation 'com.squareup.okhttp3:logging-interceptor:' + rootProject.okhttp3
+        implementation 'com.squareup.retrofit2:retrofit:' + rootProject.retrofit2
+        implementation 'com.squareup.retrofit2:converter-gson:' + rootProject.retrofit2
+        implementation 'com.squareup.retrofit2:adapter-rxjava2:' + rootProject.retrofit2
+
+        //rx android
+        implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+        implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+    }
+}
