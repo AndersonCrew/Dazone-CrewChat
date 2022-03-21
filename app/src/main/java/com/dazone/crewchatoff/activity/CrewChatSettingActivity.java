@@ -8,6 +8,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.dazone.crewchatoff.R;
@@ -66,6 +67,13 @@ public class CrewChatSettingActivity extends BaseSingleBackActivity implements C
             Log.d("CrewChatSettingActivity", swEnterVDuty.isChecked() + "");
             setEnterVDuty(swEnterVDuty);
         });
+
+        mTvScreenRotation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.showDialog("");
+            }
+        });
     }
 
     @Override
@@ -116,19 +124,6 @@ public class CrewChatSettingActivity extends BaseSingleBackActivity implements C
 
     @Override
     public void rotationScreen() {
-        int rotation = mPrefs.getIntValue(Statics.SCREEN_ROTATION, Constant.PORTRAIT);
-
-        switch (rotation) {
-            case Constant.AUTOMATIC:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-                break;
-            case Constant.PORTRAIT:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-            case Constant.LANSCAPE:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                break;
-        }
         mPresenter.rotationSettingValue(mTvScreenRotation);
         EventBus.getDefault().post(new RotationAction());
     }

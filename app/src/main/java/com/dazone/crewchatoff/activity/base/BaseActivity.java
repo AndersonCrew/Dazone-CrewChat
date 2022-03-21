@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        rotationSetting();
+
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
@@ -67,12 +67,29 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
 
     @Subscribe
     public void rotationActionRc(RotationAction rotationAction) {
-        rotationSetting();
+        try {
+            int rotation = prefs.getIntValue(Statics.SCREEN_ROTATION, Constant.PORTRAIT);
+            switch (rotation) {
+                case Constant.AUTOMATIC:
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                    break;
+                case Constant.PORTRAIT:
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    break;
+                case Constant.LANSCAPE:
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
+        rotationActionRc(new RotationAction());
         Instance = this;
 
         if(!(Instance instanceof LoginActivity)) {
@@ -181,26 +198,6 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
                                 String negativeTitle, View.OnClickListener positiveListener) {
         showAlertDialog(getString(R.string.app_name), content, positiveTitle, negativeTitle,
                 positiveListener, v -> customDialog.dismiss());
-    }
-
-    public void rotationSetting() {
-        try {
-            int rotation = prefs.getIntValue(Statics.SCREEN_ROTATION, Constant.PORTRAIT);
-            switch (rotation) {
-                case Constant.AUTOMATIC:
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-                    break;
-                case Constant.PORTRAIT:
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    break;
-                case Constant.LANSCAPE:
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    break;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override

@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-public class ProfileUserActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileUserActivity extends BaseActivity implements View.OnClickListener {
     String TAG = "ProfileUserActivity";
     private ImageView btnBack;
     private ImageView btnCall;

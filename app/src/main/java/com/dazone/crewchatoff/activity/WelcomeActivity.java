@@ -2,6 +2,7 @@ package com.dazone.crewchatoff.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,11 +33,14 @@ import com.dazone.crewchatoff.database.DepartmentDBHelper;
 import com.dazone.crewchatoff.database.FavoriteGroupDBHelper;
 import com.dazone.crewchatoff.database.FavoriteUserDBHelper;
 import com.dazone.crewchatoff.database.UserDBHelper;
+import com.dazone.crewchatoff.eventbus.RotationAction;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Prefs;
 
 import static com.dazone.crewchatoff.utils.Utils.compareVersionNames;
+
+import org.greenrobot.eventbus.Subscribe;
 
 public class WelcomeActivity extends AppCompatActivity {
     private ViewPager viewPager;
