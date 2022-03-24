@@ -1,5 +1,6 @@
 package com.dazone.crewchatoff.activity.base;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,6 +26,7 @@ import com.dazone.crewchatoff.eventbus.RotationAction;
 import com.dazone.crewchatoff.services.NetworkStateReceiver;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
+import com.dazone.crewchatoff.utils.OrientationUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,6 +35,7 @@ import static com.dazone.crewchatoff.fragment.ChattingFragment.sendComplete;
 
 public abstract class BaseActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener {
     protected Context mContext;
+    protected Activity mActivity;
     public static BaseActivity Instance = null;
     public Prefs prefs;
     private ProgressDialog mProgressDialog;
@@ -44,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         mContext = this;
+        mActivity = this;
         Instance = this;
         prefs = CrewChatApplication.getInstance().getPrefs();
         if (!EventBus.getDefault().isRegistered(this)) {
@@ -71,13 +75,13 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
             int rotation = prefs.getIntValue(Statics.SCREEN_ROTATION, Constant.PORTRAIT);
             switch (rotation) {
                 case Constant.AUTOMATIC:
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                    OrientationUtils.unlockOrientation(mActivity);
                     break;
                 case Constant.PORTRAIT:
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    OrientationUtils.lockOrientationPortrait(mActivity);
                     break;
                 case Constant.LANSCAPE:
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    OrientationUtils.lockOrientationLandscape(mActivity);
                     break;
             }
         } catch (Exception e) {

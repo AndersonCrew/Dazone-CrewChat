@@ -109,7 +109,10 @@ public abstract class ListFragment<T> extends Fragment {
 
         mInputSearch.addTextChangedListener(mWatcher);
 
-        rlMain.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
+        if(rlMain != null && rlMain.getViewTreeObserver() != null) {
+            rlMain.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
+        }
+
 
         setupRecyclerView();
         changeStatusBarColor();

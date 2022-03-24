@@ -335,7 +335,7 @@ public class InviteUserActivity extends AppCompatActivity {
 
         switch (rotation) {
             case Constant.AUTOMATIC:
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 break;
             case Constant.PORTRAIT:
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

@@ -205,6 +205,8 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         if (!isFinishing()) {
             addFragment();
         }
+
+        int a = 5;
     }
 
     /**

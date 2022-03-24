@@ -438,7 +438,7 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
             return;
         }
         rootLayout = findViewById(R.id.root_login);
-        rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
+        //rootLayout.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
         keyboardListenersAttached = true;
     }
 
@@ -446,7 +446,7 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     protected void onDestroy() {
         super.onDestroy();
-        if (keyboardListenersAttached) {
+        if (keyboardListenersAttached && rootLayout != null && rootLayout.getViewTreeObserver() != null) {
             try {
                 rootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(keyboardLayoutListener);
             } catch (NoSuchMethodError x) {
