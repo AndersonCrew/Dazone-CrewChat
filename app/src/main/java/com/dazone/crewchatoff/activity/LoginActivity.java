@@ -183,6 +183,7 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
                 HttpRequest.getInstance().checkSSL(new ICheckSSL() {
                     @Override
                     public void hasSSL(boolean hasSSL) {
+                        Utils.setServerSite(domain);
                         HttpOauthRequest.getInstance().loginV2(LoginActivity.this, mUsername, mPassword, Build.VERSION.RELEASE);
                     }
 
