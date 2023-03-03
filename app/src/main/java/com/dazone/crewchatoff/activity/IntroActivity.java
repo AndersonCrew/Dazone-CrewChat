@@ -1,20 +1,43 @@
 package com.dazone.crewchatoff.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.utils.Utils;
 
 public class IntroActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         Utils.hideKeyboard(this);
-        startApplication();
+        if(Build.VERSION.SDK_INT >= 33) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.POST_NOTIFICATIONS
+                }, 111);
+            } else {
+                startApplication();
+            }
+        } else {
+            startApplication();
+        }
     }
 
     // 어플리케이션을 시작합니다.(LoginActivity)
@@ -22,5 +45,29 @@ public class IntroActivity extends AppCompatActivity {
         Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode != 111) {
+            return;
+        }
+
+        boolean isGranted = true;
+
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                isGranted = false;
+                break;
+            }
+        }
+
+        if (isGranted) {
+            startApplication();
+        } else {
+            Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 }

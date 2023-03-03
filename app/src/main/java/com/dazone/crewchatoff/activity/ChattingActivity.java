@@ -56,6 +56,7 @@ import com.dazone.crewchatoff.interfaces.OnGetChatRoom;
 import com.dazone.crewchatoff.libGallery.MediaChooser;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
+import com.dazone.crewchatoff.utils.FileUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
 import com.nononsenseapps.filepicker.FilePickerActivity;
@@ -977,8 +978,12 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         if (data != null && data.getStringExtra(Statics.CHATTING_DTO_GALLERY_SINGLE) != null) {
             pathImageRotate = data.getStringExtra(Statics.CHATTING_DTO_GALLERY_SINGLE);
         } else if (mSelectedImage.size() > 0) {
-            pathImageRotate = Utils.getPathFromURI(Uri.parse(mSelectedImage.get(0)), this);
-        } else if (uri != null) {
+            if(mSelectedImage.get(0).contains("/data/")) {
+                pathImageRotate = Utils.getPathFromURI(Uri.parse(mSelectedImage.get(0)), this);
+            } else {
+                pathImageRotate = new FileUtils(this).getPath(Uri.parse(mSelectedImage.get(0)));
+            }
+            } else if (uri != null) {
             pathImageRotate = Utils.getPathImage(this, uri);
         } else return;
 
@@ -990,7 +995,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                 galleryAddPic(pathImageRotate);
                 ChattingDto chattingDto = new ChattingDto();
                 chattingDto.setmType(Statics.CHATTING_VIEW_TYPE_SELECT_IMAGE);
-                chattingDto.setAttachFilePath(Utils.getPathFromURI(Uri.parse(uriPath), this));
+                chattingDto.setAttachFilePath(new FileUtils(this).getPath(Uri.parse(uriPath)));
                 chattingDto.setRoomNo(chattingDto.getRoomNo());
                 chattingDto.setRegDate(Utils.getTimeNewChat(diffTime));
                 chattingDto.setStrRegDate(Utils.getTimeFormat(CrewChatApplication.getInstance().getTimeLocal() + diffTime));
@@ -1028,7 +1033,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     private void handleCameraCapture() {
         if (uri != null) {
             isChoseFile = true;
-            String path = Utils.getPathFromURI(uri, this);
+            String path = new FileUtils(this).getPath(uri);
             Intent intent = new Intent(this, RotateImageActivity.class);
             intent.putExtra(Statics.CHATTING_DTO_GALLERY_SINGLE, path);
             String currentTime = CrewChatApplication.getInstance().getTimeLocal() + "";
@@ -1046,7 +1051,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         }
 
         if (videoUri != null) {
-            String path = Utils.getPathFromURI(videoUri, this);
+            String path =  new FileUtils(this).getPath(videoUri);
             galleryAddPic(path);
 
             File file = new File(path);
@@ -1065,18 +1070,30 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     }
 
     private void handleVideoSelected(Intent data, ArrayList<String> mSelectedImage) {
+        Log.d("Anderson", "handleVideoSelected");
         Uri videoUriPick = null;
         if (data != null) {
+            Log.d("Anderson", "1");
             videoUriPick = data.getData();
+            Log.d("Anderson", "2");
         } else if (mSelectedImage.size() > 0) {
+            Log.d("Anderson", "3");
             videoUriPick = Uri.parse(mSelectedImage.get(0));
+            Log.d("Anderson", "4");
         }
+
 
         if (mSelectedImage != null && mSelectedImage.size() > 1) {
             long diffTime = 0;
             for (String uriPath : mSelectedImage) {
                 diffTime += Config.TIME_WAIT * mSelectedImage.indexOf(uriPath);
-                String path = Utils.getPathFromURI(Uri.parse(uriPath), this);
+                String path = null;
+
+                if(uriPath.contains("/data/")) {
+                    path = Utils.getPathFromURI(Uri.parse(uriPath), this);
+                } else {
+                    path = new FileUtils(this).getPath(Uri.parse(uriPath));
+                }
                 File file = new File(path);
                 String filename = path.substring(path.lastIndexOf("/") + 1);
                 ChattingDto chattingDto = new ChattingDto();
@@ -1095,6 +1112,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                 chattingDto.setStrRegDate(Utils.getTimeFormat(CrewChatApplication.getInstance().getTimeLocal() + diffTime));
 
                 ChattingFragment.instance.addNewRowFromChattingActivity(chattingDto);
+                Log.d("Anderson", "addNewRowFromChattingActivity");
                 try {
                     Thread.sleep(diffTime);
                 } catch (InterruptedException e) {
@@ -1102,9 +1120,15 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                 }
             }
         } else {
+            Log.d("Anderson", "5");
             if (videoUriPick != null) {
+                Log.d("Anderson", "6");
                 String path;
-                path = Utils.getPathFromURI(videoUriPick, this);
+                if(videoUriPick.toString().contains("/data/")) {
+                    path = Utils.getPathFromURI(videoUriPick, this);
+                } else {
+                    path = new FileUtils(this).getPath(videoUriPick);
+                }
                 File file = new File(path);
                 String filename = path.substring(path.lastIndexOf("/") + 1);
                 ChattingDto chattingDto = new ChattingDto();
@@ -1123,6 +1147,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                 chattingDto.setStrRegDate(Utils.getTimeFormat(CrewChatApplication.getInstance().getTimeLocal()));
 
                 ChattingFragment.instance.addNewRowFromChattingActivity(chattingDto);
+                Log.d("Anderson", "addNewRowFromChattingActivity");
             }
         }
     }
@@ -1154,7 +1179,14 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                 long diffTime = 0;
                 for (Uri obj : pathUri) {
                     diffTime += Config.TIME_WAIT * pathUri.indexOf(obj);
-                    String path = Utils.getPathFromURI(obj, this);
+                    String path = null;
+
+                    if(obj.toString().contains("/data/")) {
+                        path = Utils.getPathFromURI(obj, this);
+                    } else {
+                       path = new FileUtils(this).getPath(obj);
+                    }
+
                     File file = new File(path);
                     String filename = file.getName();
                     if (filename.contains(".")) {

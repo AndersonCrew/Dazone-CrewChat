@@ -60,6 +60,7 @@ import com.dazone.crewchatoff.interfaces.OnGetUserInfo;
 import com.dazone.crewchatoff.services.SyncStatusService;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
+import com.dazone.crewchatoff.utils.FileUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
 import com.google.gson.Gson;
@@ -238,7 +239,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
     void handleSendVideo(Intent intent) {
         imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
         if (imageUri != null) {
-            mSelectedImage.add(Utils.getPathFromURI(imageUri, getApplicationContext()));
+            mSelectedImage.add(new FileUtils(this).getPath(imageUri));
         }
     }
 
@@ -253,7 +254,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
         imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
         mSelectedImage.clear();
         if (imageUri != null) {
-            mSelectedImage.add(Utils.getPathFromURI(imageUri, getApplicationContext()));
+            mSelectedImage.add(new FileUtils(this).getPath(imageUri));
         }
     }
 
@@ -261,7 +262,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
         imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
         mSelectedImage.clear();
         if (imageUri != null) {
-            mSelectedImage.add(Utils.getPathFromURI(imageUri, getApplicationContext()));
+            mSelectedImage.add(new FileUtils(this).getPath(imageUri));
         }
     }
 
@@ -271,7 +272,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
         if (imageUris != null) {
             for (Uri path : imageUris) {
                 if (mSelectedImage != null) {
-                    mSelectedImage.add(Utils.getPathFromURI(path, getApplicationContext()));
+                    mSelectedImage.add(new FileUtils(this).getPath(imageUri));
                 }
 
             }

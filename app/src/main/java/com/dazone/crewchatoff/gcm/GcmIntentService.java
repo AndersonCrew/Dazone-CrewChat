@@ -460,7 +460,7 @@ public class GcmIntentService extends IntentService {
             mNotificationManager.createNotificationChannel(mChannel);
             myIntent.putExtra(Statics.CHATTING_DTO, chattingDto);
             myIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE);
 
             if (chattingDto != null && chattingDto.getAttachNo() != 0) {
                 msg = Utils.getString(R.string.notification_file) + chattingDto.getAttachFileName();
@@ -533,7 +533,7 @@ public class GcmIntentService extends IntentService {
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             myIntent.putExtra(Statics.CHATTING_DTO, chattingDto);
             myIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE);
 
             if (chattingDto != null && chattingDto.getAttachNo() != 0) {
                 msg = Utils.getString(R.string.notification_file) + chattingDto.getAttachFileName();

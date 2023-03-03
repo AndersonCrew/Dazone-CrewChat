@@ -527,12 +527,17 @@ public class ChattingSelfImageViewHolder extends BaseChattingHolder implements V
         String[] requestPermission;
         requestPermission = new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.MANAGE_DOCUMENTS,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         ActivityCompat.requestPermissions(BaseActivity.Instance, requestPermission, RandW_PERMISSIONS_REQUEST_CODE);
     }
 
     public boolean checkPermissionsWandR() {
         if (ContextCompat.checkSelfPermission(BaseActivity.Instance, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+
+        if (ContextCompat.checkSelfPermission(BaseActivity.Instance, Manifest.permission.MANAGE_DOCUMENTS) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
         return ContextCompat.checkSelfPermission(BaseActivity.Instance, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;

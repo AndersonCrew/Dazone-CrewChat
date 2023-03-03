@@ -59,6 +59,9 @@ import java.util.Date;
 
 import static com.dazone.crewchatoff.libGallery.MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTabHost;
+
 
 public class HomeFragmentActivity extends FragmentActivity implements ImageFragment.OnImageSelectedListener,
         VideoFragment.OnVideoSelectedListener, OnClickListener {
