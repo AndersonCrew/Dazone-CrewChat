@@ -15,11 +15,13 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -35,6 +37,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.base.BaseSingleStatusActivity;
@@ -925,14 +928,48 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            return false;
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            return false;
+        if(Build.VERSION.SDK_INT < 33) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
         }
 
         return true;
+    }
+
+    public boolean checkPermissionFile() {
+        if(Build.VERSION.SDK_INT < 33) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        } else return Environment.isExternalStorageManager();
+        return true;
+    }
+
+    public void setPermissionFile() {
+        String[] requestPermission;
+        if(Build.VERSION.SDK_INT < 30) {
+            requestPermission = new String[]{Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(this, requestPermission, CAMERA_PERMISSIONS_REQUEST_CODE);
+        } else {
+            try {
+                Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
+                startActivity(intent);
+            } catch (Exception ex){
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(intent);
+            }
+        }
     }
 
     public void setPermissionsCamera() {
@@ -1200,6 +1237,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                         chattingDto.setAttachFileSize((int) file.length());
                         chattingDto.setUnReadCount(ChattingActivity.userNos.size() - 1);
                         chattingDto.setRegDate(Utils.getTimeNewChat(diffTime));
+                        chattingDto.setWriterUser(Utils.getCurrentId());
                         chattingDto.setStrRegDate(Utils.getTimeFormat(CrewChatApplication.getInstance().getTimeLocal() + diffTime));
                         chattingDto.setPositionUploadImage(new Random().nextInt(1000));
                         ChattingFragment.instance.addNewRowFromChattingActivity(chattingDto);

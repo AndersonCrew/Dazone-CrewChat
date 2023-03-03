@@ -223,7 +223,7 @@ class ChattingViewModel : BaseViewModel() {
                         val success = body.get("success").toString()
                         if (success == "true") {
                             val data = body.get("data").toString()
-                            val dto = Gson().fromJson<ChattingDto>(data, ChattingDto::class.java)
+                            val dto = Gson().fromJson(data, ChattingDto::class.java)
                             dto.lastedMsgAttachType = chattingDto.lastedMsgAttachType
                             dto.lastedMsgType = chattingDto.lastedMsgType
                             dto.setmType(chattingDto.getmType())

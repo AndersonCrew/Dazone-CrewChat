@@ -107,7 +107,6 @@ public class OrganizationFragment extends BaseFragment implements IGetListDepart
     }
 
     private void unCheckParentData(TreeUserDTO personData) {
-
         TreeUserDTO needRemovePerson = null;
         for (TreeUserDTO selectedPerson : selectedPersonList) {
             if (personData.getType() == 2 && selectedPerson.getType() != 2 && selectedPerson.getId() == personData.getId()) {

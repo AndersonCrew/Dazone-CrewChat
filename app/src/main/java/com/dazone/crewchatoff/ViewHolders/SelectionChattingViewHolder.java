@@ -1,11 +1,9 @@
 package com.dazone.crewchatoff.ViewHolders;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.View;
@@ -24,13 +22,10 @@ import com.dazone.crewchatoff.libGallery.activity.BucketHomeFragmentActivity;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Utils;
-import com.nononsenseapps.filepicker.FilePickerActivity;
 import com.onegravity.contactpicker.contact.ContactDescription;
 import com.onegravity.contactpicker.contact.ContactSortOrder;
 import com.onegravity.contactpicker.core.ContactPickerActivity;
 import com.onegravity.contactpicker.picture.ContactPictureType;
-
-import java.io.File;
 
 public class SelectionChattingViewHolder extends ItemViewHolder<SelectionPlusDto> {
     public TextView title;
@@ -141,16 +136,44 @@ public class SelectionChattingViewHolder extends ItemViewHolder<SelectionPlusDto
                 title.setText(Utils.getString(R.string.file));
                 layout.setOnClickListener(v -> {
                     if (ChattingActivity.instance != null) {
-                        if (ChattingActivity.instance.checkPermissionsCamera()) {
-                            ChattingActivity.instance.isChoseFile = true;
+                        if (ChattingActivity.instance.checkPermissionFile()) {
+                            /*ChattingActivity.instance.isChoseFile = true;
                             Intent i = new Intent(ChattingActivity.Instance, FilePickerActivity.class);
                             i.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, true);
                             i.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, false);
                             i.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_FILE);
                             i.putExtra(FilePickerActivity.EXTRA_START_PATH, Environment.getExternalStorageDirectory().getPath());
-                            ChattingActivity.Instance.startActivityForResult(i, Statics.FILE_PICKER_SELECT);
+                            ChattingActivity.Instance.startActivityForResult(i, Statics.FILE_PICKER_SELECT);*/
+
+                           /* Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent.setType("file/*");
+                            ChattingActivity.Instance.startActivityForResult(intent, Statics.FILE_PICKER_SELECT);*/
+
+                            Intent intent;
+                            if (android.os.Build.MANUFACTURER.equalsIgnoreCase("samsung")) {
+                                intent = new Intent("com.sec.android.app.myfiles.PICK_DATA");
+                                intent.putExtra("CONTENT_TYPE", "*/*");
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                            } else {
+
+                                String[] mimeTypes =
+                                        {"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .doc & .docx
+                                                "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .ppt & .pptx
+                                                "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xls & .xlsx
+                                                "text/plain",
+                                                "application/pdf",
+                                                "application/zip", "application/vnd.android.package-archive"};
+
+                                intent = new Intent(Intent.ACTION_GET_CONTENT); // or ACTION_OPEN_DOCUMENT
+                                intent.setType("*/*");
+                                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                            }
+
+                            ChattingActivity.Instance.startActivityForResult(intent, Statics.FILE_PICKER_SELECT);
                         } else {
-                            ChattingActivity.instance.setPermissionsCamera();
+                            ChattingActivity.instance.setPermissionFile();
                         }
                     } else {
                         Toast.makeText(CrewChatApplication.getInstance(), CrewChatApplication.getInstance().getResources().getString(R.string.can_not_check_permission), Toast.LENGTH_SHORT).show();

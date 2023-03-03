@@ -509,9 +509,9 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
     protected void onResume() {
         super.onResume();
         mViewPager.setCurrentItem(new Prefs().getIntValue("PAGE", 0));
-        /*if(CompanyFragment.instance != null) {
-            CompanyFragment.instance.initDB();
-        }*/
+        if (CurrentChatListFragment.fragment != null) {
+            CurrentChatListFragment.fragment.onResume();
+        }
     }
 
     @Override
@@ -597,6 +597,10 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
             if (CurrentChatListFragment.fragment != null) {
                 CurrentChatListFragment.fragment.justHide();
             }
+        }
+
+        if (CurrentChatListFragment.fragment != null) {
+            CurrentChatListFragment.fragment.onResume();
         }
 
         MainActivity.CURRENT_TAB = position;
