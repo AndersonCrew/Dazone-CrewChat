@@ -2,14 +2,16 @@ package com.dazone.crewchatoff.utils;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+
+import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.ProfileUserActivity;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
-import com.dazone.crewchatoff.R;
 
 public class DialogUtils {
     public interface OnAlertDialogViewClickEvent {
@@ -19,7 +21,7 @@ public class DialogUtils {
     }
 
     public static void showDialogUser(String name, String phoneNumber, String companyNumber, final int userNo) {
-        android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(BaseActivity.Instance);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(BaseActivity.Instance);
         builderSingle.setTitle(name);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(

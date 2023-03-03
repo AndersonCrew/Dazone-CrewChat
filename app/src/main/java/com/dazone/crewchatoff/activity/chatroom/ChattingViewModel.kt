@@ -1,15 +1,13 @@
 package com.dazone.crewchatoff.activity.chatroom
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.MutableLiveData
-import android.os.Handler
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.dazone.crewchatoff.activity.base.BaseViewModel
 import com.dazone.crewchatoff.constant.Constants
 import com.dazone.crewchatoff.constant.Statics
 import com.dazone.crewchatoff.database.ChatMessageDBHelper
 import com.dazone.crewchatoff.dto.ChattingDto
-import com.dazone.crewchatoff.dto.ErrorDto
 import com.dazone.crewchatoff.dto.MessageUnreadCountDTO
 import com.dazone.crewchatoff.fragment.CurrentChatListFragment
 import com.dazone.crewchatoff.fragment.RecentFavoriteFragment
@@ -27,7 +25,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ChattingViewModel : BaseViewModel() {
     var listChatting: MutableLiveData<List<ChattingDto>> = MutableLiveData()

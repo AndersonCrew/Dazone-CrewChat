@@ -3,10 +3,6 @@ package com.dazone.crewchatoff.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,20 +16,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
-import com.dazone.crewchatoff.Tree.Org_tree;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.adapter.AdapterOrganizationChart;
 import com.dazone.crewchatoff.constant.Constants;
 import com.dazone.crewchatoff.constant.Statics;
-import com.dazone.crewchatoff.dto.BelongDepartmentDTO;
 import com.dazone.crewchatoff.dto.ChattingDto;
 import com.dazone.crewchatoff.dto.ErrorDto;
-import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 import com.dazone.crewchatoff.eventbus.NotifyAdapterOgr;
-import com.dazone.crewchatoff.fragment.CompanyFragment;
 import com.dazone.crewchatoff.interfaces.ICreateOneUserChatRom;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.Utils;
@@ -43,8 +40,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class NewOrganizationChart extends AppCompatActivity {

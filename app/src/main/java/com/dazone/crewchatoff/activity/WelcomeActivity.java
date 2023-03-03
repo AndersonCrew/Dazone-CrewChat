@@ -2,15 +2,10 @@ package com.dazone.crewchatoff.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +14,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.R;
@@ -33,14 +31,7 @@ import com.dazone.crewchatoff.database.DepartmentDBHelper;
 import com.dazone.crewchatoff.database.FavoriteGroupDBHelper;
 import com.dazone.crewchatoff.database.FavoriteUserDBHelper;
 import com.dazone.crewchatoff.database.UserDBHelper;
-import com.dazone.crewchatoff.eventbus.RotationAction;
-import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
-import com.dazone.crewchatoff.utils.Prefs;
-
-import static com.dazone.crewchatoff.utils.Utils.compareVersionNames;
-
-import org.greenrobot.eventbus.Subscribe;
 
 public class WelcomeActivity extends AppCompatActivity {
     private ViewPager viewPager;

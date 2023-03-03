@@ -3,7 +3,6 @@ package com.dazone.crewchatoff.fragment;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,16 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+
 import com.dazone.crewchatoff.Class.TreeParent;
-import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.Class.TreeView;
+import com.dazone.crewchatoff.R;
+import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
+import com.dazone.crewchatoff.Tree.Org_tree;
+import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.ErrorDto;
 import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 import com.dazone.crewchatoff.interfaces.IGetListDepart;
 import com.dazone.crewchatoff.interfaces.OnOrganizationSelectedEvent;
-import com.dazone.crewchatoff.R;
-import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
-import com.dazone.crewchatoff.Tree.Org_tree;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.google.gson.Gson;
 

@@ -1,15 +1,15 @@
 package com.dazone.crewchatoff.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
@@ -20,6 +20,7 @@ import com.dazone.crewchatoff.dto.ChattingDto;
 import com.dazone.crewchatoff.fragment.TabCurrentChatFragment;
 import com.dazone.crewchatoff.fragment.TabOrganizationChartFragment;
 import com.dazone.crewchatoff.interfaces.IF_Relay;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,14 +2,14 @@ package com.dazone.crewchatoff.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.base.BaseSingleBackActivity;
@@ -17,7 +17,6 @@ import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.eventbus.NotifyAdapterOgr;
 import com.dazone.crewchatoff.eventbus.RotationAction;
 import com.dazone.crewchatoff.presenter.CrewChatPresenter;
-import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Prefs;
 

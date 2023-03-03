@@ -1,9 +1,10 @@
 package com.dazone.crewchatoff.fragment;
 
+import static com.dazone.crewchatoff.database.ChatMessageDBHelper.addMessage;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.lifecycle.ViewModelProviders;
 
 import com.dazone.crewchatoff.Class.ChatInputView;
 import com.dazone.crewchatoff.Enumeration.ChatMessageType;
@@ -84,8 +87,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
-
-import static com.dazone.crewchatoff.database.ChatMessageDBHelper.addMessage;
 
 public class ChattingFragment extends ListFragment<ChattingDto> implements View.OnClickListener, EmojiView.EventListener, View.OnKeyListener, TextView.OnEditorActionListener {
     private String TAG = ChattingFragment.class.getName();

@@ -1,14 +1,14 @@
 package com.dazone.crewchatoff.activity;
 
+import static com.dazone.crewchatoff.utils.Utils.compareVersionNames;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
@@ -20,16 +20,18 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
 import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.GetUserStatus;
@@ -48,13 +50,11 @@ import com.dazone.crewchatoff.dto.StatusDto;
 import com.dazone.crewchatoff.dto.StatusItemDto;
 import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 import com.dazone.crewchatoff.dto.UserInfoDto;
-import com.dazone.crewchatoff.eventbus.NotifyAdapterOgr;
 import com.dazone.crewchatoff.eventbus.ReloadActivity;
 import com.dazone.crewchatoff.fragment.BaseFavoriteFragment;
 import com.dazone.crewchatoff.fragment.CompanyFragment;
 import com.dazone.crewchatoff.fragment.CurrentChatListFragment;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBackWithString;
-import com.dazone.crewchatoff.interfaces.OnClickCallback;
 import com.dazone.crewchatoff.interfaces.OnGetStatusCallback;
 import com.dazone.crewchatoff.interfaces.OnGetUserInfo;
 import com.dazone.crewchatoff.services.SyncStatusService;
@@ -65,7 +65,6 @@ import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
 import com.google.gson.Gson;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.BufferedInputStream;
@@ -79,8 +78,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.dazone.crewchatoff.utils.Utils.compareVersionNames;
 
 public class MainActivity extends BasePagerActivity implements ViewPager.OnPageChangeListener, ServiceConnection {
     String TAG = MainActivity.class.getName();

@@ -4,7 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.support.v4.app.ActivityCompat
+import androidx.core.app.ActivityCompat
 
 object PermissionUtil {
     fun checkPermissions(context: Context, permissions: List<String>) = permissions.all {

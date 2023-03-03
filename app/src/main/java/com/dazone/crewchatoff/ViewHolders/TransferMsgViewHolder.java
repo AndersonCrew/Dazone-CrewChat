@@ -2,7 +2,6 @@ package com.dazone.crewchatoff.ViewHolders;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -12,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.Views.RoundedImageView;

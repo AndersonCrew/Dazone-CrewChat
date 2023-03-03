@@ -3,8 +3,6 @@ package com.dazone.crewchatoff.ViewHolders;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -14,6 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.Views.RoundedImageView;
@@ -22,7 +23,6 @@ import com.dazone.crewchatoff.activity.ProfileUserActivity;
 import com.dazone.crewchatoff.activity.RoomUserInformationActivity;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.constant.Statics;
-import com.dazone.crewchatoff.customs.RoundLayoutGroup;
 import com.dazone.crewchatoff.database.ChatRoomDBHelper;
 import com.dazone.crewchatoff.database.UserDBHelper;
 import com.dazone.crewchatoff.dto.ChattingDto;

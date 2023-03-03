@@ -2,9 +2,10 @@ package com.dazone.crewchatoff.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
+
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -14,17 +15,23 @@ import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
 import com.dazone.crewchatoff.constant.Statics;
-import com.dazone.crewchatoff.dto.*;
+import com.dazone.crewchatoff.dto.ErrorDto;
+import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
+import com.dazone.crewchatoff.dto.UserDto;
 import com.dazone.crewchatoff.dto.userfavorites.FavoriteGroupDto;
 import com.dazone.crewchatoff.dto.userfavorites.FavoriteUserDto;
-import com.dazone.crewchatoff.interfaces.*;
+import com.dazone.crewchatoff.interfaces.OnSetNotification;
+import com.dazone.crewchatoff.interfaces.Urls;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;

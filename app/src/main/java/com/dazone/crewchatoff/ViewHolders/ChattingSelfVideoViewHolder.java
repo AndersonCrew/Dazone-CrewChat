@@ -1,5 +1,8 @@
 package com.dazone.crewchatoff.ViewHolders;
 
+import static com.dazone.crewchatoff.utils.Utils.getString;
+import static com.dazone.crewchatoff.utils.Utils.getTypeFile;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,14 +23,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +35,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
@@ -54,18 +56,23 @@ import com.dazone.crewchatoff.fragment.ChattingFragment;
 import com.dazone.crewchatoff.interfaces.ICreateOneUserChatRom;
 import com.dazone.crewchatoff.interfaces.IF_Relay;
 import com.dazone.crewchatoff.interfaces.Urls;
-import com.dazone.crewchatoff.utils.*;
+import com.dazone.crewchatoff.utils.Constant;
+import com.dazone.crewchatoff.utils.CrewChatApplication;
+import com.dazone.crewchatoff.utils.Prefs;
+import com.dazone.crewchatoff.utils.TimeUtils;
+import com.dazone.crewchatoff.utils.Utils;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.dazone.crewchatoff.utils.Utils.getString;
-import static com.dazone.crewchatoff.utils.Utils.getTypeFile;
 
 public class ChattingSelfVideoViewHolder extends BaseChattingHolder implements View.OnClickListener, View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
     public static String TAG = "ChattingSelfVideoViewHolder";

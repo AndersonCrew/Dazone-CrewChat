@@ -4,15 +4,16 @@ import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.provider.MediaStore.Video.Thumbnails;
-import android.support.v4.app.Fragment;
-import android.support.v4.util.LruCache;
 import android.widget.ImageView;
 
+import androidx.collection.LruCache;
+import androidx.fragment.app.Fragment;
+
+import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.libGallery.adapter.BucketGridAdapter;
 import com.dazone.crewchatoff.libGallery.adapter.GridViewAdapter;
 import com.dazone.crewchatoff.libGallery.fragment.BucketVideoFragment;
 import com.dazone.crewchatoff.libGallery.fragment.VideoFragment;
-import com.dazone.crewchatoff.R;
 
 import java.util.ArrayList;
 

@@ -2,15 +2,15 @@ package com.dazone.crewchatoff.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.ViewHolders.BaseChattingHolder;
 import com.dazone.crewchatoff.ViewHolders.ChattingContactViewHolder;
-import com.dazone.crewchatoff.ViewHolders.ChattingDateViewHolder;
 import com.dazone.crewchatoff.ViewHolders.ChattingGroupViewHolder;
 import com.dazone.crewchatoff.ViewHolders.ChattingGroupViewHolderNew;
 import com.dazone.crewchatoff.ViewHolders.ChattingPersonFileViewHolder;
@@ -28,12 +28,7 @@ import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.ChattingDto;
 import com.dazone.crewchatoff.interfaces.ILoadImage;
 import com.dazone.crewchatoff.utils.TimeUtils;
-import com.dazone.crewchatoff.utils.Utils;
 
-import java.sql.Time;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class ChattingAdapter extends PullUpLoadMoreRCVAdapter<ChattingDto> {

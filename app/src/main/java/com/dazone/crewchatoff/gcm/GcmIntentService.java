@@ -16,11 +16,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
@@ -34,7 +35,6 @@ import com.dazone.crewchatoff.dto.ChattingDto;
 import com.dazone.crewchatoff.dto.ErrorDto;
 import com.dazone.crewchatoff.dto.NotificationBundleDto;
 import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
-import com.dazone.crewchatoff.eventbus.ReceiveMessage;
 import com.dazone.crewchatoff.fragment.ChattingFragment;
 import com.dazone.crewchatoff.fragment.CurrentChatListFragment;
 import com.dazone.crewchatoff.interfaces.OnGetChatRoom;
@@ -45,7 +45,6 @@ import com.dazone.crewchatoff.utils.Utils;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -54,10 +53,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-import static android.support.v4.app.NotificationCompat.PRIORITY_LOW;
 
 public class GcmIntentService extends IntentService {
     private String TAG = ">>>GcmIntentService";
@@ -413,7 +410,7 @@ public class GcmIntentService extends IntentService {
         }
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channel).setSmallIcon(android.R.drawable.ic_menu_mylocation).setContentTitle("crewChat");
         Notification notification = mBuilder
-                .setPriority(PRIORITY_LOW)
+                .setPriority(Notification.PRIORITY_LOW)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build();
 

@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
+
+import androidx.appcompat.widget.SearchView;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;

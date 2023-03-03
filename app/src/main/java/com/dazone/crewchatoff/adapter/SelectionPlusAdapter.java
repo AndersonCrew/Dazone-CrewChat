@@ -1,9 +1,9 @@
 package com.dazone.crewchatoff.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.dazone.crewchatoff.dto.SelectionPlusDto;
 import com.dazone.crewchatoff.ViewHolders.SelectionChattingViewHolder;
+import com.dazone.crewchatoff.dto.SelectionPlusDto;
 
 import java.util.List;
 

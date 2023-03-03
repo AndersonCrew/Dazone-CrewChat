@@ -3,11 +3,6 @@ package com.dazone.crewchatoff.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +10,16 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.TestMultiLevelListview.MultilLevelListviewFragment;
 import com.dazone.crewchatoff.activity.MainActivity;
 import com.dazone.crewchatoff.constant.Statics;
+import com.google.android.material.tabs.TabLayout;
 
 public class BaseFavoriteFragment extends Fragment implements TabLayout.OnTabSelectedListener {
     private View rootView;

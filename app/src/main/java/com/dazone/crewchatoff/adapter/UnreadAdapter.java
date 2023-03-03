@@ -1,12 +1,13 @@
 package com.dazone.crewchatoff.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
@@ -14,7 +15,6 @@ import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
-import com.dazone.crewchatoff.utils.TimeUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

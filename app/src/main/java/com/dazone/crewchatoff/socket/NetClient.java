@@ -1,7 +1,8 @@
 package com.dazone.crewchatoff.socket;
 
+import static com.dazone.crewchatoff.constant.Statics.CHOOSE_OPTION_IMAGE;
+
 import android.app.NotificationManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,11 +10,11 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.os.Environment;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.dazone.crewchatoff.R;
+import androidx.core.app.NotificationCompat;
+
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.AttachDTO;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
@@ -32,8 +33,6 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
-
-import static com.dazone.crewchatoff.constant.Statics.CHOOSE_OPTION_IMAGE;
 
 public class NetClient {
 

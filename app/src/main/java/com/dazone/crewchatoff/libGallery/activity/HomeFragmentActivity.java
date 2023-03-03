@@ -16,6 +16,8 @@
 
 package com.dazone.crewchatoff.libGallery.activity;
 
+import static com.dazone.crewchatoff.libGallery.MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -28,9 +30,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,12 +42,17 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTabHost;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.ChattingActivity;
 import com.dazone.crewchatoff.libGallery.MediaChooser;
 import com.dazone.crewchatoff.libGallery.MediaChooserConstants;
 import com.dazone.crewchatoff.libGallery.fragment.ImageFragment;
 import com.dazone.crewchatoff.libGallery.fragment.VideoFragment;
-import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Utils;
@@ -56,11 +60,6 @@ import com.dazone.crewchatoff.utils.Utils;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static com.dazone.crewchatoff.libGallery.MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
-
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTabHost;
 
 
 public class HomeFragmentActivity extends FragmentActivity implements ImageFragment.OnImageSelectedListener,
@@ -173,10 +172,10 @@ public class HomeFragmentActivity extends FragmentActivity implements ImageFragm
 
             @Override
             public void onTabChanged(String tabId) {
-                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 ImageFragment imageFragment = (ImageFragment) fragmentManager.findFragmentByTag("tab1");
                 VideoFragment videoFragment = (VideoFragment) fragmentManager.findFragmentByTag("tab2");
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 if (tabId.equalsIgnoreCase("tab1")) {
                     headerBarTitle.setText(getResources().getString(R.string.image));

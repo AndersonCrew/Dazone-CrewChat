@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:text="@string/settings_notification_new_mail" />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_enable_notification"
             style="@style/setting_switch_compat"
             android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
             android:layout_weight="1"
             android:text="@string/settings_notification_sound" />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_enable_sound"
             style="@style/setting_switch_compat"
             android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
             android:layout_weight="1"
             android:text="@string/settings_notification_vibrate" />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_enable_vibrate"
             style="@style/setting_switch_compat"
             android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
                 android:layout_marginTop="@dimen/padding_25"/>
             <!--    android:text="@string/settings_notification_time" />-->
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/sw_enable_notification_time"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -192,7 +192,7 @@
                 android:layout_weight="1"
                 android:text="@string/settings_notification_disable_when_using_pc_version" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/sw_enable_chat_by_pc_version"
                 style="@style/setting_switch_compat"
                 android:layout_width="wrap_content"

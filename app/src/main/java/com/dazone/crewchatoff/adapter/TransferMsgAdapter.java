@@ -1,21 +1,19 @@
 package com.dazone.crewchatoff.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.ViewHolders.EmptyViewHolder;
 import com.dazone.crewchatoff.ViewHolders.ItemViewHolder;
-
 import com.dazone.crewchatoff.ViewHolders.ProgressViewHolder;
 import com.dazone.crewchatoff.ViewHolders.TransferMsgViewHolder;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.ChattingDto;
-
 import com.dazone.crewchatoff.fragment.TabCurrentChatFragment;
-
 
 import java.util.List;
 

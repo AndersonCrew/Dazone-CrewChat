@@ -1,16 +1,17 @@
 package com.dazone.crewchatoff.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.ViewHolders.ItemViewHolder;
 import com.dazone.crewchatoff.ViewHolders.ListGroupViewHolder;
 import com.dazone.crewchatoff.ViewHolders.ProgressViewHolder;
+import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 
 import java.util.List;
 

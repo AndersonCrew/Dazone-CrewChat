@@ -5,9 +5,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.WakefulBroadcastReceiver;
-import android.util.Log;
+
+import androidx.core.content.ContextCompat;
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import com.dazone.crewchatoff.database.AllUserDBHelper;
 import com.dazone.crewchatoff.database.BelongsToDBHelper;

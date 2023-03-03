@@ -4,7 +4,6 @@ package com.dazone.crewchatoff.adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Environment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -13,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.constant.Statics;
@@ -24,7 +25,6 @@ import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
 
-import java.io.File;
 import java.util.List;
 
 /**

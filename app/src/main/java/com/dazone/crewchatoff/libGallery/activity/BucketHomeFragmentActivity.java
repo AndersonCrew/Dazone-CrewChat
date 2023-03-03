@@ -15,6 +15,9 @@
  */
 package com.dazone.crewchatoff.libGallery.activity;
 
+import static com.dazone.crewchatoff.constant.Statics.CHOOSE_OPTION_IMAGE;
+import static com.dazone.crewchatoff.libGallery.MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,11 +30,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,9 +40,14 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTabHost;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.ChattingActivity;
@@ -61,9 +64,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static com.dazone.crewchatoff.constant.Statics.CHOOSE_OPTION_IMAGE;
-import static com.dazone.crewchatoff.libGallery.MediaChooserConstants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE;
 
 public class BucketHomeFragmentActivity extends FragmentActivity {
     private FragmentTabHost mTabHost;
@@ -376,7 +376,7 @@ public class BucketHomeFragmentActivity extends FragmentActivity {
                     public void run() {
                         try {
                             String fileUriString = fileUri.toString().replaceFirst("file:///", "/").trim();
-                            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                            FragmentManager fragmentManager = getSupportFragmentManager();
                             BucketImageFragment bucketImageFragment = (BucketImageFragment) fragmentManager.findFragmentByTag("tab1");
                             if (bucketImageFragment != null) {
                                 bucketImageFragment.getAdapter().addLatestEntry(fileUriString);
@@ -398,7 +398,7 @@ public class BucketHomeFragmentActivity extends FragmentActivity {
                     public void run() {
                         //Do something after 2000ms
                         String fileUriString = fileUri.toString().replaceFirst("file:///", "/").trim();
-                        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentManager fragmentManager = getSupportFragmentManager();
                         BucketVideoFragment bucketVideoFragment = (BucketVideoFragment) fragmentManager.findFragmentByTag("tab2");
                         if (bucketVideoFragment != null) {
                             bucketVideoFragment.getAdapter().addLatestEntry(fileUriString);

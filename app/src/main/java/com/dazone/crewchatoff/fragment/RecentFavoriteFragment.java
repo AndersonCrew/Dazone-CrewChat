@@ -8,8 +8,6 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,6 +21,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dazone.crewchatoff.HTTPs.GetUserStatus;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
@@ -45,7 +46,6 @@ import com.dazone.crewchatoff.interfaces.BaseHTTPCallBack;
 import com.dazone.crewchatoff.interfaces.OnGetCurrentChatCallBack;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.Prefs;
-import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
 
 import java.util.ArrayList;

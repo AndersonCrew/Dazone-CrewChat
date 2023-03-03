@@ -4,12 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Handler;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -21,9 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
@@ -36,25 +33,17 @@ import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.database.ChatMessageDBHelper;
 import com.dazone.crewchatoff.dto.ChattingDto;
 import com.dazone.crewchatoff.dto.ErrorDto;
-import com.dazone.crewchatoff.eventbus.ReloadListMessage;
 import com.dazone.crewchatoff.fragment.ChattingFragment;
 import com.dazone.crewchatoff.interfaces.ICreateOneUserChatRom;
 import com.dazone.crewchatoff.interfaces.IF_Relay;
-import com.dazone.crewchatoff.interfaces.SendChatMessage;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import static com.dazone.crewchatoff.fragment.ChattingFragment.sendComplete;
 
 public class ChattingSelfViewHolder extends BaseChattingHolder {
     private TextView date_tv, content_tv;
@@ -142,7 +131,7 @@ public class ChattingSelfViewHolder extends BaseChattingHolder {
     }
 
     public void showDialogChat(final String content, final long MessageNo) {
-        android.support.v7.app.AlertDialog.Builder builderSingle = new android.support.v7.app.AlertDialog.Builder(BaseActivity.Instance);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(BaseActivity.Instance);
         builderSingle.setTitle(Utils.getString(R.string.app_name));
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(

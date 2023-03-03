@@ -1,19 +1,22 @@
 package com.dazone.crewchatoff.activity.base;
 
+import static java.lang.Integer.MAX_VALUE;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.dazone.crewchatoff.HTTPs.HttpOauthRequest;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
@@ -27,24 +30,23 @@ import com.dazone.crewchatoff.fragment.BaseFavoriteFragment;
 import com.dazone.crewchatoff.fragment.CompanyFragment;
 import com.dazone.crewchatoff.fragment.CurrentChatListFragment;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBack;
-import com.dazone.crewchatoff.interfaces.OnClickCallback;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
-
-import static java.lang.Integer.MAX_VALUE;
 
 public abstract class BasePagerActivity extends BaseActivity {
 
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * {@link FragmentStatePagerAdapter}.
      */
     protected TabPagerAdapter tabAdapter;
     String TAG = "BasePagerActivity";

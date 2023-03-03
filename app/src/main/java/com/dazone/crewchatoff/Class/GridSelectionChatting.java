@@ -1,14 +1,15 @@
 package com.dazone.crewchatoff.Class;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.adapter.SelectionPlusAdapter;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.customs.GridDecoration;
 import com.dazone.crewchatoff.dto.SelectionPlusDto;
-import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 
 import java.util.ArrayList;

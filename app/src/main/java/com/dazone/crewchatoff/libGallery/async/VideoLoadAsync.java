@@ -20,8 +20,9 @@ package com.dazone.crewchatoff.libGallery.async;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
 
 import com.dazone.crewchatoff.libGallery.GalleryCache;
 import com.dazone.crewchatoff.libGallery.GalleryRetainCache;

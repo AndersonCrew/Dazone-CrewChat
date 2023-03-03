@@ -36,7 +36,7 @@
             android:textSize="@dimen/text_size_normal"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_enter_auto"
             style="@style/setting_switch_compat"
             android:layout_width="wrap_content"
@@ -116,7 +116,7 @@
             android:textSize="@dimen/text_size_normal"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sw_enter_v_duty"
             style="@style/setting_switch_compat"
             android:layout_width="wrap_content"

@@ -1,6 +1,8 @@
 package com.dazone.crewchatoff.ViewHolders;
 
-import android.Manifest;
+import static com.dazone.crewchatoff.utils.Utils.getString;
+import static com.dazone.crewchatoff.utils.Utils.getTypeFile;
+
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
@@ -8,16 +10,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -29,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.FileProvider;
 
 import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
@@ -55,8 +55,6 @@ import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -68,9 +66,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.dazone.crewchatoff.utils.Utils.getString;
-import static com.dazone.crewchatoff.utils.Utils.getTypeFile;
 
 public class ChattingSelfFileViewHolder extends BaseChattingHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
     private TextView tvFileDate, tvFileName, tvFileSize, fileReceiveTv;
