@@ -644,7 +644,35 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
     }
 
     private void insertDevice(final String regId) {
-        new Thread(() -> HttpRequest.getInstance().InsertDevice(regId, new BaseHTTPCallBack() {
+
+        Prefs mPref = CrewChatApplication.getInstance().getPrefs();
+        int hourStart = mPref.getIntValue(Statics.TIME_HOUR_START_NOTIFICATION, 8);
+        int minuteStart = mPref.getIntValue(Statics.TIME_MINUTE_START_NOTIFICATION, 0);
+
+        int hourEnd = mPref.getIntValue(Statics.TIME_HOUR_END_NOTIFICATION, 18);
+        int minuteEnd = mPref.getIntValue(Statics.TIME_MINUTE_END_NOTIFICATION, 0);
+
+        String strHourStart = hourStart < 10 ? "0" + hourStart : hourStart + "";
+        String strMinuteStart = minuteStart < 10 ? "0" + minuteStart : minuteStart + "";
+
+        String strHourEnd = hourEnd < 10 ? "0" + hourEnd : hourEnd + "";
+        String strMinuteEnd = minuteEnd < 10 ? "0" + minuteEnd : minuteEnd + "";
+
+        boolean isEnableN = prefs.getBooleanValue(Statics.ENABLE_NOTIFICATION, true);
+        boolean isEnableSound = prefs.getBooleanValue(Statics.ENABLE_SOUND, true);
+        boolean isEnableVibrate = prefs.getBooleanValue(Statics.ENABLE_VIBRATE, true);
+        boolean isEnableTime = prefs.getBooleanValue(Statics.ENABLE_TIME, false);
+
+        String notificationOptions = "{" +
+                "\"enabled\": " + isEnableN + "," +
+                "\"sound\": " + isEnableSound + "," +
+                "\"vibrate\": " + isEnableVibrate + "," +
+                "\"notitime\": " + isEnableTime + "," +
+                "\"starttime\": \"" + strHourStart + ":" + strMinuteStart + "\"," +
+                "\"endtime\": \"" + strHourEnd + ":" + strMinuteEnd + "\"" + "}";
+        notificationOptions = notificationOptions.trim();
+        String finalNotificationOptions = notificationOptions;
+        new Thread(() -> HttpRequest.getInstance().InsertDevice(regId, finalNotificationOptions, new BaseHTTPCallBack() {
             @Override
             public void onHTTPSuccess() {
             }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -20,7 +21,6 @@ import com.dazone.crewchatoff.interfaces.OnSetNotification;
 import com.dazone.crewchatoff.interfaces.Urls;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Prefs;
-import com.dazone.crewchatoff.utils.TimeUtils;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -35,10 +35,7 @@ public class SettingNotificationFragment extends Fragment implements CompoundBut
     /*
     * All date time var
     * */
-    private int hour;
-    private int min;
-    private int START_TIME = 0;
-    private int END_TIME = 1;
+    int hourStart, minuteStart, hourEnd, minuteEnd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,13 +69,18 @@ public class SettingNotificationFragment extends Fragment implements CompoundBut
         boolean isEnableNotificationWhenUsingPcVersion = prefs.getBooleanValue(Statics.ENABLE_NOTIFICATION_WHEN_USING_PC_VERSION, true);
 
 
-        int start_hour = prefs.getIntValue(Statics.START_NOTIFICATION_HOUR, Statics.DEFAULT_START_NOTIFICATION_TIME);
-        int start_minutes = prefs.getIntValue(Statics.START_NOTIFICATION_MINUTES, 0);
-        int end_hour = prefs.getIntValue(Statics.END_NOTIFICATION_HOUR, Statics.DEFAULT_END_NOTIFICATION_TIME);
-        int end_minutes = prefs.getIntValue(Statics.END_NOTIFICATION_MINUTES, 0);
+        hourStart = prefs.getIntValue(Statics.TIME_HOUR_START_NOTIFICATION, 8);
+        minuteStart = prefs.getIntValue(Statics.TIME_MINUTE_START_NOTIFICATION, 0);
 
-        tvStartTime.setText(TimeUtils.timeToString(start_hour, start_minutes));
-        tvEndTime.setText(TimeUtils.timeToString(end_hour, end_minutes));
+        hourEnd = prefs.getIntValue(Statics.TIME_HOUR_END_NOTIFICATION, 18);
+        minuteEnd = prefs.getIntValue(Statics.TIME_MINUTE_END_NOTIFICATION, 0);
+        String strHourStart = hourStart < 10 ? "0" + hourStart : hourStart + "";
+        String strMinuteStart = minuteStart < 10 ? "0" + minuteStart : minuteStart + "";
+
+        String strHourEnd = hourEnd < 10 ? "0" + hourEnd : hourEnd + "";
+        String strMinuteEnd = minuteEnd < 10 ? "0" + minuteEnd : minuteEnd + "";
+        tvStartTime.setText(strHourStart + ":" + strMinuteStart);
+        tvEndTime.setText(strHourEnd + ":" + strMinuteEnd);
 
 
         if (isEnableN) {
@@ -133,10 +135,11 @@ public class SettingNotificationFragment extends Fragment implements CompoundBut
         boolean isEnableNotificationWhenUsingPcVersion = prefs.getBooleanValue(Statics.ENABLE_NOTIFICATION_WHEN_USING_PC_VERSION, true);
 
 
-        int start_hour = prefs.getIntValue(Statics.START_NOTIFICATION_HOUR, Statics.DEFAULT_START_NOTIFICATION_TIME);
-        int start_minutes = prefs.getIntValue(Statics.START_NOTIFICATION_MINUTES, 0);
-        int end_hour = prefs.getIntValue(Statics.END_NOTIFICATION_HOUR, Statics.DEFAULT_END_NOTIFICATION_TIME);
-        int end_minutes = prefs.getIntValue(Statics.END_NOTIFICATION_MINUTES, 0);
+        String strHourStart = hourStart < 10 ? "0" + hourStart : hourStart + "";
+        String strMinuteStart = minuteStart < 10 ? "0" + minuteStart : minuteStart + "";
+
+        String strHourEnd = hourEnd < 10 ? "0" + hourEnd : hourEnd + "";
+        String strMinuteEnd = minuteEnd < 10 ? "0" + minuteEnd : minuteEnd + "";
 
 
         Map<String, Object> params = new HashMap<>();
@@ -144,8 +147,8 @@ public class SettingNotificationFragment extends Fragment implements CompoundBut
         params.put("sound", isEnableSound);
         params.put("vibrate", isEnableVibrate);
         params.put("notitime", isEnableTime);
-        params.put("starttime", TimeUtils.timeToStringNotAMPM(start_hour, start_minutes));
-        params.put("endtime", TimeUtils.timeToStringNotAMPM(end_hour, end_minutes));
+        params.put("starttime", strHourStart + ":" + strMinuteStart );
+        params.put("endtime", strHourEnd + ":" + strMinuteEnd);
         params.put("confirmonline", isEnableNotificationWhenUsingPcVersion);
 
 
@@ -231,19 +234,27 @@ public class SettingNotificationFragment extends Fragment implements CompoundBut
         @Override
         public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
             // set value and tag for start time textview
-            int end_hour = prefs.getIntValue(Statics.END_NOTIFICATION_HOUR, 0);
-            int end_minutes = prefs.getIntValue(Statics.END_NOTIFICATION_MINUTES, 0);
-            if ((hourOfDay > end_hour) || (hourOfDay == end_hour && minute > end_minutes)) {
-                showTimePicker(START_TIME);
-                return;
-            }
-            tvStartTime.setText(TimeUtils.timeToString(hourOfDay, minute));
-            // Save value time
-            prefs.putIntValue(Statics.START_NOTIFICATION_HOUR, hourOfDay);
-            prefs.putIntValue(Statics.START_NOTIFICATION_MINUTES, minute);
+            hourStart = hourOfDay;
+            minuteStart = minute;
+            String strHourStart = hourStart < 10 ? "0" + hourStart : hourStart + "";
+            String strMinuteStart = minuteStart < 10 ? "0" + minuteStart : minuteStart + "";
 
-            // Update to server
-            setNotification();
+            tvStartTime.setText(strHourStart + ":" + strMinuteStart);
+            if(hourStart > hourEnd) {
+                hourEnd = hourOfDay;
+                minuteEnd = minute;
+                String strHourEnd = hourEnd < 10 ? "0" + hourEnd : hourEnd + "";
+                String strMinuteEnd = minuteEnd < 10 ? "0" + minuteEnd : minuteEnd + "";
+                tvEndTime.setText(strHourEnd + ":" + strMinuteEnd);
+            }
+
+            if(swEnableNotificationTime.isChecked()) {
+                setNotification();
+                prefs.putIntValue(Statics.TIME_HOUR_START_NOTIFICATION, hourStart);
+                prefs.putIntValue(Statics.TIME_MINUTE_START_NOTIFICATION, minuteStart);
+                prefs.putIntValue(Statics.TIME_HOUR_END_NOTIFICATION, hourEnd);
+                prefs.putIntValue(Statics.TIME_MINUTE_END_NOTIFICATION, minuteEnd);
+            }
         }
     };
 
@@ -251,33 +262,32 @@ public class SettingNotificationFragment extends Fragment implements CompoundBut
 
         @Override
         public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-            // check end time is bigger than start time
-            int start_hour = prefs.getIntValue(Statics.START_NOTIFICATION_HOUR, 0);
-            int start_minutes = prefs.getIntValue(Statics.START_NOTIFICATION_MINUTES, 0);
-            if ((hourOfDay < start_hour) || (hourOfDay == start_hour && minute < start_minutes)) {
-                showTimePicker(END_TIME);
-                return;
-            }
-            // set value and tag for start time textview
-            tvEndTime.setText(TimeUtils.timeToString(hourOfDay, minute));
-            // Save value time
-            prefs.putIntValue(Statics.END_NOTIFICATION_HOUR, hourOfDay);
-            prefs.putIntValue(Statics.END_NOTIFICATION_MINUTES, minute);
+            if (hourOfDay < hourStart || hourOfDay == hourStart && minute < minuteStart) {
+                Toast.makeText(getActivity(), "Please choose end time greater than start time", Toast.LENGTH_LONG).show();
+            } else {
+                hourEnd = hourOfDay;
+                minuteEnd = minute;
 
-            // Update to server
-            setNotification();
+                String strHourEnd = hourEnd < 10 ? "0" + hourEnd : hourEnd + "";
+                String strMinuteEnd = minuteEnd < 10 ? "0" + minuteEnd : minuteEnd + "";
+                tvEndTime.setText(strHourEnd + ":" + strMinuteEnd);
+
+                if (swEnableNotificationTime.isChecked()) {
+                    setNotification();
+                    prefs.putIntValue(Statics.TIME_HOUR_END_NOTIFICATION, hourEnd);
+                    prefs.putIntValue(Statics.TIME_MINUTE_END_NOTIFICATION, minuteEnd);
+                }
+            }
         }
     };
 
     private void showTimePicker(int type) {
-        getTime(type);
-
         TimePickerDialog tpd = null;
 
-        if (type == START_TIME) {
-            tpd = TimePickerDialog.newInstance(startTimeListener, hour, min, true);
-        } else if (type == END_TIME) {
-            tpd = TimePickerDialog.newInstance(endTimeListener, hour, min, true);
+        if (type == 0) {
+            tpd = TimePickerDialog.newInstance(startTimeListener, hourStart, minuteStart, true);
+        } else if (type == 1) {
+            tpd = TimePickerDialog.newInstance(endTimeListener, hourEnd, minuteEnd, true);
         }
 
         if (tpd != null) {
@@ -287,25 +297,15 @@ public class SettingNotificationFragment extends Fragment implements CompoundBut
         }
     }
 
-    private void getTime(int type) {
-        if (type == START_TIME) {
-            hour = prefs.getIntValue(Statics.START_NOTIFICATION_HOUR, Statics.DEFAULT_START_NOTIFICATION_TIME);
-            min = prefs.getIntValue(Statics.START_NOTIFICATION_MINUTES, 0);
-        } else if (type == END_TIME) {
-            hour = prefs.getIntValue(Statics.END_NOTIFICATION_HOUR, Statics.DEFAULT_END_NOTIFICATION_TIME);
-            min = prefs.getIntValue(Statics.END_NOTIFICATION_MINUTES, 0);
-        }
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_start_time:
-                showTimePicker(START_TIME);
+                showTimePicker(0);
                 break;
 
             case R.id.tv_end_time:
-                showTimePicker(END_TIME);
+                showTimePicker(1);
                 break;
         }
     }

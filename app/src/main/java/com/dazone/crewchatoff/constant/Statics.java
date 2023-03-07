@@ -4,14 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaRecorder;
 
-import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.R;
-import com.dazone.crewchatoff.utils.Constant;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.dazone.crewchatoff.customs.RoundedOneCorner;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 
 public interface Statics {
@@ -271,4 +268,10 @@ public interface Statics {
 
     String TIME_SERVER_MILI = "TIME_SERVER_MILI";
     String TIME_LOCAL_MILI = "TIME_LOCAL_MILI";
+
+    public static final String TIME_HOUR_START_NOTIFICATION = "TIME_HOUR_START_NOTIFICATION";
+    public static final String TIME_MINUTE_START_NOTIFICATION = "TIME_MINUTE_START_NOTIFICATION";
+
+    public static final String TIME_HOUR_END_NOTIFICATION = "TIME_HOUR_END_NOTIFICATION";
+    public static final String TIME_MINUTE_END_NOTIFICATION = "TIME_MINUTE_END_NOTIFICATION";
 }

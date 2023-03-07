@@ -1074,7 +1074,7 @@ public class HttpRequest {
         });
     }
 
-    public void InsertDevice(String deviceId, final BaseHTTPCallBack baseHTTPCallBack) {
+    public void InsertDevice(String deviceId, String notificationOptions, final BaseHTTPCallBack baseHTTPCallBack) {
         String url = root_link + Urls.URL_ROOT_2;
         Map<String, String> params = new HashMap<>();
         Map<String, Object> params2 = new HashMap<>();
@@ -1082,7 +1082,7 @@ public class HttpRequest {
         params.put("sessionId", "" + CrewChatApplication.getInstance().getPrefs().getaccesstoken());
         params.put("languageCode", Locale.getDefault().getLanguage().toUpperCase());
         params.put("timeZoneOffset", TimeUtils.getTimezoneOffsetInMinutes());
-
+        params.put("notificationOptions", notificationOptions);
         params2.put("DeviceType", Statics.DEVICE_TYPE);
         params2.put("DeviceID", deviceId);
 

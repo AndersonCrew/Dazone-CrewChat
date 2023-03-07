@@ -20,6 +20,21 @@ public class TimeUtils {
         return simpleDateFormat.format(new Date(date));
     }
 
+    public static boolean isBetweenTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
+        Calendar currentCalendar = Calendar.getInstance();
+        Calendar startCalendar = Calendar.getInstance();
+        Calendar endCalendar = Calendar.getInstance();
+
+        startCalendar.set(Calendar.HOUR_OF_DAY, hourStart);
+        startCalendar.set(Calendar.MINUTE, minuteStart);
+
+        endCalendar.set(Calendar.HOUR_OF_DAY, hourEnd);
+        endCalendar.set(Calendar.MINUTE, minuteEnd);
+
+
+        return currentCalendar.getTime().getTime() >= startCalendar.getTime().getTime() && currentCalendar.getTime().getTime() <= endCalendar.getTime().getTime();
+
+    }
     public static String getTimezoneOffsetInMinutes() {
         TimeZone tz = TimeZone.getDefault();
         int offsetMinutes = tz.getRawOffset() / 60000;

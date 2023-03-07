@@ -41,6 +41,7 @@ import com.dazone.crewchatoff.interfaces.OnGetChatRoom;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Prefs;
+import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
@@ -76,6 +77,7 @@ public class GcmIntentService extends IntentService {
     private Prefs prefs;
     private NotificationCompat.Builder mBuilder;
     boolean isEnableN, isEnableSound, isEnableVibrate, isEnableTime, isPCVersion;
+    int hourStart, minuteStart, hourEnd, minuteEnd;
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -89,6 +91,22 @@ public class GcmIntentService extends IntentService {
         isEnableVibrate = prefs.getBooleanValue(Statics.ENABLE_VIBRATE, true);
         isEnableTime = prefs.getBooleanValue(Statics.ENABLE_TIME, false);
         isPCVersion = prefs.getBooleanValue(Statics.ENABLE_NOTIFICATION_WHEN_USING_PC_VERSION, true);
+
+        int hourStart = prefs.getIntValue(Statics.TIME_HOUR_START_NOTIFICATION, 8);
+        int minuteStart = prefs.getIntValue(Statics.TIME_MINUTE_START_NOTIFICATION, 0);
+
+        int hourEnd = prefs.getIntValue(Statics.TIME_HOUR_END_NOTIFICATION, 18);
+        int minuteEnd = prefs.getIntValue(Statics.TIME_MINUTE_END_NOTIFICATION, 0);
+
+        if (!isEnableN) {
+            return;
+        } else {
+            if (isEnableTime) {
+                if (!TimeUtils.isBetweenTime(hourStart, minuteStart, hourEnd, minuteEnd)) {
+                    return;
+                }
+            }
+        }
 
         if (extras != null) { // Check enable notification and current time avaiable [on time table]
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
