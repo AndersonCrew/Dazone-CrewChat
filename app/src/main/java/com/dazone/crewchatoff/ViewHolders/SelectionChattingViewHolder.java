@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,10 +21,8 @@ import com.dazone.crewchatoff.libGallery.activity.BucketHomeFragmentActivity;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Utils;
-import com.onegravity.contactpicker.contact.ContactDescription;
-import com.onegravity.contactpicker.contact.ContactSortOrder;
-import com.onegravity.contactpicker.core.ContactPickerActivity;
-import com.onegravity.contactpicker.picture.ContactPictureType;
+
+import mx.com.quiin.contactpicker.ui.ContactPickerActivity;
 
 public class SelectionChattingViewHolder extends ItemViewHolder<SelectionPlusDto> {
     public TextView title;
@@ -223,14 +220,17 @@ public class SelectionChattingViewHolder extends ItemViewHolder<SelectionPlusDto
     }
 
     private void contactPicker() {
-        ChattingActivity.instance.isChoseFile = true;
+        /*ChattingActivity.instance.isChoseFile = true;
         Intent intent = new Intent(ChattingActivity.Instance, ContactPickerActivity.class)
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE, ContactPictureType.ROUND.name())
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION, ContactDescription.ADDRESS.name())
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
                 .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER, ContactSortOrder.AUTOMATIC.name());
 
-        ChattingActivity.Instance.startActivityForResult(intent, Statics.CONTACT_PICKER_SELECT);
+        ChattingActivity.Instance.startActivityForResult(intent, Statics.CONTACT_PICKER_SELECT);*/
+
+        Intent contactPicker = new Intent(ChattingActivity.instance, ContactPickerActivity.class);
+        ChattingActivity.instance.startActivityForResult(contactPicker, Statics.CONTACT_PICKER_SELECT);
     }
 
     private void recordVideo() {

@@ -66,8 +66,6 @@ import com.dazone.crewchatoff.utils.FileUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
 import com.nononsenseapps.filepicker.FilePickerActivity;
-import com.onegravity.contactpicker.contact.Contact;
-import com.onegravity.contactpicker.core.ContactPickerActivity;
 
 import java.io.File;
 import java.io.Serializable;
@@ -77,6 +75,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.TreeSet;
+
+import mx.com.quiin.contactpicker.SimpleContact;
 
 public class ChattingActivity extends BaseSingleStatusActivity implements View.OnClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
     public static void toActivity(Context context, long roomNo, long myId, ChattingDto tempDto, String typeShare, ArrayList<String> mSelectedImage) {
@@ -1256,21 +1257,23 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     }
 
     private void handleContactSelected(Intent data) {
-        if (data != null && data.hasExtra(ContactPickerActivity.RESULT_CONTACT_DATA)) {
-            List<Contact> contacts = (List<Contact>) data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA);
+        if (data != null) {
+            TreeSet<SimpleContact> selectedContacts = (TreeSet<SimpleContact>)data.getSerializableExtra(mx.com.quiin.contactpicker.ui.ContactPickerActivity.CP_SELECTED_CONTACTS);
 
+            ArrayList<SimpleContact> listContact = new ArrayList<>();
+            listContact.addAll(selectedContacts);
             long diffTime = 0;
-            for (final Contact contact : contacts) {
-                diffTime += Config.TIME_WAIT * contacts.indexOf(contact);
+            for (SimpleContact contact : listContact) {
+                diffTime += Config.TIME_WAIT * listContact.indexOf(contact);
                 final ChattingDto dto = new ChattingDto();
                 UserDto userDto = new UserDto();
                 userDto.setFullName(contact.getDisplayName());
-                userDto.setPhoneNumber(contact.getPhone(0));
-                userDto.setAvatar(contact.getPhotoUri() != null ? contact.getPhotoUri().toString() : null);
+                userDto.setPhoneNumber(contact.getCommunication());
+                //userDto.setAvatar(contact.getPhotoUri() != null ? contact.getPhotoUri().toString() : null);
 
                 dto.setmType(Statics.CHATTING_VIEW_TYPE_CONTACT);
                 dto.setUser(userDto);
-                dto.setMessage(contact.getPhone(0) == null ? contact.getDisplayName() : contact.getDisplayName() + "\n" + contact.getPhone(0));
+                dto.setMessage(contact.getCommunication() == null ? contact.getDisplayName() : contact.getDisplayName() + "\n" + contact.getCommunication());
                 dto.setHasSent(false);
                 dto.setUserNo(Utils.getCurrentId());
                 dto.setRoomNo(roomNo);
