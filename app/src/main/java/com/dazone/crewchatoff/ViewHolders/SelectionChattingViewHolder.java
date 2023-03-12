@@ -146,6 +146,7 @@ public class SelectionChattingViewHolder extends ItemViewHolder<SelectionPlusDto
                             intent.setType("file/*");
                             ChattingActivity.Instance.startActivityForResult(intent, Statics.FILE_PICKER_SELECT);*/
 
+                            ChattingActivity.instance.isChoseFile = true;
                             Intent intent;
                             if (android.os.Build.MANUFACTURER.equalsIgnoreCase("samsung")) {
                                 intent = new Intent("com.sec.android.app.myfiles.PICK_DATA");
