@@ -621,7 +621,8 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
         protected Void doInBackground(String... params) {
             try {
 
-                InstanceID instanceID = InstanceID.getInstance(LoginActivity.this);
+                InstanceID instanceID = InstanceID.getInstance(CrewChatApplication.getInstance());
+
                 regId = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
                         GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 

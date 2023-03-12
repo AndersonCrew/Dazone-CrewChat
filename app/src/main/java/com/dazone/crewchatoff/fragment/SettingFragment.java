@@ -45,6 +45,10 @@ import com.dazone.crewchatoff.utils.DialogUtils;
 import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+
+import java.io.IOException;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
@@ -200,52 +204,67 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     private void doLogout() {
         new Prefs().putIntValue("PAGE", 0);
-        String ids = new Prefs().getGCMregistrationid();
-        BaseActivity.Instance.showProgressDialog();
-        HttpRequest.getInstance().DeleteDevice(ids, new BaseHTTPCallBack() {
-            @Override
-            public void onHTTPSuccess() {
+        String regId = new Prefs().getGCMregistrationid();
+        if(regId.isEmpty()) {
+            InstanceID instanceID = InstanceID.getInstance(requireContext());
 
-                HttpOauthRequest.getInstance().logout(new BaseHTTPCallBack() {
-                    @Override
-                    public void onHTTPSuccess() {
-                        BaseActivity.Instance.dismissProgressDialog();
-                        // New thread to clear all cache
-                        CrewChatApplication.isAddUser = false;
-                        new Thread(() -> {
-                            BelongsToDBHelper.clearBelong();
-                            AllUserDBHelper.clearUser();
-                            ChatRoomDBHelper.clearChatRooms();
-                            ChatMessageDBHelper.clearMessages();
-                            DepartmentDBHelper.clearDepartment();
-                            UserDBHelper.clearUser();
-                            FavoriteGroupDBHelper.clearGroups();
-                            FavoriteUserDBHelper.clearFavorites();
-                            CrewChatApplication.resetValue();
-                            CrewChatApplication.isLoggedIn = false;
-                            CrewChatApplication.getInstance().getPrefs().clearLogin();
-                            handler.obtainMessage(LOGOUT_COMPLETE).sendToTarget();
-                            ShortcutBadger.removeCount(getContext()); //for 1.1.4
-                        }).start();
-                    }
-
-                    @Override
-                    public void onHTTPFail(ErrorDto errorDto) {
-                        Log.d(TAG, "onHTTPFail 1");
-                        BaseActivity.Instance.dismissProgressDialog();
-                        Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
-                    }
-                });
-
+            try {
+                regId = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
+                        GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                new Prefs().setGCMregistrationid(regId);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+        }
 
-            @Override
-            public void onHTTPFail(ErrorDto errorDto) {
-                Log.d(TAG, "onHTTPFail 2");
-                BaseActivity.Instance.dismissProgressDialog();
-                Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
-            }
-        });
+        if(!regId.isEmpty()) {
+            BaseActivity.Instance.showProgressDialog();
+            HttpRequest.getInstance().DeleteDevice(regId, new BaseHTTPCallBack() {
+                @Override
+                public void onHTTPSuccess() {
+
+                    HttpOauthRequest.getInstance().logout(new BaseHTTPCallBack() {
+                        @Override
+                        public void onHTTPSuccess() {
+                            BaseActivity.Instance.dismissProgressDialog();
+                            // New thread to clear all cache
+                            CrewChatApplication.isAddUser = false;
+                            new Thread(() -> {
+                                BelongsToDBHelper.clearBelong();
+                                AllUserDBHelper.clearUser();
+                                ChatRoomDBHelper.clearChatRooms();
+                                ChatMessageDBHelper.clearMessages();
+                                DepartmentDBHelper.clearDepartment();
+                                UserDBHelper.clearUser();
+                                FavoriteGroupDBHelper.clearGroups();
+                                FavoriteUserDBHelper.clearFavorites();
+                                CrewChatApplication.resetValue();
+                                CrewChatApplication.isLoggedIn = false;
+                                CrewChatApplication.getInstance().getPrefs().clearLogin();
+                                handler.obtainMessage(LOGOUT_COMPLETE).sendToTarget();
+                                ShortcutBadger.removeCount(getContext()); //for 1.1.4
+                            }).start();
+                        }
+
+                        @Override
+                        public void onHTTPFail(ErrorDto errorDto) {
+                            Log.d(TAG, "onHTTPFail 1");
+                            BaseActivity.Instance.dismissProgressDialog();
+                            Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onHTTPFail(ErrorDto errorDto) {
+                    Log.d(TAG, "onHTTPFail 2");
+                    BaseActivity.Instance.dismissProgressDialog();
+                    Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
 
 
     }

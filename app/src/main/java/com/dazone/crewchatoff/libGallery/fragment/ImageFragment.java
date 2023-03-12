@@ -115,7 +115,22 @@ public class ImageFragment extends Fragment {
 
             final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID};
 
-            mImageCursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, searchParams, null, orderBy + " DESC");
+
+            String[] projection = new String[] {
+                    MediaStore.Images.Media.DATA, MediaStore.Images.Media._ID
+            };
+            String[] selectionArgs = new String[] {
+
+            };
+            String sortOrder = orderBy + " DESC";
+
+            mImageCursor = requireActivity().getContentResolver().query(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    projection,
+                    null,
+                    null,
+                    sortOrder
+            );
 
             setAdapter(mImageCursor);
         } catch (Exception e) {

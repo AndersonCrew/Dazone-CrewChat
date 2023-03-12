@@ -90,6 +90,7 @@ public class GcmIntentService extends IntentService {
         // ...
         InstanceID instanceID = InstanceID.getInstance(this);
         try {
+
             String token = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             new Prefs().setGCMregistrationid(token);
@@ -489,7 +490,7 @@ public class GcmIntentService extends IntentService {
             final PendingIntent contentIntent;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                 contentIntent = PendingIntent.getActivity
-                        (this, 0, myIntent, PendingIntent.FLAG_MUTABLE);
+                        (this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE);
             }
             else
             {
@@ -571,7 +572,7 @@ public class GcmIntentService extends IntentService {
             final PendingIntent contentIntent;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                 contentIntent = PendingIntent.getActivity
-                        (this, 0, myIntent, PendingIntent.FLAG_MUTABLE);
+                        (this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE);
             }
             else
             {
