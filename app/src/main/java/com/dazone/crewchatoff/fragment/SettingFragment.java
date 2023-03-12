@@ -45,10 +45,6 @@ import com.dazone.crewchatoff.utils.DialogUtils;
 import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-
-import java.io.IOException;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
@@ -205,17 +201,6 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     private void doLogout() {
         new Prefs().putIntValue("PAGE", 0);
         String regId = new Prefs().getGCMregistrationid();
-        if(regId.isEmpty()) {
-            InstanceID instanceID = InstanceID.getInstance(requireContext());
-
-            try {
-                regId = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
-                        GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-                new Prefs().setGCMregistrationid(regId);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
         if(!regId.isEmpty()) {
             BaseActivity.Instance.showProgressDialog();

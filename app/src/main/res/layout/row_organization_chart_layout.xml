@@ -36,7 +36,7 @@
                 android:id="@+id/relAvatar"
                 android:layout_width="@dimen/tree_user_avatar_dimen"
                 android:layout_height="@dimen/tree_user_avatar_dimen"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <androidx.cardview.widget.CardView
                     app:cardCornerRadius="24dp"
@@ -50,6 +50,7 @@
 
                 <ImageView
                     android:id="@+id/status_imv"
+                    android:elevation="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
