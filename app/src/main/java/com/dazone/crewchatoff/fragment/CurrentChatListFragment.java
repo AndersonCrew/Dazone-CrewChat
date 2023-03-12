@@ -19,7 +19,6 @@ import com.dazone.crewchatoff.activity.MainActivity;
 import com.dazone.crewchatoff.activity.RenameRoomActivity;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.adapter.CurrentChatAdapter;
-import com.dazone.crewchatoff.constant.Constants;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.database.ChatRoomDBHelper;
 import com.dazone.crewchatoff.dto.ChattingDto;
@@ -422,7 +421,6 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
     public void onResume() {
         super.onResume();
         isActive = true;
-        registerGCMReceiver();
         if (isUpdate) {
             isUpdate = false;
             adapterList.updateData(dataSet);
@@ -448,13 +446,26 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
         if (listOfUsers != null) {
             getChatList(listOfUsers);
         }
+
+        new Handler().postDelayed(() -> {
+            if(isAdded()) {
+                registerGCMReceiver();
+            }
+
+        }, 1000);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         isActive = false;
-        unregisterGCMReceiver();
+
+        new Handler().postDelayed(() -> {
+            if(isAdded()) {
+                unregisterGCMReceiver();
+            }
+
+        }, 1000);
     }
 
     public boolean active() {
@@ -495,11 +506,11 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
         filter.addAction(Constant.INTENT_FILTER_ADD_USER);
         filter.addAction(Constant.INTENT_FILTER_NOTIFY_ADAPTER);
         filter.addAction(Constant.INTENT_FILTER_UPDATE_ROOM_NAME);
-        getActivity().registerReceiver(mReceiverNewAssignTask, filter);
+        requireActivity().registerReceiver(mReceiverNewAssignTask, filter);
     }
 
     private void unregisterGCMReceiver() {
-        getActivity().unregisterReceiver(mReceiverNewAssignTask);
+        requireActivity().unregisterReceiver(mReceiverNewAssignTask);
     }
 
     private BroadcastReceiver mReceiverNewAssignTask = new BroadcastReceiver() {

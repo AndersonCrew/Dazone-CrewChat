@@ -622,16 +622,9 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
             try {
 
                 InstanceID instanceID = InstanceID.getInstance(LoginActivity.this);
-                String token = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
+                regId = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
                         GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
 
-                if (gcm == null) {
-                    gcm = GoogleCloudMessaging.getInstance(context);
-                }
-                if (gcm == null) {
-                    return null;
-                }
-                regId = gcm.register(Statics.GOOGLE_SENDER_ID);
             } catch (IOException ex) {
             }
             return null;

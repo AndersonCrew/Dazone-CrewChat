@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -202,53 +201,51 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     private void doLogout() {
         new Prefs().putIntValue("PAGE", 0);
         String ids = new Prefs().getGCMregistrationid();
-        if (!TextUtils.isEmpty(ids)) {
-            BaseActivity.Instance.showProgressDialog();
-            HttpRequest.getInstance().DeleteDevice(ids, new BaseHTTPCallBack() {
-                @Override
-                public void onHTTPSuccess() {
+        BaseActivity.Instance.showProgressDialog();
+        HttpRequest.getInstance().DeleteDevice(ids, new BaseHTTPCallBack() {
+            @Override
+            public void onHTTPSuccess() {
 
-                    HttpOauthRequest.getInstance().logout(new BaseHTTPCallBack() {
-                        @Override
-                        public void onHTTPSuccess() {
-                            BaseActivity.Instance.dismissProgressDialog();
-                            // New thread to clear all cache
-                            CrewChatApplication.isAddUser = false;
-                            new Thread(() -> {
-                                BelongsToDBHelper.clearBelong();
-                                AllUserDBHelper.clearUser();
-                                ChatRoomDBHelper.clearChatRooms();
-                                ChatMessageDBHelper.clearMessages();
-                                DepartmentDBHelper.clearDepartment();
-                                UserDBHelper.clearUser();
-                                FavoriteGroupDBHelper.clearGroups();
-                                FavoriteUserDBHelper.clearFavorites();
-                                CrewChatApplication.resetValue();
-                                CrewChatApplication.isLoggedIn = false;
-                                CrewChatApplication.getInstance().getPrefs().clearLogin();
-                                handler.obtainMessage(LOGOUT_COMPLETE).sendToTarget();
-                                ShortcutBadger.removeCount(getContext()); //for 1.1.4
-                            }).start();
-                        }
+                HttpOauthRequest.getInstance().logout(new BaseHTTPCallBack() {
+                    @Override
+                    public void onHTTPSuccess() {
+                        BaseActivity.Instance.dismissProgressDialog();
+                        // New thread to clear all cache
+                        CrewChatApplication.isAddUser = false;
+                        new Thread(() -> {
+                            BelongsToDBHelper.clearBelong();
+                            AllUserDBHelper.clearUser();
+                            ChatRoomDBHelper.clearChatRooms();
+                            ChatMessageDBHelper.clearMessages();
+                            DepartmentDBHelper.clearDepartment();
+                            UserDBHelper.clearUser();
+                            FavoriteGroupDBHelper.clearGroups();
+                            FavoriteUserDBHelper.clearFavorites();
+                            CrewChatApplication.resetValue();
+                            CrewChatApplication.isLoggedIn = false;
+                            CrewChatApplication.getInstance().getPrefs().clearLogin();
+                            handler.obtainMessage(LOGOUT_COMPLETE).sendToTarget();
+                            ShortcutBadger.removeCount(getContext()); //for 1.1.4
+                        }).start();
+                    }
 
-                        @Override
-                        public void onHTTPFail(ErrorDto errorDto) {
-                            Log.d(TAG, "onHTTPFail 1");
-                            BaseActivity.Instance.dismissProgressDialog();
-                            Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    @Override
+                    public void onHTTPFail(ErrorDto errorDto) {
+                        Log.d(TAG, "onHTTPFail 1");
+                        BaseActivity.Instance.dismissProgressDialog();
+                        Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
+                    }
+                });
 
-                }
+            }
 
-                @Override
-                public void onHTTPFail(ErrorDto errorDto) {
-                    Log.d(TAG, "onHTTPFail 2");
-                    BaseActivity.Instance.dismissProgressDialog();
-                    Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+            @Override
+            public void onHTTPFail(ErrorDto errorDto) {
+                Log.d(TAG, "onHTTPFail 2");
+                BaseActivity.Instance.dismissProgressDialog();
+                Toast.makeText(mContext, "Logout failed !", Toast.LENGTH_LONG).show();
+            }
+        });
 
 
     }

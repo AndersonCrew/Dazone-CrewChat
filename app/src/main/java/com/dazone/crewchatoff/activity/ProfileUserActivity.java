@@ -7,16 +7,14 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import androidx.cardview.widget.CardView;
+
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
@@ -28,12 +26,14 @@ import com.dazone.crewchatoff.dto.ErrorDto;
 import com.dazone.crewchatoff.dto.ProfileUserDTO;
 import com.dazone.crewchatoff.interfaces.ICreateOneUserChatRom;
 import com.dazone.crewchatoff.interfaces.OnGetUserCallBack;
-import com.dazone.crewchatoff.utils.*;
+import com.dazone.crewchatoff.utils.Constant;
+import com.dazone.crewchatoff.utils.CrewChatApplication;
+import com.dazone.crewchatoff.utils.ImageUtils;
+import com.dazone.crewchatoff.utils.Prefs;
+import com.dazone.crewchatoff.utils.TimeUtils;
+import com.dazone.crewchatoff.utils.Utils;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ProfileUserActivity extends BaseActivity implements View.OnClickListener {
     String TAG = "ProfileUserActivity";
@@ -57,7 +57,7 @@ public class ProfileUserActivity extends BaseActivity implements View.OnClickLis
     private TextView tvBelongToDepartment;
     private TextView tv_pass;
     private TextView btnChangePass;
-    private RelativeLayout btnChat;
+    private CardView btnChat;
 
     private int userNo = 0;
     private ImageView ivEmailEmail, ivPhoneCall, ivExPhoneCall, ivPhoneEmail, ivExPhoneEmail;

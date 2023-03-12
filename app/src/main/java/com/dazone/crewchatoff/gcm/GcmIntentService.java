@@ -44,6 +44,7 @@ import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -85,6 +86,16 @@ public class GcmIntentService extends IntentService {
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
         prefs = CrewChatApplication.getInstance().getPrefs();
+
+        // ...
+        InstanceID instanceID = InstanceID.getInstance(this);
+        try {
+            String token = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
+                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            new Prefs().setGCMregistrationid(token);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         isEnableN = prefs.getBooleanValue(Statics.ENABLE_NOTIFICATION, true);
         isEnableSound = prefs.getBooleanValue(Statics.ENABLE_SOUND, true);
@@ -475,7 +486,16 @@ public class GcmIntentService extends IntentService {
             mNotificationManager.createNotificationChannel(mChannel);
             myIntent.putExtra(Statics.CHATTING_DTO, chattingDto);
             myIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE);
+            final PendingIntent contentIntent;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                contentIntent = PendingIntent.getActivity
+                        (this, 0, myIntent, PendingIntent.FLAG_MUTABLE);
+            }
+            else
+            {
+                contentIntent = PendingIntent.getActivity
+                        (this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
 
             if (chattingDto != null && chattingDto.getAttachNo() != 0) {
                 msg = Utils.getString(R.string.notification_file) + chattingDto.getAttachFileName();
@@ -548,7 +568,16 @@ public class GcmIntentService extends IntentService {
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             myIntent.putExtra(Statics.CHATTING_DTO, chattingDto);
             myIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE);
+            final PendingIntent contentIntent;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                contentIntent = PendingIntent.getActivity
+                        (this, 0, myIntent, PendingIntent.FLAG_MUTABLE);
+            }
+            else
+            {
+                contentIntent = PendingIntent.getActivity
+                        (this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
 
             if (chattingDto != null && chattingDto.getAttachNo() != 0) {
                 msg = Utils.getString(R.string.notification_file) + chattingDto.getAttachFileName();
