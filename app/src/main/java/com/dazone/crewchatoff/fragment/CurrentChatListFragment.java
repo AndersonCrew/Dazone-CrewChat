@@ -65,7 +65,7 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
     }
 
     private boolean isScreenOff;
-    private BroadcastReceiver mScreenReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mScreenReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
@@ -76,7 +76,7 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
         }
     };
 
-    private BroadcastReceiver mReceiverShowSearchInput = new BroadcastReceiver() {
+    private final BroadcastReceiver mReceiverShowSearchInput = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Statics.ACTION_SHOW_SEARCH_INPUT_IN_CURRENT_CHAT)) {
@@ -174,7 +174,7 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
         void onSelect(int type, Bundle bundle);
     }
 
-    private OnContextMenuSelect mOnContextMenuSelect = new OnContextMenuSelect() {
+    private final OnContextMenuSelect mOnContextMenuSelect = new OnContextMenuSelect() {
         @Override
         public void onSelect(int type, Bundle bundle) {
             Intent intent;
@@ -513,7 +513,7 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
         requireActivity().unregisterReceiver(mReceiverNewAssignTask);
     }
 
-    private BroadcastReceiver mReceiverNewAssignTask = new BroadcastReceiver() {
+    private final BroadcastReceiver mReceiverNewAssignTask = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Statics.ACTION_RECEIVER_NOTIFICATION)) {
@@ -769,7 +769,7 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
             for (TreeUserDTOTemp u : listOfUsers) {
                 u.setStatus(0);
                 for (StatusItemDto sItem : status.getItems()) {
-                    if (sItem.getUserID().equals(u.getUserID())) {
+                    if (sItem.getUserID().equalsIgnoreCase(u.getUserID())) {
                         u.setStatus(sItem.getStatus());
                         break;
                     }
@@ -889,11 +889,7 @@ public class CurrentChatListFragment extends ListFragment<ChattingDto> implement
 
                 @Override
                 public void OnGetChatListFail(ErrorDto errorDto) {
-                    if (dataSet != null && dataSet.size() > 0) {
-                        countDataFromServer(true);
-                    } else {
-                        countDataFromServer(false);
-                    }
+                    countDataFromServer(dataSet != null && dataSet.size() > 0);
 
                 }
             });
