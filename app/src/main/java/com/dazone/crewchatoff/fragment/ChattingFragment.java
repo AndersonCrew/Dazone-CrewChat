@@ -1275,6 +1275,10 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
                 siteDomain = siteDomain.replace("http://", "");
             }
 
+            if (siteDomain.startsWith("https://")) {
+                siteDomain = siteDomain.replace("https://", "");
+            }
+
             if (siteDomain.contains(":")) {
                 siteDomain = siteDomain.substring(0, siteDomain.indexOf(":"));
             }
