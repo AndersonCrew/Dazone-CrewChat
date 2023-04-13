@@ -486,11 +486,11 @@ public class GcmIntentService extends IntentService {
             mChannel.setShowBadge(true);
             mNotificationManager.createNotificationChannel(mChannel);
             myIntent.putExtra(Statics.CHATTING_DTO, chattingDto);
-            myIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
             final PendingIntent contentIntent;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                 contentIntent = PendingIntent.getActivity
-                        (this, 0, myIntent, PendingIntent.FLAG_IMMUTABLE);
+                        (this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             }
             else
             {
@@ -568,7 +568,7 @@ public class GcmIntentService extends IntentService {
             final Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             myIntent.putExtra(Statics.CHATTING_DTO, chattingDto);
-            myIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
             final PendingIntent contentIntent;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                 contentIntent = PendingIntent.getActivity

@@ -97,14 +97,23 @@ public class Utils {
     public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameLayout, boolean isSaveStack, String tag) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (TextUtils.isEmpty(tag)) {
-            transaction.add(frameLayout, fragment);
+            if(fragmentManager.findFragmentById(frameLayout) != null) {
+                transaction.replace(frameLayout, fragment);
+            } else {
+                transaction.add(frameLayout, fragment);
+            }
         } else {
-            transaction.add(frameLayout, fragment, tag);
+            if(fragmentManager.findFragmentById(frameLayout) != null) {
+                transaction.replace(frameLayout, fragment, tag);
+            } else {
+                transaction.add(frameLayout, fragment, tag);
+            }
         }
 
         if (isSaveStack) {
             transaction.addToBackStack(null);
         }
+
         transaction.commit();
     }
 

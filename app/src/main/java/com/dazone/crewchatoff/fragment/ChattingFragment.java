@@ -186,6 +186,13 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
         });
     }
 
+    public void updateRoomNo(long roomNo) {
+        this.roomNo = roomNo;
+        initData(new ArrayList<>());
+        adapterList.notifyDataSetChanged();
+        viewModel.getChatListFirst(roomNo, userID);
+    }
+
     private boolean hasActionSend = false;
 
     private void initViewModel() {
@@ -324,8 +331,7 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
     }
 
     public ChattingFragment newInstance(long roomNo, ArrayList<Integer> userNos, Activity activity) {
-        if (instance == null)
-            instance = new ChattingFragment();
+        instance = new ChattingFragment();
         instance.setActivity(activity);
         Bundle args = new Bundle();
         args.putLong(Constant.KEY_INTENT_ROOM_NO, roomNo);

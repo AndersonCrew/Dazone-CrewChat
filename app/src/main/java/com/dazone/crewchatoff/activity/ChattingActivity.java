@@ -354,8 +354,9 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         if (bundle != null) {
             roomNo = bundle.getLong(Constant.KEY_INTENT_ROOM_NO, 0);
             getChatRoomInfo();
-            fragment = new ChattingFragment().newInstance(roomNo, userNos, this);
-            Utils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.content_base_single_activity, false, fragment.getClass().getSimpleName());
+            ChattingFragment.instance.updateRoomNo(roomNo);
+            //fragment = new ChattingFragment().newInstance(roomNo, userNos, this);
+            //Utils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.content_base_single_activity, false, fragment.getClass().getSimpleName());
         }
     }
 
