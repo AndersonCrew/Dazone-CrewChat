@@ -179,6 +179,7 @@ public class GcmIntentService extends IntentService {
                 try {
                     NotificationBundleDto bundleDto = new Gson().fromJson(extras.getString("Data"), NotificationBundleDto.class);
 
+                    String time = bundleDto.getStrRegDate().split(" ")[1].substring(0, 5);
                     chattingDto = new ChattingDto();
                     chattingDto.setRoomNo(bundleDto.getRoomNo());
                     chattingDto.setUnreadTotalCount(bundleDto.getUnreadTotalCount());
@@ -266,15 +267,15 @@ public class GcmIntentService extends IntentService {
                                     if (chattingDto.getType() == 3) {
                                         String[] msg = chattingDto.getMessage().split("\n");
                                         if (msg.length > 1)
-                                            sendNotification(msg[1], msg[0], url, myIntent, chattingDto.getUnreadTotalCount(), roomNo);
+                                            sendNotification(msg[1], msg[0], url, myIntent, chattingDto.getUnreadTotalCount(), roomNo, time);
                                         else
-                                            sendNotification(chattingDto.getMessage(), name, url, myIntent, chattingDto.getUnreadTotalCount(), roomNo);
+                                            sendNotification(chattingDto.getMessage(), name, url, myIntent, chattingDto.getUnreadTotalCount(), roomNo, time);
                                     } else
-                                        sendNotification(chattingDto.getMessage(), name, url, myIntent, chattingDto.getUnreadTotalCount(), roomNo);
+                                        sendNotification(chattingDto.getMessage(), name, url, myIntent, chattingDto.getUnreadTotalCount(), roomNo, time);
                                 }
                             } else {
                                 if (isShowNotification) {
-                                    sendNotification(chattingDto.getMessage(), "Crew Chat", "", myIntent, chattingDto.getUnreadTotalCount(), roomNo);
+                                    sendNotification(chattingDto.getMessage(), "Crew Chat", "", myIntent, chattingDto.getUnreadTotalCount(), roomNo, time);
                                 }
                             }
                         }
@@ -307,7 +308,7 @@ public class GcmIntentService extends IntentService {
                         null,
                         intent,
                         0,
-                        roomNo);
+                        roomNo, "");
 
 
                 if ((CurrentChatListFragment.fragment != null && CurrentChatListFragment.fragment.isActive) || (ChattingFragment.instance != null && ChattingFragment.instance.isActive)) {
@@ -472,7 +473,7 @@ public class GcmIntentService extends IntentService {
         return chanelId;
     }
 
-    private void sendNotification(String msg, final String title, String avatarUrl, Intent myIntent, final int unReadCount, final long roomNo) {
+    private void sendNotification(String msg, final String title, String avatarUrl, Intent myIntent, final int unReadCount, final long roomNo, final String createTime) {
         if(!isPCVersion) {
             return;
         }
@@ -522,7 +523,7 @@ public class GcmIntentService extends IntentService {
                 mBuilder.setNumber(unReadCount)
                         .setSmallIcon(R.drawable.small_icon_chat)
                         .setLargeIcon(bitmap)
-                        .setContentTitle(title)
+                        .setContentTitle(title + " - " + createTime)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msgTemp))
                         .setContentText(msgTemp)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -557,11 +558,13 @@ public class GcmIntentService extends IntentService {
                     mBuilder.setContentText(msgTemp.split("\r\n")[0]);
                 }
 
+                mBuilder.setShowWhen(false);
+
                 Notification notification = mBuilder.build();
                 notification.number = 100;
                 notification.tickerText = getTickerText(unReadCount);
-                mNotificationManager.notify((int) roomNo, mBuilder.build());
-                startForeground((int) System.currentTimeMillis(), notification);
+                mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
+                startForeground((int) roomNo, notification);
             }
         } else {
             final long[] vibrate = new long[]{1000, 1000, 0, 0, 0};
@@ -636,11 +639,13 @@ public class GcmIntentService extends IntentService {
                     mBuilder.setContentText(msgTemp.split("\r\n")[0]);
                 }
 
+                mBuilder.setShowWhen(false);
+
                 Notification notification = mBuilder.build();
                 notification.number = 100;
                 notification.tickerText = getTickerText(unReadCount);
-                mNotificationManager.notify((int) roomNo, mBuilder.build());
-                startForeground((int) System.currentTimeMillis(), notification);
+                mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
+                startForeground((int) roomNo, notification);
             }
         }
 
