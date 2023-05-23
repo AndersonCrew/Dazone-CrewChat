@@ -523,7 +523,7 @@ public class GcmIntentService extends IntentService {
                 mBuilder.setNumber(unReadCount)
                         .setSmallIcon(R.drawable.small_icon_chat)
                         .setLargeIcon(bitmap)
-                        .setContentTitle(title + " - " + createTime)
+                        .setContentTitle(title + " " + createTime)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msgTemp))
                         .setContentText(msgTemp)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
