@@ -12,17 +12,19 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +39,6 @@ import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.constant.Statics;
-import com.dazone.crewchatoff.customs.IconButton;
 import com.dazone.crewchatoff.database.ServerSiteDBHelper;
 import com.dazone.crewchatoff.dto.ErrorDto;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBack;
@@ -64,12 +65,12 @@ import java.net.URL;
 public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnCheckDevice {
     private Button btnLogin;
     private EditText edtUserName, edtPassword;
-    private AutoCompleteTextView edtServer;
+    private EditText edtServer;
     private ScrollView scrollView;
     private boolean firstLogin = true;
     private Dialog errorDialog;
-    private IconButton mBtnSignUp;
-    private FrameLayout iv;
+    private ImageView iv;
+    private FrameLayout frDomain, frID, frPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,11 +136,14 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
         registerReceiver(accountReceiver, intentFilter);
         flag = true;
 
-        btnLogin = findViewById(R.id.login_btn_login);
+        btnLogin = findViewById(R.id.btnLogin);
         edtUserName = findViewById(R.id.login_edt_username);
         edtPassword = findViewById(R.id.login_edt_passsword);
         edtServer = findViewById(R.id.login_edt_server);
         scrollView = findViewById(R.id.scl_login);
+        frPassword = findViewById(R.id.frPassword);
+        frID = findViewById(R.id.frID);
+        frDomain = findViewById(R.id.frDomain);
         edtUserName.setText(prefs.getUserID());
 
         String dm = prefs.getDDSServer();
@@ -149,14 +153,7 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
                 dm = str[0];
         }
 
-        edtServer.setText(dm);
-        edtPassword.setText(prefs.getPass());
-        mBtnSignUp = findViewById(R.id.login_btn_signup);
-        mBtnSignUp.setOnClickListener(v -> {
-            Intent intent1 = new Intent(LoginActivity.this, SignUpActivity.class);
-            startActivity(intent1);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        });
+
 
         btnLogin.setOnClickListener(v -> {
             String mUsername = edtUserName.getText().toString().trim();
@@ -186,17 +183,90 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
 
         iv = findViewById(R.id.iv);
         iv.setOnClickListener(v -> displayPass());
+
+        edtServer.setOnFocusChangeListener((view, b) -> {
+            if(b) {
+                frDomain.setBackgroundResource(R.drawable.bg_edt);
+            } else {
+                frDomain.setBackgroundResource(R.drawable.bg_transparent);
+            }
+        });
+
+        edtUserName.setOnFocusChangeListener((view, b) -> {
+            if(b) {
+                frID.setBackgroundResource(R.drawable.bg_edt);
+            } else {
+                frID.setBackgroundResource(R.drawable.bg_transparent);
+            }
+        });
+
+        edtPassword.setOnFocusChangeListener((view, b) -> {
+            if(b) {
+                frPassword.setBackgroundResource(R.drawable.bg_edt);
+            } else {
+                frPassword.setBackgroundResource(R.drawable.bg_transparent);
+            }
+
+            if(isDisplayPass) {
+                if(b) {
+                    iv.setImageResource(R.drawable.eye);
+                } else {
+                    iv.setImageResource(R.drawable.eye_gray);
+                }
+
+            } else {
+                if(b) {
+                    iv.setImageResource(R.drawable.eye_active_60x60);
+                } else {
+                    iv.setImageResource(R.drawable.eye_defalt_60x60);
+                }
+            }
+        });
+
+        edtPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(isDisplayPass) {
+                    if(edtPassword.hasFocus()) {
+                        iv.setImageResource(R.drawable.eye);
+                    } else {
+                        iv.setImageResource(R.drawable.eye_gray);
+                    }
+
+                } else {
+                    if(edtPassword.hasFocus()) {
+                        iv.setImageResource(R.drawable.eye_active_60x60);
+                    } else {
+                        iv.setImageResource(R.drawable.eye_defalt_60x60);
+                    }
+                }
+            }
+        });
+
+        edtServer.setText(dm);
+        edtPassword.setText(prefs.getPass());
     }
 
     boolean isDisplayPass = true;
 
     void displayPass() {
         if (isDisplayPass) {
-            edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             isDisplayPass = false;
+            edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
         } else {
-            edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             isDisplayPass = true;
+            edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
     }
 

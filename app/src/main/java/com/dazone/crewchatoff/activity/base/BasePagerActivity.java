@@ -56,6 +56,7 @@ public abstract class BasePagerActivity extends BaseActivity {
     protected ViewPager mViewPager;
     public TabLayout tabLayout;
     protected FloatingActionButton fab;
+    protected FrameLayout frNewChat;
 
     /**
      * MENU ITEM
@@ -102,8 +103,9 @@ public abstract class BasePagerActivity extends BaseActivity {
         });
 
 
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
+        //fab = findViewById(R.id.fab);
+        frNewChat = findViewById(R.id.frNewChat);
+        frNewChat.setOnClickListener(view -> {
             if (MainActivity.CURRENT_TAB == 0) {
                 if (MainActivity.instance != null) {
                     MainActivity.instance.gotoOrganizationChart();
@@ -149,14 +151,14 @@ public abstract class BasePagerActivity extends BaseActivity {
     }
 
     public void showPAB() {
-        if (fab != null) {
-            fab.show();
+        if (frNewChat != null) {
+            frNewChat.setVisibility(View.VISIBLE);
         }
     }
 
     public void hidePAB() {
-        if (fab != null) {
-            fab.hide();
+        if (frNewChat != null) {
+            frNewChat.setVisibility(View.GONE);
         }
     }
 

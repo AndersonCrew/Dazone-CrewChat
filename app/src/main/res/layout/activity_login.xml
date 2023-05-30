@@ -3,206 +3,126 @@
     android:id="@+id/root_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/login_main_background">
+    android:background="#ffffff">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scl_login"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scl_login"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <!-- Image logo -->
+
+            <TextView
+                android:fontFamily="@font/gmarketsans_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_login_logo_margin"
-                android:orientation="vertical"
-                android:padding="@dimen/activity_login_logo_margin">
-
-                <!-- Image logo -->
-
-                <LinearLayout
+                android:layout_marginTop="70dp"
+                android:gravity="center_horizontal"
+                android:text="@string/app_name"
+                android:textColor="#333333"
+                android:textSize="30sp" />
+            
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="52dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <FrameLayout
+                    android:id="@+id/frDomain"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/loginBlock"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-                    <!-- Image logo -->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/loading_ic_crewchat_b" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center_horizontal"
-                        android:text="@string/app_name"
-                        android:textColor="@android:color/white"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_login_btn_margin"
-                    android:gravity="center_horizontal"
-                    android:text="@string/app_name"
-                    android:textColor="@android:color/white"
-                    android:textSize="35sp"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/loginBlock"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-
-                    <!-- Username & Password fields -->
-                    <AutoCompleteTextView
+                    android:layout_height="match_parent">
+                    <EditText
                         android:id="@+id/login_edt_server"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
-                        android:background="@drawable/editext_line_buttom_background"
-                        android:gravity="bottom"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="48dp"
+                        android:textColorHint="#BBBBBB"
+                        android:textColor="#BBBBBB"
                         android:hint="@string/string_server_site"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textEmailAddress|textNoSuggestions|text"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="8dp"
-                        android:singleLine="true"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="#60FFFFFF"
-                        android:textCursorDrawable="@null"
-                        android:textSize="17sp" />
-
-
-                    <com.dazone.crewchatoff.customs.CustomEditText
-                        android:id="@+id/login_edt_username"
+                        android:background="@android:color/transparent"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/editext_line_buttom_background"
-                        android:gravity="bottom"
-                        android:hint="@string/login_username"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="textEmailAddress|textNoSuggestions|text"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="8dp"
-                        android:singleLine="true"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="#60FFFFFF"
-                        android:textCursorDrawable="@null"
-                        android:textSize="17sp" />
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
 
+            </androidx.cardview.widget.CardView>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp">
-
-                        <com.dazone.crewchatoff.customs.CustomEditText
-                            android:id="@+id/login_edt_passsword"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/button_height"
-                            android:background="@drawable/editext_line_buttom_background"
-                            android:gravity="bottom"
-                            android:hint="@string/login_password"
-                            android:imeOptions="flagNoExtractUi"
-                            android:inputType="textPassword|textNoSuggestions|text"
-                            android:paddingBottom="8dp"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="15dp"
-                            android:textColor="@android:color/white"
-                            android:layout_centerVertical="true"
-                            android:textColorHint="#60FFFFFF"
-                            android:textCursorDrawable="@null"
-                            android:textSize="17sp" />
-
-                       <FrameLayout
-                           android:background="?android:attr/selectableItemBackground"
-                           android:id="@+id/iv"
-                           android:layout_centerVertical="true"
-                           android:layout_alignParentRight="true"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content">
-                           <ImageView
-                               android:layout_width="wrap_content"
-                               android:padding="5dp"
-                               android:layout_height="wrap_content"
-                               android:adjustViewBounds="true"
-                               android:src="@drawable/ic_visibility_black_24dp" />
-                       </FrameLayout>
-                    </RelativeLayout>
-
-
-                    <!-- Login button -->
-
-                    <Button
-                        android:id="@+id/login_btn_login"
-                        style="@style/LoginButton"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/login_login" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="22dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <FrameLayout
+                    android:id="@+id/frID"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="90dp"
-                    android:orientation="vertical">
-
-                    <TextView
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/login_edt_username"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="48dp"
+                        android:textColorHint="#BBBBBB"
+                        android:textColor="#BBBBBB"
+                        android:hint="@string/login_username"
+                        android:background="@android:color/transparent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:text="@string/sign_up_suggest"
-                        android:textColor="@android:color/white"
-                        android:textSize="17sp" />
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
 
-                    <com.dazone.crewchatoff.customs.IconButton
-                        android:id="@+id/login_btn_signup"
-                        style="@style/SignupButton"
-                        android:layout_marginTop="10dp"
-                        android:drawableLeft="@drawable/ic_group_add_white_24dp"
-                        android:text="@string/register"
-                        customviews:iconPadding="20dp" />
-                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="22dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <FrameLayout
+                    android:id="@+id/frPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/login_edt_passsword"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="48dp"
+                        android:textColorHint="#BBBBBB"
+                        android:textColor="#BBBBBB"
+                        android:hint="@string/login_password"
+                        android:background="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <ImageView
+                        android:id="@+id/iv"
+                        android:padding="14dp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/eye_defalt_60x60"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:textColor="@color/white"
+                android:text="@string/login_login"
+                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="24dp"
+                android:background="@drawable/bg_button_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
 
-            </LinearLayout>
 
-        </ScrollView>
+        </LinearLayout>
 
-
-    </LinearLayout>
+    </ScrollView>
 
     <include
         layout="@layout/logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true" />
-
-    <TextView
-        android:id="@+id/coppy_right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="40dp"
-        android:gravity="center_horizontal"
-        android:text="@string/copy_right_string"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:visibility="gone" />
 </RelativeLayout>

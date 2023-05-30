@@ -1,5 +1,7 @@
 package com.dazone.crewchatoff.activity.base;
 
+import static com.dazone.crewchatoff.fragment.ChattingFragment.sendComplete;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -14,9 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
-import com.dazone.crewchatoff.activity.IntroActivity;
 import com.dazone.crewchatoff.activity.LoginActivity;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.eventbus.ReloadListMessage;
@@ -26,12 +30,9 @@ import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.OrientationUtils;
 import com.dazone.crewchatoff.utils.Prefs;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import static com.dazone.crewchatoff.fragment.ChattingFragment.sendComplete;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity extends AppCompatActivity implements NetworkStateReceiver.NetworkStateReceiverListener {
     protected Context mContext;
@@ -63,9 +64,11 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
 
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
     }
 
