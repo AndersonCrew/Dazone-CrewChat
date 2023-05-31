@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +24,6 @@ import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.HttpOauthRequest;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
-import com.dazone.crewchatoff.activity.CrewChatSettingActivity;
 import com.dazone.crewchatoff.activity.LoginActivity;
 import com.dazone.crewchatoff.activity.MainActivity;
 import com.dazone.crewchatoff.activity.NotificationSettingActivity;
@@ -36,15 +38,20 @@ import com.dazone.crewchatoff.database.DepartmentDBHelper;
 import com.dazone.crewchatoff.database.FavoriteGroupDBHelper;
 import com.dazone.crewchatoff.database.FavoriteUserDBHelper;
 import com.dazone.crewchatoff.database.UserDBHelper;
+import com.dazone.crewchatoff.dto.BelongDepartmentDTO;
 import com.dazone.crewchatoff.dto.ErrorDto;
+import com.dazone.crewchatoff.dto.ProfileUserDTO;
 import com.dazone.crewchatoff.dto.UserDto;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBack;
+import com.dazone.crewchatoff.interfaces.OnGetUserCallBack;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.DialogUtils;
 import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
+
+import java.util.ArrayList;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
@@ -69,32 +76,93 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         return mView;
     }
 
-    private TextView tvGeneralSetting, tvLogout, tvUserName, tv_infor;
-    private TextView tvNotificationSettings, tvCrewChatSettings;
+    private TextView tvUserName, tvPosition, tvEmail, tvPhone, tvPhoneCompany;
+    private TextView tvNotificationSettings;
     private ImageView mAvatar;
+    private Button btnLogout;
+    private LinearLayout llCellPhone, llCompanyPhone;
 
     private void initSettingGroup() {
-        tvGeneralSetting = mView.findViewById(R.id.tv_general_setting);
-        tvGeneralSetting.setOnClickListener(this);
-        tvLogout = mView.findViewById(R.id.tv_logout);
-        tvLogout.setOnClickListener(this);
+        btnLogout = mView.findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(this);
         tvNotificationSettings = mView.findViewById(R.id.tv_notification_settings);
         tvNotificationSettings.setOnClickListener(this);
         tvUserName = mView.findViewById(R.id.tv_username);
         tvUserName.setOnClickListener(this);
-        tvCrewChatSettings = mView.findViewById(R.id.tv_crew_chat_settings);
-        tvCrewChatSettings.setOnClickListener(this);
         mAvatar = mView.findViewById(R.id.iv_avatar);
+        tvPosition = mView.findViewById(R.id.tvPosition);
+        tvEmail = mView.findViewById(R.id.tvEmail);
+        tvPhone = mView.findViewById(R.id.tvPhone);
+        llCellPhone = mView.findViewById(R.id.llCellPhone);
+        llCompanyPhone = mView.findViewById(R.id.llCompanyPhone);
+        tvPhoneCompany = mView.findViewById(R.id.tvPhoneCompany);
         mAvatar.setOnClickListener(this);
 
-        tv_infor = mView.findViewById(R.id.tv_infor);
-        tv_infor.setOnClickListener(this);
 
         String url = prefs.getServerSite() + prefs.getAvatarUrl();
         Log.d(TAG, "url:" + url);
-        ImageUtils.showCycleImageFromLink(url, mAvatar, R.dimen.button_height);
+        ImageUtils.loadImageNormal(url, mAvatar);
 
 
+        getDataFromServer();
+    }
+
+    private void getDataFromServer() {
+
+        int userNo = 0;
+        if (userDBHelper.getId() == 0) {
+            userNo = CrewChatApplication.currentId;
+        } else {
+            userNo = userDBHelper.getId();
+        }
+        HttpRequest.getInstance().GetUser(userNo, new OnGetUserCallBack() {
+            @Override
+            public void onHTTPSuccess(ProfileUserDTO profileUserDTO) {
+                fillData(profileUserDTO);
+            }
+
+            @Override
+            public void onHTTPFail(ErrorDto errorDto) {
+            }
+        });
+    }
+
+    private void fillData(ProfileUserDTO profileUserDTO) {
+
+        tvUserName.setText(profileUserDTO.getName());
+        String strPositionName = "";
+        String belongToDepartment = "";
+        ArrayList<BelongDepartmentDTO> listBelong = profileUserDTO.getBelongs();
+
+        for (BelongDepartmentDTO belongDepartmentDTOs : listBelong) {
+            belongToDepartment += listBelong.indexOf(belongDepartmentDTOs) == listBelong.size() - 1 ?
+                    belongDepartmentDTOs.getDepartName() + " / " + belongDepartmentDTOs.getPositionName() + " / " + belongDepartmentDTOs.getDutyName() :
+                    belongDepartmentDTOs.getDepartName() + " / " + belongDepartmentDTOs.getPositionName() + " / " + belongDepartmentDTOs.getDutyName() + "<br>";
+            if (belongDepartmentDTOs.isDefault()) {
+                strPositionName = belongDepartmentDTOs.getDepartName() + " / " + belongDepartmentDTOs.getPositionName() + " / " + belongDepartmentDTOs.getDutyName();
+            }
+        }
+
+        tvPosition.setText(strPositionName);
+        tvEmail.setText(profileUserDTO.getMailAddress());
+
+        String cellPhone = profileUserDTO.getCellPhone();
+        Log.d(TAG, "cellPhone:" + cellPhone);
+        if (TextUtils.isEmpty(cellPhone)) {
+            llCellPhone.setVisibility(View.GONE);
+        } else {
+            tvPhone.setText(cellPhone);
+
+        }
+
+
+        String exPhone = profileUserDTO.getCompanyPhone();
+        Log.d(TAG, "exPhone:" + exPhone);
+        if (TextUtils.isEmpty(exPhone)) {
+            llCompanyPhone.setVisibility(View.GONE);
+        } else {
+            tvPhoneCompany.setText(exPhone);
+        }
     }
 
 
@@ -106,28 +174,20 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_username:
-            case R.id.iv_avatar:
-                goProfile();
-                break;
-
             case R.id.tv_notification_settings:
                 Intent intent = new Intent(mContext, NotificationSettingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
-            case R.id.tv_general_setting:
-                generalSetting();
-                break;
-            case R.id.tv_logout:
+            case R.id.btnLogout:
                 logoutV2();
                 break;
-            case R.id.tv_infor:
+           /* case R.id.tv_infor:
                 showInfoV2();
                 break;
             case R.id.tv_crew_chat_settings:
                 CrewChatSettingActivity.toActivity(mContext);
-                break;
+                break;*/
         }
     }
 

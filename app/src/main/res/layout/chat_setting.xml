@@ -1,229 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:descendantFocusability="blocksDescendants"
     android:fillViewport="true">
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:background="#F4F4F4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="18dp"
-            android:paddingLeft="@dimen/dimen_20_40"
-            android:paddingTop="18dp">
+            android:orientation="vertical"
+            >
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_avatar"
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="10dp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="centerCrop"
-                android:src="@drawable/avatar_l" />
+                android:src="@drawable/avatar_l" >
+                <ImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tv_username"
-                style="@style/more_page_item"
-                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="@dimen/dimen_4_8"
                 android:text="@string/my_profile"  />
+
+            <TextView
+                android:id="@+id/tvPosition"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Anderson/ Android Developer"  />
+        </LinearLayout>
+
+
+        <TextView
+            android:text="@string/email"
+            android:textColor="@color/gray"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:textColor="@color/black"
+            tools:text="pikakun19@gmail.com"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/divide_color"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <LinearLayout
+            android:id="@+id/llCellPhone"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/phone_number"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:textColor="@color/black"
+                tools:text="0375225146"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/divide_color"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llCompanyPhone"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/company_phone"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvPhoneCompany"
+                android:textColor="@color/black"
+                tools:text="0375225146"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_marginTop="12dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/divide_color"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:paddingHorizontal="20dp"
+            android:layout_marginTop="22dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@drawable/chang_pw_120x120"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+
+                <TextView
+                    android:id="@+id/tv_notification_settings"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/settings_change_pass" />
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@drawable/notifi_120x120"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/settings_notification" />
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@drawable/chat_set_120x120"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/settings_notification" />
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@drawable/info_120x120"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/settings_notification" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <View
+            android:layout_marginTop="22dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/divide_color"
             android:layout_width="match_parent"
-            android:layout_height="0.67dp"
-            android:background="@color/notification_divider" />
+            android:layout_height="0.5dp"/>
 
-        <!-- General setting -->
-        <LinearLayout
+        <Button
+            android:id="@+id/btnLogout"
+            android:textColor="@color/white"
+            android:text="@string/logout"
+            android:layout_marginTop="22dp"
+            android:layout_marginHorizontal="42dp"
+            android:background="@drawable/bg_button_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_20_40"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_circle_blue_more_page">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/setting_ic_setting" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_general_setting"
-                style="@style/more_page_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="@dimen/dimen_4_8"
-                android:text="@string/settings_general" />
-        </LinearLayout>
-
+            android:layout_height="wrap_content"/>
 
         <!-- Notification settings -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_20_40">
-
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_circle_blue_more_page">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/setting_ic_notice" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_notification_settings"
-                style="@style/more_page_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="@dimen/dimen_4_8"
-                android:text="@string/settings_notification" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.67dp"
-            android:background="@color/notification_divider" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_20_40">
-
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_circle_blue_more_page">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_crew_setting" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_crew_chat_settings"
-                style="@style/more_page_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="@dimen/dimen_4_8"
-                android:text="@string/settings_crew_chat" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.67dp"
-            android:background="@color/notification_divider" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_20_40">
-
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_circle_blue_more_page">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_info_outline_white_18dp" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_infor"
-                style="@style/more_page_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="@dimen/dimen_4_8"
-                android:text="@string/about_crewchat" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.67dp"
-            android:background="@color/notification_divider" />
-
-        <!-- Logout -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_20_40">
-
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_circle_blue_more_page">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/setting_ic_logout" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_logout"
-                style="@style/more_page_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="@dimen/dimen_4_8"
-                android:text="@string/logout" />
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.67dp"
-            android:background="@color/notification_divider" />
 
     </LinearLayout>
 

@@ -532,10 +532,10 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
         }
 
         View view = LayoutInflater.from(this).inflate(R.layout.custom_tab_view, null);
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_user);
-        tabLayout.getTabAt(1).setIcon(R.drawable.tabbar_group_ic);
-        tabLayout.getTabAt(2).setIcon(R.drawable.nav_favorite_ic);
-        tabLayout.getTabAt(3).setIcon(R.drawable.nav_mnu_hol_ic);
+        tabLayout.getTabAt(0).setIcon(R.drawable.user_defalt);
+        tabLayout.getTabAt(1).setIcon(R.drawable.chat_defalt);
+        tabLayout.getTabAt(2).setIcon(R.drawable.favorite_defalt);
+        tabLayout.getTabAt(3).setIcon(R.drawable.option_default);
     }
 
     @Override

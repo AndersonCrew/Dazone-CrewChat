@@ -288,4 +288,5 @@
     <string name="settings_notification_time_value">Thời gian nhận thông báo</string>
     <string name="company_phone">Số điện thoại công ty</string>
     <string name="enter_v_duty">Hiển thị cấp bậc</string>
+    <string name="settings_change_pass">비밀번호 변경</string>
 </resources>

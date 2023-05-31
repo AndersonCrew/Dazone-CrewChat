@@ -267,4 +267,5 @@
     <string name ="mailActivity_message_download_apk">正在下載安裝文件。\ n請稍候。</string>
     <string name ="string_update_content">存在較新的版本。請更新到最新版本</string>
     <string name ="enter_v_duty">顯示標題</string>
+    <string name="settings_change_pass">비밀번호 변경</string>
 </resources>

@@ -25,11 +25,12 @@
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
+                android:padding="13dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_new_message" />
+                android:src="@drawable/chat_add" />
         </FrameLayout>
 
         <FrameLayout
@@ -63,12 +64,7 @@
         android:visibility="gone"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-
-
-
-
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

@@ -271,4 +271,5 @@
     <string name = "mailActivity_message_download_apk">インストールファイルをダウンロード中です。\ nしばらくお待ちください。</string>
     <string name = "string_update_content">最新バージョンが存在します。最新バージョンにアップデートハシギルください</string>
     <string name = "enter_v_duty">職責を表示</string>
+    <string name="settings_change_pass">비밀번호 변경</string>
 </resources>
