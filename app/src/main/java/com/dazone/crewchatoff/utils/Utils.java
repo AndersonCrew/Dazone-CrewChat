@@ -769,8 +769,8 @@ public class Utils {
         View dialogView = inflater.inflate(R.layout.custom_dialog_common, null);
 
         builder.setView(dialogView);
-        Button btn_positive = dialogView.findViewById(R.id.btn_yes);
-        Button btn_negative = dialogView.findViewById(R.id.btn_no);
+        TextView btn_positive = dialogView.findViewById(R.id.btn_yes);
+        TextView btn_negative = dialogView.findViewById(R.id.btn_no);
         TextView txtTitle = dialogView.findViewById(R.id.txt_dialog_title);
         TextView txtContent = dialogView.findViewById(R.id.txt_dialog_content);
 

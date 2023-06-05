@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/notification_item_background"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activity.NotificationSettingActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/notification_item_background"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
@@ -22,11 +22,14 @@
             android:layout_weight="1"
             android:text="@string/settings_notification_new_mail" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <CheckBox
             android:id="@+id/sw_enable_notification"
             style="@style/setting_switch_compat"
+            android:button="@android:color/transparent"
+            android:background="@drawable/bg_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:track="@drawable/bg_switch"
             android:checked="true" />
     </LinearLayout>
 
@@ -46,7 +49,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/notification_item_background"
+        android:background="@color/white"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
 
@@ -57,11 +60,15 @@
             android:layout_weight="1"
             android:text="@string/settings_notification_sound" />
 
-        <androidx.appcompat.widget.SwitchCompat
+
+        <CheckBox
             android:id="@+id/sw_enable_sound"
             style="@style/setting_switch_compat"
+            android:button="@android:color/transparent"
+            android:background="@drawable/bg_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:track="@drawable/bg_switch"
             android:checked="true" />
 
     </LinearLayout>
@@ -74,7 +81,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/notification_item_background"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
@@ -86,11 +93,14 @@
             android:layout_weight="1"
             android:text="@string/settings_notification_vibrate" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <CheckBox
             android:id="@+id/sw_enable_vibrate"
             style="@style/setting_switch_compat"
+            android:button="@android:color/transparent"
+            android:background="@drawable/bg_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:track="@drawable/bg_switch"
             android:checked="true" />
     </LinearLayout>
 
@@ -109,7 +119,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/notification_item_background"
+        android:background="@color/white"
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
@@ -129,13 +139,17 @@
                 android:layout_toLeftOf="@+id/sw_enable_notification_time"
                 android:layout_marginTop="@dimen/padding_25"/>
             <!--    android:text="@string/settings_notification_time" />-->
-
-            <androidx.appcompat.widget.SwitchCompat
+            <CheckBox
                 android:id="@+id/sw_enable_notification_time"
+                style="@style/setting_switch_compat"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:button="@android:color/transparent"
+                android:background="@drawable/bg_switch"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:track="@drawable/bg_switch"
+                android:checked="true" />
         </RelativeLayout>
 
 
@@ -192,11 +206,16 @@
                 android:layout_weight="1"
                 android:text="@string/settings_notification_disable_when_using_pc_version" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <CheckBox
                 android:id="@+id/sw_enable_chat_by_pc_version"
                 style="@style/setting_switch_compat"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@android:color/transparent"
+                android:background="@drawable/bg_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:track="@drawable/bg_switch"
                 android:checked="true" />
         </LinearLayout>
 

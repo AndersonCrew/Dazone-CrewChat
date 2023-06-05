@@ -38,6 +38,7 @@
     <color name="gray">#acacac</color>
     <color name="black">#000000</color>
     <color name="colorLink">#277bcd</color>
+    <color name="colorIcon">#636363</color>
 
     <!-- PROFILE -->
     <color name="profile_label">#5d5d5d</color>

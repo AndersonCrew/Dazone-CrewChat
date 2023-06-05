@@ -80,7 +80,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     private TextView tvNotificationSettings;
     private ImageView mAvatar;
     private Button btnLogout;
-    private LinearLayout llCellPhone, llCompanyPhone;
+    private LinearLayout llCellPhone, llCompanyPhone, llNotificationSetting;
 
     private void initSettingGroup() {
         btnLogout = mView.findViewById(R.id.btnLogout);
@@ -96,7 +96,9 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         llCellPhone = mView.findViewById(R.id.llCellPhone);
         llCompanyPhone = mView.findViewById(R.id.llCompanyPhone);
         tvPhoneCompany = mView.findViewById(R.id.tvPhoneCompany);
+        llNotificationSetting = mView.findViewById(R.id.llNotificationSetting);
         mAvatar.setOnClickListener(this);
+        llNotificationSetting.setOnClickListener(this);
 
 
         String url = prefs.getServerSite() + prefs.getAvatarUrl();
@@ -174,10 +176,11 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_notification_settings:
+            case R.id.llNotificationSetting:
                 Intent intent = new Intent(mContext, NotificationSettingActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                break;
 
             case R.id.btnLogout:
                 logoutV2();

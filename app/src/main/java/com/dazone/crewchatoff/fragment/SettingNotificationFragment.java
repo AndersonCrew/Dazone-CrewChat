@@ -7,11 +7,10 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.widget.SwitchCompat;
 
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
@@ -29,7 +28,7 @@ import java.util.Map;
 
 public class SettingNotificationFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     private View mView;
-    private SwitchCompat swEnableNotification, swEnableSound, swEnableVibrate, swEnableNotificationTime, swEnableNotificationWhenUsingPCVersion;
+    private CheckBox swEnableSound, swEnableVibrate, swEnableNotificationTime, swEnableNotificationWhenUsingPCVersion, swEnableNotification;
     private Prefs prefs;
     private TextView tvStartTime, tvEndTime,tv_notify_setting_time;
     /*
