@@ -189,9 +189,8 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
     public void updateRoomNo(long roomNo) {
         this.roomNo = roomNo;
         dataSet = new ArrayList<>();
-        initData(dataSet);
-        adapterList.notifyDataSetChanged();
-        viewModel.getChatListFirst(roomNo, userID);
+        dataSetCopy = new ArrayList<>();
+        setupRecyclerView();
     }
 
     private boolean hasActionSend = false;
@@ -988,13 +987,6 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
     @Override
     public void onResume() {
         super.onResume();
-
-        Bundle bundle = getArguments();
-        if (bundle != null && bundle.getLong(Constant.KEY_INTENT_ROOM_NO, 0) != roomNo) {
-            roomNo = bundle.getLong(Constant.KEY_INTENT_ROOM_NO, 0);
-            userNos = bundle.getIntegerArrayList(Constant.KEY_INTENT_USER_NO_ARRAY);
-            updateRoomNo(roomNo);
-        }
 
         isVisible = true;
         isActive = true;

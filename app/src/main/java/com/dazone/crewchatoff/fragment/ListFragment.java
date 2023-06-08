@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -20,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -108,10 +106,6 @@ public abstract class ListFragment<T> extends Fragment {
         swipeRefreshLayout.setEnabled(false);
 
         mInputSearch.addTextChangedListener(mWatcher);
-
-        if(rlMain != null && rlMain.getViewTreeObserver() != null) {
-            rlMain.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
-        }
 
 
         setupRecyclerView();
@@ -253,6 +247,9 @@ public abstract class ListFragment<T> extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        if(rlMain != null && rlMain.getViewTreeObserver() != null) {
+            rlMain.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
+        }
     }
 
     private ILayoutChange iLayoutChange;

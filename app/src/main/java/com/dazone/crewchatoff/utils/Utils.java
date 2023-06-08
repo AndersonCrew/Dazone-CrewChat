@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -95,6 +96,29 @@ public class Utils {
     }
 
     public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameLayout, boolean isSaveStack, String tag) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        if (TextUtils.isEmpty(tag)) {
+            if(fragmentManager.findFragmentById(frameLayout) != null) {
+                transaction.replace(frameLayout, fragment);
+            } else {
+                transaction.add(frameLayout, fragment);
+            }
+        } else {
+            if(fragmentManager.findFragmentById(frameLayout) != null) {
+                transaction.replace(frameLayout, fragment, tag);
+            } else {
+                transaction.add(frameLayout, fragment, tag);
+            }
+        }
+
+        if (isSaveStack) {
+            transaction.addToBackStack(null);
+        }
+
+        transaction.commit();
+    }
+
+    public static void reAddFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameLayout, boolean isSaveStack, String tag) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (TextUtils.isEmpty(tag)) {
             if(fragmentManager.findFragmentById(frameLayout) != null) {
@@ -264,6 +288,45 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
             showMessage(context.getString(R.string.download_file_error));
+        }
+    }
+
+    public static void downloadReCopy(Context context, String url, String name, DownLoadIMGFinish callback) {
+        if (hasReadPermissions(context) && hasWritePermissions(context)) {
+            File folder = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+            final File file = new File(folder, name);
+            Uri uri =  FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file);
+            String extension = MimeTypeMap.getFileExtensionFromUrl(uri.getPath());
+            String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+
+            try{
+                DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Uri downloadUri = Uri.parse(url);
+                DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                        .setAllowedOverRoaming(false)
+                        .setTitle(name)
+                        .setMimeType(mimeType) // Your file type. You can use this code to download other file types also.
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name.toLowerCase());
+                final Long reference = dm.enqueue(request);
+
+                BroadcastReceiver onComplete=new BroadcastReceiver() {
+                    public void onReceive(Context ctxt, Intent intent) {
+                        callback.onSuccess(file);
+
+                    }
+                };
+                context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+            }catch (Exception e){
+                Toast.makeText(context, "Download failed.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, Statics.REQUEST_CODE); // your request code
         }
     }
 
@@ -632,7 +695,7 @@ public class Utils {
     }
 
     public static void DownloadImage_v2(final Context context, final String url, final String name, DownLoadIMGFinish callback) {
-        String mimeType;
+        /*String mimeType;
         String serviceString = Context.DOWNLOAD_SERVICE;
         String fileType = name.substring(name.lastIndexOf(".")).toLowerCase();
         final DownloadManager downloadmanager;
@@ -642,7 +705,6 @@ public class Utils {
 
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Constant.pathDownload, name);
         int type = getTypeFile(fileType);
         switch (type) {
             case 1:
@@ -669,7 +731,14 @@ public class Utils {
                 break;
         }
 
-        final Long reference = downloadmanager.enqueue(request);
+        final Long reference = downloadmanager.enqueue(request);*/
+
+
+        DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+        long reference = manager.enqueue(request);
 
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
@@ -678,11 +747,12 @@ public class Utils {
                 if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
                     DownloadManager.Query query = new DownloadManager.Query();
                     query.setFilterById(reference);
-                    Cursor c = downloadmanager.query(query);
+                    Cursor c = manager.query(query);
 
                     if (c.moveToFirst()) {
                         int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
                         if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
+                           // callback.onSuccess();
                         }
                     }
                 }
@@ -690,7 +760,7 @@ public class Utils {
         };
 
         context.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-        callback.onSuccess();
+
     }
 
     public static String getApplicationName(Context context) {

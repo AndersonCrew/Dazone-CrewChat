@@ -1,7 +1,6 @@
 package com.dazone.crewchatoff.ViewHolders;
 
 import static com.dazone.crewchatoff.utils.Utils.getString;
-import static com.dazone.crewchatoff.utils.Utils.getTypeFile;
 
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -16,12 +15,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -313,7 +310,7 @@ public class ChattingSelfFileViewHolder extends BaseChattingHolder implements Vi
     }
 
     public void DownloadImage(final Context context, final String url, final String name, final Intent shareIntent, final File file) {
-        String mimeType;
+       /* String mimeType;
         String serviceString = Context.DOWNLOAD_SERVICE;
         String fileType = name.substring(name.lastIndexOf(".")).toLowerCase();
         final DownloadManager downloadmanager;
@@ -348,9 +345,15 @@ public class ChattingSelfFileViewHolder extends BaseChattingHolder implements Vi
                     request.setMimeType(mimeType);
                 }
                 break;
-        }
+        }*/
 
-        final Long reference = downloadmanager.enqueue(request);
+        final DownloadManager downloadmanager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+        long reference = downloadmanager.enqueue(request);
+
+        //final Long reference = downloadmanager.enqueue(request);
 
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
