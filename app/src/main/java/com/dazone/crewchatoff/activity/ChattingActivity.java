@@ -113,6 +113,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     private ArrayList<String> mSelectedImage = new ArrayList<>();
     private String typeShare;
     public boolean isChoseFile = false;
+    public boolean isNewIntent = false;
 
     public void removeUserList(int userId) {
         if (userNos != null) {
@@ -219,27 +220,24 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
      * RECEIVE DATA FROM INTENT
      */
     private void receiveData() {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
             try {
-                roomNo = bundle.getLong(Constant.KEY_INTENT_ROOM_NO, 0);
-                myId = bundle.getLong(Constant.KEY_INTENT_USER_NO, 0);
+                roomNo = getIntent().getLongExtra(Constant.KEY_INTENT_ROOM_NO, 0);
+                myId = getIntent().getLongExtra(Constant.KEY_INTENT_USER_NO, 0);
 
                 if (myId == 0) {
                     myId = Utils.getCurrentId();
                 }
 
-                mDto = (ChattingDto) bundle.getSerializable(Constant.KEY_INTENT_ROOM_DTO);
+                mDto = (ChattingDto) getIntent().getSerializableExtra(Constant.KEY_INTENT_ROOM_DTO);
 
-                IV_STATUS = bundle.getInt(Statics.IV_STATUS, -1);
+                IV_STATUS = getIntent().getIntExtra(Statics.IV_STATUS, -1);
 
-                typeShare = bundle.getString(Constants.TYPE_SHARE);
-                mSelectedImage = (ArrayList<String>) bundle.getSerializable(Constants.LIST_FILE_PATH_SHARE);
+                typeShare = getIntent().getStringExtra(Constants.TYPE_SHARE);
+                mSelectedImage = (ArrayList<String>) getIntent().getSerializableExtra(Constants.LIST_FILE_PATH_SHARE);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
     }
 
     private boolean hasSendActionShare = false;
@@ -350,14 +348,12 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
 
     @Override
     protected void onNewIntent(Intent intent) {
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            roomNo = bundle.getLong(Constant.KEY_INTENT_ROOM_NO, 0);
-            getChatRoomInfo();
-            ChattingFragment.instance.updateRoomNo(roomNo);
-            //fragment = new ChattingFragment().newInstance(roomNo, userNos, this);
-            //Utils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.content_base_single_activity, false, fragment.getClass().getSimpleName());
-        }
+        isNewIntent = true;
+        roomNo = intent.getLongExtra(Constant.KEY_INTENT_ROOM_NO, 0);
+        getChatRoomInfo();
+        //ChattingFragment.instance.updateRoomNo(roomNo);
+        fragment = new ChattingFragment().newInstance(roomNo, userNos, this);
+        Utils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.content_base_single_activity, false, fragment.getClass().getSimpleName());
     }
 
     @Override
@@ -867,6 +863,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     }
 
     private String strSearch = "";
+
     @Override
     public boolean onQueryTextChange(String newText) {
         strSearch = newText;
@@ -930,7 +927,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return false;
         }
-        if(Build.VERSION.SDK_INT < 33) {
+        if (Build.VERSION.SDK_INT < 33) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -943,7 +940,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     }
 
     public boolean checkPermissionFile() {
-        if(Build.VERSION.SDK_INT < 33) {
+        if (Build.VERSION.SDK_INT < 33) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -956,7 +953,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
 
     public void setPermissionFile() {
         String[] requestPermission;
-        if(Build.VERSION.SDK_INT < 30) {
+        if (Build.VERSION.SDK_INT < 30) {
             requestPermission = new String[]{Manifest.permission.CAMERA,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -966,7 +963,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                 Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri);
                 startActivity(intent);
-            } catch (Exception ex){
+            } catch (Exception ex) {
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
                 startActivity(intent);
@@ -1018,12 +1015,12 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         if (data != null && data.getStringExtra(Statics.CHATTING_DTO_GALLERY_SINGLE) != null) {
             pathImageRotate = data.getStringExtra(Statics.CHATTING_DTO_GALLERY_SINGLE);
         } else if (mSelectedImage.size() > 0) {
-            if(mSelectedImage.get(0).contains("/data/")) {
+            if (mSelectedImage.get(0).contains("/data/")) {
                 pathImageRotate = Utils.getPathFromURI(Uri.parse(mSelectedImage.get(0)), this);
             } else {
                 pathImageRotate = new FileUtils(this).getPath(Uri.parse(mSelectedImage.get(0)));
             }
-            } else if (uri != null) {
+        } else if (uri != null) {
             pathImageRotate = Utils.getPathImage(this, uri);
         } else return;
 
@@ -1091,7 +1088,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         }
 
         if (videoUri != null) {
-            String path =  new FileUtils(this).getPath(videoUri);
+            String path = new FileUtils(this).getPath(videoUri);
             galleryAddPic(path);
 
             File file = new File(path);
@@ -1129,7 +1126,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                 diffTime += Config.TIME_WAIT * mSelectedImage.indexOf(uriPath);
                 String path = null;
 
-                if(uriPath.contains("/data/")) {
+                if (uriPath.contains("/data/")) {
                     path = Utils.getPathFromURI(Uri.parse(uriPath), this);
                 } else {
                     path = new FileUtils(this).getPath(Uri.parse(uriPath));
@@ -1164,7 +1161,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
             if (videoUriPick != null) {
                 Log.d("Anderson", "6");
                 String path;
-                if(videoUriPick.toString().contains("/data/")) {
+                if (videoUriPick.toString().contains("/data/")) {
                     path = Utils.getPathFromURI(videoUriPick, this);
                 } else {
                     path = new FileUtils(this).getPath(videoUriPick);
@@ -1221,10 +1218,10 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                     diffTime += Config.TIME_WAIT * pathUri.indexOf(obj);
                     String path = null;
 
-                    if(obj.toString().contains("/data/")) {
+                    if (obj.toString().contains("/data/")) {
                         path = Utils.getPathFromURI(obj, this);
                     } else {
-                       path = new FileUtils(this).getPath(obj);
+                        path = new FileUtils(this).getPath(obj);
                     }
 
                     File file = new File(path);
@@ -1259,7 +1256,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
 
     private void handleContactSelected(Intent data) {
         if (data != null) {
-            TreeSet<SimpleContact> selectedContacts = (TreeSet<SimpleContact>)data.getSerializableExtra(mx.com.quiin.contactpicker.ui.ContactPickerActivity.CP_SELECTED_CONTACTS);
+            TreeSet<SimpleContact> selectedContacts = (TreeSet<SimpleContact>) data.getSerializableExtra(mx.com.quiin.contactpicker.ui.ContactPickerActivity.CP_SELECTED_CONTACTS);
 
             ArrayList<SimpleContact> listContact = new ArrayList<>();
             listContact.addAll(selectedContacts);
@@ -1324,10 +1321,11 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     protected void onResume() {
         super.onResume();
 
-        if (!isChoseFile) {
+        if (!isChoseFile && !isNewIntent) {
             ChattingFragment.instance.Reload();
         }
 
         isChoseFile = false;
+        isNewIntent = false;
     }
 }

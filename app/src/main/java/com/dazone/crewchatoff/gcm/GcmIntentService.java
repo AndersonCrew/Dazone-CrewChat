@@ -491,12 +491,12 @@ public class GcmIntentService extends IntentService {
             final PendingIntent contentIntent;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                 contentIntent = PendingIntent.getActivity
-                        (this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                        (this, (int) System.currentTimeMillis(), myIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             }
             else
             {
                 contentIntent = PendingIntent.getActivity
-                        (this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        (this, (int) System.currentTimeMillis(), myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
 
             if (chattingDto != null && chattingDto.getAttachNo() != 0) {
@@ -528,7 +528,7 @@ public class GcmIntentService extends IntentService {
                         .setContentText(msgTemp)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setChannelId(idChanel)
-                        .setAutoCancel(false);
+                        .setAutoCancel(true);
 
                 // Check notification setting and config notification
                 if (isEnableSound) {
@@ -563,8 +563,8 @@ public class GcmIntentService extends IntentService {
                 Notification notification = mBuilder.build();
                 notification.number = 100;
                 notification.tickerText = getTickerText(unReadCount);
-                mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
-                startForeground((int) roomNo, notification);
+                mNotificationManager.notify((int) roomNo, mBuilder.build());
+                startForeground((int) System.currentTimeMillis(), notification);
             }
         } else {
             final long[] vibrate = new long[]{1000, 1000, 0, 0, 0};
@@ -609,7 +609,7 @@ public class GcmIntentService extends IntentService {
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msgTemp))
                         .setContentText(msgTemp)
                         .setPriority(Notification.PRIORITY_MAX)
-                        .setAutoCancel(false);
+                        .setAutoCancel(true);
 
                 // Check notification setting and config notification
                 if (isEnableSound) {
@@ -644,8 +644,8 @@ public class GcmIntentService extends IntentService {
                 Notification notification = mBuilder.build();
                 notification.number = 100;
                 notification.tickerText = getTickerText(unReadCount);
-                mNotificationManager.notify((int) System.currentTimeMillis(), mBuilder.build());
-                startForeground((int) roomNo, notification);
+                mNotificationManager.notify((int) roomNo, mBuilder.build());
+                startForeground((int) System.currentTimeMillis(), notification);
             }
         }
 

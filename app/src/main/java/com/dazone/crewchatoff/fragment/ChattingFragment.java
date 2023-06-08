@@ -188,9 +188,9 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
 
     public void updateRoomNo(long roomNo) {
         this.roomNo = roomNo;
-        initData(new ArrayList<>());
-        adapterList.notifyDataSetChanged();
-        viewModel.getChatListFirst(roomNo, userID);
+        dataSet = new ArrayList<>();
+        dataSetCopy = new ArrayList<>();
+        setupRecyclerView();
     }
 
     private boolean hasActionSend = false;

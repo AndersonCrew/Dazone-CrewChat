@@ -1,12 +1,15 @@
 package com.dazone.crewchatoff.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,10 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
-import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.adapter.ViewImageAdapter;
@@ -29,7 +30,6 @@ import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.ChattingDto;
 import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 import com.dazone.crewchatoff.fragment.CompanyFragment;
-import com.dazone.crewchatoff.interfaces.DownLoadIMGFinish;
 import com.dazone.crewchatoff.interfaces.OnClickViewCallback;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
@@ -41,7 +41,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -245,24 +246,14 @@ public class ChatViewImageActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.btn_share:
-                if (ChattingActivity.instance.checkPermissionsReadExternalStorage()&&ChattingActivity.instance.checkPermissionsWriteExternalStorage()) {
-                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("image/jpg");
-                    final File photoFile = new File(path);
-                    if (!photoFile.exists()) {
-                        Utils.DownloadImage_v2(this, urlDownload1, listData.get(viewPager.getCurrentItem()).getAttachInfo().getFileName(), new DownLoadIMGFinish() {
-                            @Override
-                            public void onSuccess() {
-                                shareIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider",photoFile));
-                                startActivity(Intent.createChooser(shareIntent, "Share image using"));
-                            }
-                        });
-                    } else {
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider",photoFile));
-                        startActivity(Intent.createChooser(shareIntent, "Share image using"));
-                    }
-                } else {
-                    ChattingActivity.instance.setPermissionsReadExternalStorage();
+                ChattingDto chattingDto1 = listData.get(viewPager.getCurrentItem());
+                if (chattingDto1 != null) {
+                    Bitmap bitmap = getBitmapFromURL(urlDownload1);
+                    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, getImageUri(this, bitmap));
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.setType("image/png");
+                    startActivity(intent);
                 }
 
                 break;
@@ -281,6 +272,31 @@ public class ChatViewImageActivity extends BaseActivity implements View.OnClickL
 
         }
     }
+
+    public Bitmap getBitmapFromURL(String strURL) {
+        try {
+            URL url = new URL(strURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+
 
     interface getBitmap {
         void onSuccess(Bitmap result);

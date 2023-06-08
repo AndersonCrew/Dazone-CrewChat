@@ -107,10 +107,6 @@ public abstract class ListFragment<T> extends Fragment {
 
         mInputSearch.addTextChangedListener(mWatcher);
 
-        if(rlMain != null && rlMain.getViewTreeObserver() != null) {
-            rlMain.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
-        }
-
 
         setupRecyclerView();
         initList();
@@ -250,6 +246,9 @@ public abstract class ListFragment<T> extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        if(rlMain != null && rlMain.getViewTreeObserver() != null) {
+            rlMain.getViewTreeObserver().addOnGlobalLayoutListener(keyboardLayoutListener);
+        }
     }
 
     private ILayoutChange iLayoutChange;
