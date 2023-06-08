@@ -1,7 +1,6 @@
 package com.dazone.crewchatoff.ViewHolders;
 
 import static android.graphics.Bitmap.createScaledBitmap;
-import static com.dazone.crewchatoff.utils.Utils.getString;
 import static com.dazone.crewchatoff.utils.Utils.getTypeFile;
 
 import android.Manifest;
@@ -25,7 +24,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -62,7 +60,6 @@ import com.dazone.crewchatoff.fragment.ChattingFragment;
 import com.dazone.crewchatoff.interfaces.ICreateOneUserChatRom;
 import com.dazone.crewchatoff.interfaces.IF_Relay;
 import com.dazone.crewchatoff.interfaces.ILoadImage;
-import com.dazone.crewchatoff.interfaces.Urls;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.ImageUtils;
@@ -74,7 +71,12 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -379,32 +381,15 @@ public class ChattingSelfImageViewHolder extends BaseChattingHolder implements V
 
             case Statics.MENU_SHARE:
                 if (tempDto != null) {
-                    AttachDTO attachDTO = tempDto.getAttachInfo();
-                    String urlDownload1 = new Prefs().getServerSite() + Urls.URL_DOWNLOAD_THUMBNAIL +
-                            "session=" + CrewChatApplication.getInstance().getPrefs().getaccesstoken() +
-                            "&no=" + attachDTO.getAttachNo();
-
-                    String path = Environment.getExternalStorageDirectory() + Constant.pathDownload + "/" + attachDTO.getFileName();
-                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("image/jpg");
-                    final File photoFile = new File(path);
-                    if (!photoFile.exists()) {
-                        if (checkPermissionsWandR()) {
-                            mProgressDialog = new ProgressDialog(BaseActivity.Instance);
-                            mProgressDialog.setMessage(getString(R.string.download));
-                            mProgressDialog.setIndeterminate(true);
-                            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                            mProgressDialog.setCancelable(false);
-                            mProgressDialog.show();
-                            DownloadImage(mActivity, urlDownload1, attachDTO.getFileName(), shareIntent, photoFile);
-                        } else {
-                            setPermissionsRandW();
-                        }
-
-                    } else {
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(CrewChatApplication.getInstance(), BuildConfig.APPLICATION_ID + ".provider", photoFile));
-                        mActivity.startActivity(Intent.createChooser(shareIntent, "Share image using"));
-                    }
+                    String url = String.format("/UI/CrewChat/MobileAttachDownload.aspx?session=%s&no=%s",
+                            new Prefs().getaccesstoken(), tempDto.getAttachNo());
+                    String urlDownload1 = new Prefs().getServerSite() + url;
+                    Bitmap bitmap = getBitmapFromURL(urlDownload1);
+                    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_STREAM, getImageUri(mActivity, bitmap));
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.setType("image/png");
+                    mActivity.startActivity(intent);
 
                 }
                 break;
@@ -420,6 +405,29 @@ public class ChattingSelfImageViewHolder extends BaseChattingHolder implements V
         }
 
         return false;
+    }
+
+    public Bitmap getBitmapFromURL(String strURL) {
+        try {
+            URL url = new URL(strURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public void DownloadImage(final Context context, final String url, final String name, final Intent shareIntent, final File photoFile) {

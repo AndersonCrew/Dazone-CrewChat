@@ -21,7 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.dazone.crewchatoff.R;
@@ -43,8 +42,6 @@ import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -299,43 +296,7 @@ public class ChatViewImageActivity extends BaseActivity implements View.OnClickL
         return Uri.parse(path);
     }
 
-    public Uri getLocalBitmapUri(Bitmap bmp) {
-        Uri bmpUri = null;
-        try {
-            File file =  new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
-            FileOutputStream out = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
-            out.close();
-            bmpUri = FileProvider.getUriForFile(
-                    this,
-                    getPackageName() + ".provider",
-                    File.createTempFile("pickImageResult", ".jpeg", file)
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bmpUri;
-    }
 
-    private Uri saveImage(Bitmap image) {
-        //TODO - Should be processed in another thread
-        File imagesFolder = new File(getCacheDir(), "images");
-        Uri uri = null;
-        try {
-            imagesFolder.mkdirs();
-            File file = new File(imagesFolder, "shared_image.png");
-
-            FileOutputStream stream = new FileOutputStream(file);
-            image.compress(Bitmap.CompressFormat.PNG, 90, stream);
-            stream.flush();
-            stream.close();
-            uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
-
-        } catch (IOException e) {
-            Log.d(TAG, "IOException while trying to write file for sharing: " + e.getMessage());
-        }
-        return uri;
-    }
 
     interface getBitmap {
         void onSuccess(Bitmap result);
