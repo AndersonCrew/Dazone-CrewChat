@@ -2,61 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?attr/actionBarSize">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+        <ImageView
+            android:id="@+id/imgBack"
+            android:padding="16dp"
+            android:src="@drawable/nav_back_ic"
+            android:tint="@color/black"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+        <TextView
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:text="@string/room_rename"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
 
-                <ImageView
-                    android:id="@+id/back_imv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/nav_back_ic" />
+        <TextView
+            android:id="@+id/tvDone"
+            android:text="Done"
+            android:padding="16dp"
+            android:gravity="center"
+            android:src="@drawable/nav_back_ic"
+            android:tint="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
 
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toLeftOf="@+id/iv_tick"
-                    android:layout_toRightOf="@+id/back_imv"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="Sample title here"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp" />
 
-                <ImageView
-                    android:id="@+id/iv_tick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/add_check" />
-            </RelativeLayout>
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    </LinearLayout>
 
     <include layout="@layout/content_base_single" />
 

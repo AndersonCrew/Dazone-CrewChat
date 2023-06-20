@@ -61,7 +61,7 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
     private ImageView ivFavorite;
     private ImageView ivNotification;
     private View view;
-    private RelativeLayout layoutAvatar;
+    private CardView layoutAvatar;
     private ImageView ivStatus;
     private String roomTitle = "";
     private long roomNo = -1;
@@ -274,7 +274,7 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
                 if (linkIMG != null && linkIMG.length() > 0) {
                     String rootUrl = new Prefs().getServerSite() + linkIMG;
 
-                    ImageUtils.showCycleImageFromLink(rootUrl, imgAvatar, R.dimen.button_height);
+                    ImageUtils.loadImageNormal(rootUrl, imgAvatar);
                 } else {
                     ImageUtils.showRoundImage(dto.getListTreeUser().get(0), imgAvatar);
                 }

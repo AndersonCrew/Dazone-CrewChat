@@ -61,7 +61,7 @@ public class RecentFavoriteViewHolder extends ItemViewHolder<ChattingDto> implem
     private ImageView imgAvatar;
     private ImageView ivLastedAttach;
     private View view;
-    private RelativeLayout layoutAvatar;
+    private CardView layoutAvatar;
 
     private String roomTitle = "";
     private long roomNo = -1;

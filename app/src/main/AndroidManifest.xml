@@ -262,7 +262,9 @@
             android:name="com.dazone.crewchatoff.activity.RotateImageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name="com.dazone.crewchatoff.activity.NewOrganizationChart">
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name="com.dazone.crewchatoff.activity.NewOrganizationChart">
 
         </activity>
         <activity android:name="com.dazone.crewchatoff.activity.InviteUserActivity"></activity>
@@ -271,6 +273,7 @@
             android:label="@string/iv_file_box" />
 
         <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name="com.dazone.crewchatoff.activity.AttachFileBoxActivity"
             android:label="@string/attach_file_box" />
         <activity android:name="com.dazone.crewchatoff.activity.DetailsMyImageActivity" />
@@ -278,6 +281,7 @@
             android:name="com.dazone.crewchatoff.activity.RelayActivity"
             android:label="" />
         <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name="com.dazone.crewchatoff.activity.ChangePasswordActivity"
             android:label="@string/change_password" />
         <activity android:name="com.dazone.crewchatoff.activity.UnreadActivity" />

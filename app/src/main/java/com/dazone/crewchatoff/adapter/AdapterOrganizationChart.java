@@ -19,9 +19,9 @@ import com.dazone.crewchatoff.activity.NewOrganizationChart;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
+import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,7 +147,7 @@ public class AdapterOrganizationChart extends RecyclerView.Adapter<AdapterOrgani
                 String url = new Prefs().getServerSite() + treeUserDTO.getAvatarUrl();
 
                 avatar.setImageResource(R.drawable.avatar_l);
-                ImageLoader.getInstance().displayImage(url, avatar, Statics.options2);
+                ImageUtils.setImgFromUrl(url, avatar);
 
                 position.setVisibility(View.VISIBLE);
                 setDutyOrPosition(position, nameDuty, namePosition);
@@ -174,7 +174,7 @@ public class AdapterOrganizationChart extends RecyclerView.Adapter<AdapterOrgani
                 positionTwo.setVisibility(View.GONE);
 
                 relAvatar.setVisibility(View.GONE);
-                folderIcon.setVisibility(View.VISIBLE);
+                folderIcon.setVisibility(View.GONE);
             }
             name_department.setText("" + treeUserDTO.getName_parent());
             name.setText(nameString);

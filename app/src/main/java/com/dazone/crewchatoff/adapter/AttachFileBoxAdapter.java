@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.dazone.crewchatoff.dto.AttachImageList;
 import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
+import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
@@ -42,6 +44,8 @@ public class AttachFileBoxAdapter extends RecyclerView.Adapter<AttachFileBoxAdap
         public TextView tvFileName, tvUserName, tvSize, tvDate;
         public RelativeLayout btnDetails;
 
+        private ImageView imgIcon;
+
         // add event  click
         public RecyclerViewHolders(View itemView) {
             super(itemView);
@@ -50,6 +54,7 @@ public class AttachFileBoxAdapter extends RecyclerView.Adapter<AttachFileBoxAdap
             tvUserName = itemView.findViewById(R.id.tvUserName);
             tvSize = itemView.findViewById(R.id.tvSize);
             tvDate = itemView.findViewById(R.id.tvDate);
+            imgIcon = itemView.findViewById(R.id.imgIcon);
             btnDetails.setOnCreateContextMenuListener(this);
 
         }
@@ -94,7 +99,7 @@ public class AttachFileBoxAdapter extends RecyclerView.Adapter<AttachFileBoxAdap
 
     @Override
     public RecyclerViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_attach_file_box_layout, null);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_attach_file_box_layout, parent, false);
         RecyclerViewHolders rcv = new RecyclerViewHolders(layoutView);
         return rcv;
     }
@@ -113,21 +118,15 @@ public class AttachFileBoxAdapter extends RecyclerView.Adapter<AttachFileBoxAdap
         holder.tvUserName.setText(userName);
         holder.tvSize.setText("" + obj.getSize() + "KB");
         holder.tvDate.setText(TimeUtils.displayTimeWithoutOffset(context, obj.getRegDate(), 0, TimeUtils.KEY_FROM_SERVER));
-        holder.btnDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickRow(obj);
-            }
+        holder.btnDetails.setOnClickListener(view -> clickRow(obj));
+
+        holder.btnDetails.setOnLongClickListener(view -> {
+            objTemp = obj;
+            view.showContextMenu();
+            return true;
         });
 
-        holder.btnDetails.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                objTemp = obj;
-                view.showContextMenu();
-                return true;
-            }
-        });
+        ImageUtils.imageFileType(holder.imgIcon, Utils.getFileType(obj.getFileName()));
     }
 
     void clickRow(AttachImageList obj) {

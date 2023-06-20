@@ -26,7 +26,7 @@
                 android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="8dp"
                     android:layout_width="@dimen/common_avatar"
                     android:layout_height="@dimen/common_avatar">
 
@@ -47,7 +47,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/avatar_group"
-                app:cardCornerRadius="24dp"
+                app:cardCornerRadius="8dp"
                 android:layout_width="@dimen/common_avatar"
                 android:layout_height="@dimen/common_avatar">
 
@@ -115,25 +115,31 @@
             </androidx.cardview.widget.CardView>
 
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:id="@+id/layoutAvatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:layout_width="@dimen/common_avatar"
+                android:layout_height="@dimen/common_avatar"
                 android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/avatar_imv"
-                    style="@style/default_avatar_medium"
-                    android:src="@drawable/avatar_l" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/avatar_imv"
+                        style="@style/default_avatar_medium"
+                        android:src="@drawable/avatar_l" />
 
-                <ImageView
-                    android:id="@+id/status_imv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/home_big_status_01" />
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/status_imv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/home_big_status_01" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 
@@ -179,7 +185,8 @@
                     android:drawablePadding="2dp"
                     android:drawableStart="@drawable/home_attach_ic_contact"
                     android:gravity="center_vertical"
-                    android:padding="3dp"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="3dp"
                     android:text="10"
                     android:textColor="@color/time_color_current_chat"
                     android:textSize="12sp" />

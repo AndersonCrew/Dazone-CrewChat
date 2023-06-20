@@ -5,13 +5,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,8 +37,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RoomUserInformationActivity extends BaseActivity {
-    protected TextView toolbar_title;
-    protected ImageView ivBack;
     private ArrayList<Integer> userNos;
     private RoomUserInfoAdapter mAdapter;
     public RecyclerView rvMainList;
@@ -52,6 +47,7 @@ public class RoomUserInformationActivity extends BaseActivity {
     long roomNo = -1;
     int myID;
     ArrayList<TreeUserDTOTemp> users;
+    private LinearLayout llAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +82,8 @@ public class RoomUserInformationActivity extends BaseActivity {
 
             // init data
             if (userNos != null) {
-                @SuppressLint("StringFormatMatches") String subtitle = CrewChatApplication.getInstance().getResources().getString(R.string.room_info_participant_count, userNos.size());
-                toolbar_title.setText(subtitle);
+                /*@SuppressLint("StringFormatMatches") String subtitle = CrewChatApplication.getInstance().getResources().getString(R.string.room_info_participant_count, userNos.size());
+                toolbar_title.setText(subtitle);*/
 
 
                 temp = getLst(myID, users, userNos);
@@ -168,18 +164,20 @@ public class RoomUserInformationActivity extends BaseActivity {
     }
 
     private void init() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ivBack = findViewById(R.id.iv_back);
-        ivBack.setOnClickListener(v -> finish());
-        toolbar_title = findViewById(R.id.toolbar_title);
         rvMainList = findViewById(R.id.rv_main);
 
         rvMainList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         rvMainList.setLayoutManager(layoutManager);
+
+        findViewById(R.id.imgBack).setOnClickListener(view -> {
+            finish();
+        });
+
+        findViewById(R.id.llAdd).setOnClickListener(view -> {
+            actionAdd();
+        });
     }
 
     void actionAdd() {
@@ -195,28 +193,6 @@ public class RoomUserInformationActivity extends BaseActivity {
         }
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_user_from_room_infor, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            case R.id.menu_add:
-                actionAdd();
-                break;
-        }
-
-        return true;
-    }
-
 
     private void activityResultAddUser(Intent data) {
         try {
@@ -237,14 +213,7 @@ public class RoomUserInformationActivity extends BaseActivity {
                         mAdapter.updateData(temp);
                     }
                     String subtitle = "";
-                    try {
-                        subtitle = CrewChatApplication.getInstance().getResources().getString(R.string.room_info_participant_count, userNos.size());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (subtitle.length() > 0 && toolbar_title != null) {
-                        toolbar_title.setText(subtitle);
-                    }
+
 
                     if (ChattingActivity.instance != null) {
                         ChattingActivity.instance.activityResultAddUser(data);

@@ -87,11 +87,7 @@ public class RoomUserInfoViewHolder extends ItemViewHolder<TreeUserDTO> {
 
             String url = new Prefs().getServerSite() + treeUserDTO.getAvatarUrl();
 
-            if (mContext != null) {
-                ImageUtils.showCycleImageFromLinkScale(mContext, url, avatar, R.dimen.button_height);
-            } else {
-                ImageUtils.showCycleImageFromLink(url, avatar, R.dimen.button_height);
-            }
+            ImageUtils.setImgFromUrl(url, avatar);
 
             position.setVisibility(View.VISIBLE);
             folderIcon.setVisibility(View.GONE);

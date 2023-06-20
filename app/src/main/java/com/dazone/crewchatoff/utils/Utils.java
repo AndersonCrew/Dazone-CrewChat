@@ -810,8 +810,8 @@ public class Utils {
         builder.setView(dialogView);
 
         // Get the custom alert dialog view widgets reference
-        Button btn_positive = dialogView.findViewById(R.id.btn_yes);
-        Button btn_negative = dialogView.findViewById(R.id.btn_no);
+        TextView btn_positive = dialogView.findViewById(R.id.btn_yes);
+        TextView btn_negative = dialogView.findViewById(R.id.btn_no);
         TextView txtTitle = dialogView.findViewById(R.id.txt_dialog_title);
         TextView txtContent = dialogView.findViewById(R.id.txt_dialog_content);
 

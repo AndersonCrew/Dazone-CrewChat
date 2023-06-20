@@ -2,9 +2,9 @@ package com.dazone.crewchatoff.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dazone.crewchatoff.HTTPs.HttpOauthRequest;
 import com.dazone.crewchatoff.R;
+import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.interfaces.IF_UpdatePass;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 
@@ -19,22 +20,21 @@ import com.dazone.crewchatoff.utils.CrewChatApplication;
  * Created by maidinh on 4/3/2017.
  */
 
-public class ChangePasswordActivity extends AppCompatActivity {
+public class ChangePasswordActivity extends BaseActivity {
     private EditText edOldPass, edNewPass, edConfirmPass;
     private Button btnChange;
+    private ImageView imgBack;
 
     void initView() {
         edOldPass = findViewById(R.id.edOldPass);
         edNewPass = findViewById(R.id.edNewPass);
         edConfirmPass = findViewById(R.id.edConfirmPass);
         btnChange = findViewById(R.id.btnChange);
+        imgBack = findViewById(R.id.imgBack);
 
-        btnChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionChange();
-            }
-        });
+        btnChange.setOnClickListener(v -> actionChange());
+
+        imgBack.setOnClickListener(view -> finish());
     }
 
     void showMsg(String msg) {
@@ -76,7 +76,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_password_layout);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initView();
     }
 

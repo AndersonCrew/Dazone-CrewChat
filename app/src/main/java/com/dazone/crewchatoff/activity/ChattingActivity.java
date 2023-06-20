@@ -115,6 +115,14 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     public boolean isChoseFile = false;
     public boolean isNewIntent = false;
 
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.chat_list_bg_color));
+        } else {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.chat_list_bg_color));
+        }
+    }
+
     public void removeUserList(int userId) {
         if (userNos != null) {
             if (userNos.size() > 0) {
@@ -142,6 +150,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeStatusBarColor();
         instance = this;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -339,7 +348,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         title = roomTitle;
 
         if (title != null && TextUtils.isEmpty(title.trim())) {
-            title = getGroupTitleName(userNos);
+            title = "그룹 재팅";
         }
         this.roomTitle = title;
         setTitle(title);

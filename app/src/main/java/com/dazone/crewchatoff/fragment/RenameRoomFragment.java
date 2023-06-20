@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +30,7 @@ public class RenameRoomFragment extends BaseFragment {
     private View rootView;
     private TextView tvRemainCharacterCount;
     private EditText et_title;
-    private Button btnClear;
+    private ImageView btnClear;
 
     private String roomTitle;
     private int roomNo;
@@ -108,7 +108,7 @@ public class RenameRoomFragment extends BaseFragment {
     private void initView() {
         tvRemainCharacterCount = (TextView) rootView.findViewById(R.id.tv_remain_character_count);
         et_title = (EditText) rootView.findViewById(R.id.et_title);
-        btnClear = (Button) rootView.findViewById(R.id.btn_clear);
+        btnClear = (ImageView) rootView.findViewById(R.id.btn_clear);
     }
 
     private void initData() {

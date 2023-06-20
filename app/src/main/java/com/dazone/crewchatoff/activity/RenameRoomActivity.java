@@ -15,15 +15,12 @@ public class RenameRoomActivity extends BaseSingleBackTick {
     private String roomTitle;
     private int roomNo;
     String TAG = "RenameRoomActivity";
-    OnTickCallbackSuccess mOnTickSuccess = new OnTickCallbackSuccess() {
-        @Override
-        public void onTickSuccess(int roomNo, String roomTitle) {
-            Intent intent = new Intent();
-            intent.putExtra(Statics.ROOM_NO, roomNo);
-            intent.putExtra(Statics.ROOM_TITLE, roomTitle);
-            setResult(RESULT_OK, intent);
-            finish();
-        }
+    OnTickCallbackSuccess mOnTickSuccess = (roomNo, roomTitle) -> {
+        Intent intent = new Intent();
+        intent.putExtra(Statics.ROOM_NO, roomNo);
+        intent.putExtra(Statics.ROOM_TITLE, roomTitle);
+        setResult(RESULT_OK, intent);
+        finish();
     };
 
     private RenameRoomFragment fragment;
@@ -31,7 +28,6 @@ public class RenameRoomActivity extends BaseSingleBackTick {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setUPToolBar(getString(R.string.room_rename));
     }
 
     @Override

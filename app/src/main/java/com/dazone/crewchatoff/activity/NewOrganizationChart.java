@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +41,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewOrganizationChart extends AppCompatActivity {
+public class NewOrganizationChart extends BaseActivity {
     private String TAG = "NewOrganizationChart";
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -63,8 +62,8 @@ public class NewOrganizationChart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_organization_chart_layout);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.create_chat_room));
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setTitle(getResources().getString(R.string.create_chat_room));
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -84,6 +83,8 @@ public class NewOrganizationChart extends AppCompatActivity {
         initView();
 
         initDB();
+
+        findViewById(R.id.ivBack2).setOnClickListener(view -> finish());
 
     }
 

@@ -9,7 +9,7 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.base.BasePagerActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -17,25 +17,20 @@
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <FrameLayout
-            android:id="@+id/frNewChat"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="right|center"
-            android:background="?android:attr/selectableItemBackground">
-
-            <ImageView
-                android:padding="13dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:src="@drawable/chat_add" />
-        </FrameLayout>
+        <TextView
+            android:text="@string/app_name"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
 
         <FrameLayout
             android:id="@+id/iv_search"
-            android:layout_width="?attr/actionBarSize"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="right|center"
             android:background="?android:attr/selectableItemBackground">
@@ -48,7 +43,24 @@
                 android:src="@drawable/ic_search_black" />
         </FrameLayout>
 
-    </androidx.appcompat.widget.Toolbar>
+        <FrameLayout
+            android:id="@+id/frNewChat"
+            android:padding="5dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="right|center"
+            android:background="?android:attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:src="@drawable/chat_add" />
+        </FrameLayout>
+
+    </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/container"

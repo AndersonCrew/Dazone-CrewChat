@@ -61,14 +61,13 @@ public abstract class BaseSingleStatusActivity extends BaseActivity {
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
         btnGroup = findViewById(R.id.btnGroup);
-        btnGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ChattingActivity.instance != null) {
-                    ChattingActivity.instance.menu_list_chat();
-                }
+        findViewById(R.id.imgMembers).setOnClickListener(view -> {
+            if (ChattingActivity.instance != null) {
+                ChattingActivity.instance.menu_list_chat();
             }
         });
+
+        findViewById(R.id.imgBack).setOnClickListener(view -> finish());
     }
     public static String getPath(Context context, Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

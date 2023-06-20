@@ -51,7 +51,6 @@ import com.dazone.crewchatoff.dto.StatusItemDto;
 import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 import com.dazone.crewchatoff.dto.UserInfoDto;
 import com.dazone.crewchatoff.eventbus.ReloadActivity;
-import com.dazone.crewchatoff.fragment.BaseFavoriteFragment;
 import com.dazone.crewchatoff.fragment.CompanyFragment;
 import com.dazone.crewchatoff.fragment.CurrentChatListFragment;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBackWithString;
@@ -112,8 +111,8 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
     private final ActivityHandler2 mActivityHandler2 = new ActivityHandler2(this);
     static boolean active = false;
     public static String urlDownload = "";
-    public static int TAB_CHAT = 0;
-    public static int TAB_COMPANY = 1;
+    public static int TAB_CHAT = 1;
+    public static int TAB_COMPANY = 0;
     public static int TAB_FAVORITE = 2;
     public static int TAB_SETTING = 3;
     private int currentUserNo = 0;
@@ -143,7 +142,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
         companyNo = new Prefs().getCompanyNo();
 
         active = true;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         if (!CrewChatApplication.isLoggedIn) {
             CrewChatApplication.getInstance().syncData();
             CrewChatApplication.isLoggedIn = true;
@@ -605,23 +604,23 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
 
         MainActivity.CURRENT_TAB = position;
         new Prefs().putIntValue("PAGE", position);
-        if (position == TAB_CHAT || position == TAB_FAVORITE) {
+        if (position == TAB_CHAT) {
             showPAB();
-            hideSearchView();
-            hideMenuSearch();
-            showIcon();
-            if (position == TAB_FAVORITE) {
-                if (BaseFavoriteFragment.CURRENT_TAB == 0) {
-                    hidePAB();
-                }
-            }
+            hideSearch(true);
+            hideToolBar(false);
+
+        } else if(position == TAB_FAVORITE) {
+            hidePAB();
+            hideSearch(false);
+            hideToolBar(false);
         } else if (position == TAB_COMPANY) {
-            hideSearchIcon();
-            hidePAB();
+            showPAB();
+            hideSearch(false);
+            hideToolBar(false);
         } else if (position == TAB_SETTING) {
-            hideSearchIcon();
             hidePAB();
-            hideSearchView();
+            hideSearch(true);
+            hideToolBar(true);
         }
         if (position == TAB_FAVORITE || position == TAB_COMPANY) {
             if (position == TAB_COMPANY || position == TAB_FAVORITE) {

@@ -24,6 +24,8 @@ import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.HttpOauthRequest;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
+import com.dazone.crewchatoff.activity.ChangePasswordActivity;
+import com.dazone.crewchatoff.activity.CrewChatSettingActivity;
 import com.dazone.crewchatoff.activity.LoginActivity;
 import com.dazone.crewchatoff.activity.MainActivity;
 import com.dazone.crewchatoff.activity.NotificationSettingActivity;
@@ -80,7 +82,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     private TextView tvNotificationSettings;
     private ImageView mAvatar;
     private Button btnLogout;
-    private LinearLayout llCellPhone, llCompanyPhone, llNotificationSetting;
+    private LinearLayout llCellPhone, llCompanyPhone, llNotificationSetting, llChangePass, llInfo, llCrewChatSetting;
 
     private void initSettingGroup() {
         btnLogout = mView.findViewById(R.id.btnLogout);
@@ -97,8 +99,14 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         llCompanyPhone = mView.findViewById(R.id.llCompanyPhone);
         tvPhoneCompany = mView.findViewById(R.id.tvPhoneCompany);
         llNotificationSetting = mView.findViewById(R.id.llNotificationSetting);
+        llChangePass = mView.findViewById(R.id.llChangePass);
+        llInfo = mView.findViewById(R.id.llInfo);
+        llCrewChatSetting = mView.findViewById(R.id.llCrewChatSetting);
         mAvatar.setOnClickListener(this);
         llNotificationSetting.setOnClickListener(this);
+        llChangePass.setOnClickListener(this);
+        llInfo.setOnClickListener(this);
+        llCrewChatSetting.setOnClickListener(this);
 
 
         String url = prefs.getServerSite() + prefs.getAvatarUrl();
@@ -185,12 +193,17 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             case R.id.btnLogout:
                 logoutV2();
                 break;
-           /* case R.id.tv_infor:
-                showInfoV2();
+
+            case R.id.llChangePass:
+                 startActivity(new Intent(getContext(), ChangePasswordActivity.class));
                 break;
-            case R.id.tv_crew_chat_settings:
+
+                case R.id.llInfo:
+                    showInfoV2();
+                break;
+            case R.id.llCrewChatSetting:
                 CrewChatSettingActivity.toActivity(mContext);
-                break;*/
+                break;
         }
     }
 

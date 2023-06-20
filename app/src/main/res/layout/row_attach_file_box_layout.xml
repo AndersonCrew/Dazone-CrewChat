@@ -2,19 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btnDetails"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginTop="12dp"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_item_attach_file_box">
 
-    <RelativeLayout
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+    <LinearLayout
+        android:id="@+id/llName"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:src="@drawable/excel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
 
         <TextView
             android:id="@+id/tvFileName"
-            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/tvSize"
             android:ellipsize="end"
@@ -23,13 +34,22 @@
 
         <TextView
             android:id="@+id/tvUserName"
-            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvFileName"
             android:layout_toLeftOf="@+id/tvDate"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="File Name" />
+            android:text="Anderson" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/llName"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvSize"
@@ -38,6 +58,12 @@
             android:layout_alignParentRight="true"
             android:text="Size" />
 
+        <View
+            android:background="@color/black_70_color"
+            android:layout_marginHorizontal="4dp"
+            android:layout_width="1dp"
+            android:layout_height="18dp"/>
+
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
@@ -45,11 +71,6 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tvSize"
             android:text="Date" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/notification_divider" />
 </RelativeLayout>

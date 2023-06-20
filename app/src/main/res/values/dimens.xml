@@ -66,6 +66,7 @@
     <dimen name="chat_text_max_width">250dp</dimen>
     <dimen name="dimen_lnl_chat_left_pl">15dp</dimen>
     <dimen name="dimen_lnl_chat_left">10dp</dimen>
+    <dimen name="conner_avatar">8dp</dimen>
 
     <!--Common-->
     <dimen name="dimen_1_2">1dp</dimen>

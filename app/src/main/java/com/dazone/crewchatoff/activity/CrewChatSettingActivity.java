@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.base.BaseSingleBackActivity;
@@ -24,10 +22,10 @@ import org.greenrobot.eventbus.EventBus;
 
 
 public class CrewChatSettingActivity extends BaseSingleBackActivity implements CrewChatPresenter.RotationInterface {
-    private Toolbar mToolBar;
-    private SwitchCompat swEnter;
-    private SwitchCompat swEnterVDuty;
-    private TextView mTvScreenRotation;
+    private CheckBox swEnter;
+    private CheckBox swEnterVDuty;
+    private TextView mTvScreenRotation, tvTitle;
+    private ImageView back_imv;
     private Prefs mPrefs;
 
     private CrewChatPresenter mPresenter;
@@ -48,12 +46,12 @@ public class CrewChatSettingActivity extends BaseSingleBackActivity implements C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_setting);
 
-        mToolBar = findViewById(R.id.toolbar);
         swEnter = findViewById(R.id.sw_enter_auto);
         swEnterVDuty = findViewById(R.id.sw_enter_v_duty);
         mTvScreenRotation = findViewById(R.id.tv_screen_rotation);
+        tvTitle = findViewById(R.id.toolbar_title);
+        back_imv = findViewById(R.id.back_imv);
 
-        setupToolBarSingleTitle(getString(R.string.settings_crew_chat), mToolBar);
         mPresenter = new CrewChatPresenter(this, this);
         mPrefs = CrewChatApplication.getInstance().getPrefs();
         initView();
@@ -67,12 +65,11 @@ public class CrewChatSettingActivity extends BaseSingleBackActivity implements C
             setEnterVDuty(swEnterVDuty);
         });
 
-        mTvScreenRotation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.showDialog("");
-            }
+        back_imv.setOnClickListener(view -> {
+            finish();
         });
+
+        mTvScreenRotation.setOnClickListener(v -> mPresenter.showDialog(""));
     }
 
     @Override
@@ -110,7 +107,7 @@ public class CrewChatSettingActivity extends BaseSingleBackActivity implements C
         return isEnable;
     }
 
-    private void setEnterVDuty(SwitchCompat swEnterVDuty) {
+    private void setEnterVDuty(CheckBox swEnterVDuty) {
         boolean isEnable = swEnterVDuty.isChecked();
         mPrefs.putBooleanValue(Statics.IS_ENABLE_ENTER_VIEW_DUTY_KEY, isEnable);
         EventBus.getDefault().post(new NotifyAdapterOgr());

@@ -5,6 +5,7 @@
         android:id="@+id/menu_add"
         android:orderInCategory="100"
         android:title="Add"
+        android:iconTint="@color/black"
         android:icon="@drawable/ic_add_circle_outline_white_24dp"
         app:showAsAction="always" />
 </menu>

@@ -2,18 +2,17 @@ package com.dazone.crewchatoff.activity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
+import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.adapter.AttachFileBoxAdapter;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.AttachImageList;
@@ -29,7 +28,7 @@ import java.util.List;
  * Created by maidinh on 7/2/2017.
  */
 
-public class AttachFileBoxActivity extends AppCompatActivity {
+public class AttachFileBoxActivity extends BaseActivity {
     String TAG = "AttachFileBoxActivity";
     RecyclerView rvIvFileBox;
     LinearLayoutManager lLayout;
@@ -43,8 +42,7 @@ public class AttachFileBoxActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attach_file_box_layout);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         init();
     }
 
@@ -64,6 +62,8 @@ public class AttachFileBoxActivity extends AppCompatActivity {
         mAdapter = new AttachFileBoxAdapter(this, imagesURL, allUser);
         rvIvFileBox = findViewById(R.id.rvIvFileBox);
         lLayout = new LinearLayoutManager(AttachFileBoxActivity.this);
+
+        findViewById(R.id.imgBack).setOnClickListener(view -> finish());
 
 
         rvIvFileBox.setLayoutManager(lLayout);
@@ -92,15 +92,5 @@ public class AttachFileBoxActivity extends AppCompatActivity {
                 tvNodata.setVisibility(View.VISIBLE);
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return true;
     }
 }

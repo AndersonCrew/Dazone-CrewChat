@@ -65,6 +65,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:text="@string/string_ok"
+            android:fontFamily="@font/gmarketsans_medium"
             android:textColor="@color/button_login"
             android:textSize="16sp"
             android:textStyle="normal" />

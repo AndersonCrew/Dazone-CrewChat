@@ -3,68 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <!-- TOOLBAR -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:contentInsetEnd="0dp"
-        android:contentInsetLeft="0dp"
-        android:contentInsetRight="0dp"
-        android:contentInsetStart="0dp"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
+        android:gravity="center_vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/btn_back"
+            android:tint="@color/black"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/padding_block"
+            android:src="@drawable/nav_back_ic" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_back"
+            android:gravity="center_vertical"
+            android:padding="@dimen/padding_small"
+            android:text="@string/my_profile"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_profile_title" />
 
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_centerVertical="true"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/padding_block"
-                android:src="@drawable/nav_back_ic" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/btn_more"
-                android:layout_toRightOf="@+id/btn_back"
-                android:gravity="center_vertical"
-                android:padding="@dimen/padding_small"
-                android:text="@string/my_profile"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_profile_title" />
-
-            <ImageView
-                android:id="@+id/btn_more"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/padding_block"
-                android:src="@drawable/nav_mnu_ver_ic"
-                android:visibility="gone" />
-        </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
+    </RelativeLayout>
 
     <ScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -72,23 +49,32 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_underline"
+                android:background="#F4F4F4"
                 android:paddingBottom="@dimen/dimen_10_20">
                 <!-- AVATAR -->
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_avatar"
-                    android:layout_width="@dimen/profile_avatar"
-                    android:layout_height="@dimen/profile_avatar"
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAvatar"
+                    app:cardCornerRadius="12dp"
                     android:layout_marginTop="@dimen/dimen_10_20"
                     android:layout_marginBottom="@dimen/profile_avatar_margin_bottom"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/avatar_l"/>
+                    android:layout_width="@dimen/profile_avatar"
+                    android:layout_height="@dimen/profile_avatar">
+                    <ImageView
+                        android:id="@+id/iv_avatar"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/profile_avatar"
+                        android:layout_height="@dimen/profile_avatar"
+                        android:src="@drawable/avatar_l"/>
+                </androidx.cardview.widget.CardView>
+
                 <!-- FULL NAME -->
                 <TextView
                     android:id="@+id/tv_full_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_avatar"
+                    android:layout_below="@+id/cardAvatar"
                     android:gravity="center"
                     android:textSize="@dimen/profile_text_size_username" />
                 <!-- POSITION NAME -->
@@ -101,30 +87,11 @@
                     android:textSize="@dimen/profile_text_size_company" />
 
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btnChat"
-                    app:cardCornerRadius="20dp"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/tv_position_name"
-                    android:layout_marginTop="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/gray">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/nav_chat_ic" />
-                </androidx.cardview.widget.CardView>
-
                 <!-- PHONE AND MAIL -->
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnChat"
+                    android:layout_below="@+id/tv_position_name"
                     android:layout_centerHorizontal="true"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/padding_block"
@@ -164,68 +131,13 @@
                     style="@style/profile_content" />
             </LinearLayout>
 
-            <!-- ROW PASSWORD  -->
-            <FrameLayout
-                android:id="@+id/pwLayout"
-                style="@style/profile_row_layout">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/dimen_3_6"
-                    android:paddingBottom="@dimen/dimen_3_6">
-
-                    <TextView
-                        style="@style/profile_label"
-                        android:text="@string/login_password_change"
-                        android:textAllCaps="true" />
-
-                    <TextView
-                        android:id="@+id/tv_pass"
-                        style="@style/profile_label"
-                        android:inputType="textPassword"
-                        android:text="textPassword"
-                        android:textColor="@color/black" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/btnChangePass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|right"
-                    android:text="@string/change_pass"
-                    android:background="@drawable/bg_change_pass"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginEnd="11dp"
-                    android:layout_marginRight="11dp"
-                    android:padding="@dimen/dimen_12_24"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:textAllCaps="false" />
-            </FrameLayout>
-
-            <!-- ROW NAME -->
-            <LinearLayout
-                style="@style/profile_row_layout"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/profile_label"
-                    android:text="@string/profile_label_name" />
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    style="@style/profile_content" />
-            </LinearLayout>
 
             <!-- ROW MAIL ADDRESS -->
             <LinearLayout style="@style/profile_row_layout_horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -236,21 +148,15 @@
 
                     <TextView
                         android:id="@+id/tv_mail_address"
+                        android:fontFamily="@font/gmarketsans_medium"
                         style="@style/profile_content" />
                 </LinearLayout>
 
-
-                <ImageView
-                    android:id="@+id/iv_email_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/profile_ic_email_blue" />
             </LinearLayout>
 
             <!-- ROW SEX -->
             <LinearLayout
+                android:layout_marginLeft="12dp"
                 style="@style/profile_row_layout"
                 android:visibility="gone">
 
@@ -264,7 +170,9 @@
             </LinearLayout>
 
             <!-- ROW PHONE NUMBER -->
-            <LinearLayout style="@style/profile_row_layout"
+            <LinearLayout
+                android:layout_marginLeft="12dp"
+                style="@style/profile_row_layout"
                 android:visibility="gone">
 
                 <TextView
@@ -279,6 +187,7 @@
 
             <LinearLayout
                 android:id="@+id/ln_phone"
+                android:layout_marginLeft="12dp"
                 style="@style/profile_row_layout_horizontal">
 
                 <LinearLayout
@@ -292,36 +201,9 @@
                         android:text="@string/phone_number" />
 
                     <TextView
+                        android:fontFamily="@font/gmarketsans_medium"
                         android:id="@+id/tv_phone_number"
                         style="@style/profile_content" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp">
-
-                    <ImageView
-                        android:id="@+id/iv_phone_call"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/profile_ic_call_blue" />
-
-                    <ImageView
-                        android:id="@+id/iv_phone_email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/profile_ic_email_blue" />
 
                 </LinearLayout>
 
@@ -330,6 +212,7 @@
             <!-- ROW COMPANY NUMBER -->
 
             <LinearLayout
+                android:layout_marginLeft="12dp"
                 android:id="@+id/ln_ex_phone"
                 style="@style/profile_row_layout_horizontal">
 
@@ -344,41 +227,16 @@
                         android:text="@string/company_phone" />
 
                     <TextView
+                        android:fontFamily="@font/gmarketsans_medium"
                         android:id="@+id/tv_company_number"
                         style="@style/profile_content" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp">
-
-                    <ImageView
-                        android:id="@+id/iv_ex_phone_call"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/profile_ic_call_blue" />
-
-                    <ImageView
-                        android:id="@+id/iv_ex_phone_email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/profile_ic_email_blue" />
-
-                </LinearLayout>
-
 
             </LinearLayout>
 
             <!-- ROW ENTRANCE DATE -->
             <LinearLayout
+                android:layout_marginLeft="12dp"
                 android:id="@+id/tv_entrance_date_label"
                 style="@style/profile_row_layout">
 
@@ -387,12 +245,14 @@
                     android:text="@string/profile_label_entrance_date" />
 
                 <TextView
+                    android:fontFamily="@font/gmarketsans_medium"
                     android:id="@+id/tv_entrance_date"
                     style="@style/profile_content" />
             </LinearLayout>
 
             <!-- ROW BIRTHDAY -->
             <LinearLayout
+                android:layout_marginLeft="12dp"
                 android:id="@+id/tv_birthday_label"
                 style="@style/profile_row_layout">
 
@@ -401,6 +261,7 @@
                     android:text="@string/profile_label_birthday" />
 
                 <TextView
+                    android:fontFamily="@font/gmarketsans_medium"
                     android:id="@+id/tv_birthday"
                     style="@style/profile_content" />
             </LinearLayout>
@@ -416,9 +277,57 @@
 
                 <TextView
                     android:id="@+id/tv_belong_to_department"
+                    android:fontFamily="@font/gmarketsans_medium"
                     style="@style/profile_content"
                     android:singleLine="false" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/llChat"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/chat_120x120"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/gmarketsans_medium"
+                        android:text="대화하가"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="32dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/favorite_120x120"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"/>
+
+                    <TextView
+                        android:layout_marginTop="8dp"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/gmarketsans_medium"
+                        android:text="대화하가"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

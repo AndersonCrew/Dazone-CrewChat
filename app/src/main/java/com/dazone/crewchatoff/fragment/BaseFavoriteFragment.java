@@ -128,11 +128,11 @@ public class BaseFavoriteFragment extends Fragment implements TabLayout.OnTabSel
         if (tab.getPosition() == 0) {
             hideIcon();
             ImageView icon = tab.getCustomView().findViewById(R.id.iv_icon_left);
-            icon.setImageResource(R.drawable.nav_chat_ic);
+            icon.setImageResource(R.drawable.ic_chat_tab_unselect);
         } else {
             showIcon();
             ImageView icon = tab.getCustomView().findViewById(R.id.iv_icon_right);
-            icon.setImageResource(R.drawable.tabbar_group_ic);
+            icon.setImageResource(R.drawable.ic_user_tab_unselect);
             if (getActivity() != null) {
                 showSearchFavorite();
             }
@@ -143,10 +143,10 @@ public class BaseFavoriteFragment extends Fragment implements TabLayout.OnTabSel
     public void onTabUnselected(TabLayout.Tab tab) {
         if (tab.getPosition() == 0) {
             ImageView icon = tab.getCustomView().findViewById(R.id.iv_icon_left);
-            icon.setImageResource(R.drawable.nav_chat_ic_blue);
+            icon.setImageResource(R.drawable.ic_chat_tab_selected);
         } else {
             ImageView icon = tab.getCustomView().findViewById(R.id.iv_icon_right);
-            icon.setImageResource(R.drawable.tabbar_group_ic_blue);
+            icon.setImageResource(R.drawable.ic_user_selected);
         }
     }
 

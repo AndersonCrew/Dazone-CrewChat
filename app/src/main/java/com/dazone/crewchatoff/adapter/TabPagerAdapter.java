@@ -30,7 +30,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 1: // 조직도 탭
+            case 0: // 조직도 탭
                 CompanyFragment companyFragment = new CompanyFragment();
                 companyFragment.setContext(mContext);
                 return companyFragment;
@@ -41,7 +41,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
             case 3: // 환경설정 탭
                 return new SettingFragment();
-            case 0: // 채팅 리스트 탭
+            case 1: // 채팅 리스트 탭
             default: // 기본(채팅리스트)
                 return new CurrentChatListFragment();
         }

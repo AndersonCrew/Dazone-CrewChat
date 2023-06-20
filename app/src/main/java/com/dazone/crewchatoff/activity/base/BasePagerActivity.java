@@ -10,9 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
@@ -57,6 +57,7 @@ public abstract class BasePagerActivity extends BaseActivity {
     public TabLayout tabLayout;
     protected FloatingActionButton fab;
     protected FrameLayout frNewChat;
+    private LinearLayout toolbar;
 
     /**
      * MENU ITEM
@@ -73,8 +74,7 @@ public abstract class BasePagerActivity extends BaseActivity {
 
         setContentView(R.layout.activity_base_pager);
         CrewChatApplication.isAddUser = true;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
@@ -82,6 +82,7 @@ public abstract class BasePagerActivity extends BaseActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container);
+
         mViewPager.setAdapter(tabAdapter);
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -128,26 +129,21 @@ public abstract class BasePagerActivity extends BaseActivity {
 
     // Hide topmenubar search icon(default)
     // 탑 메뉴바의 검색 아이콘을 숨김(기본)
-    public void showIcon() {
-        if (ivSearch != null) {
-            if (!ivSearch.isShown())
-                ivSearch.setVisibility(View.VISIBLE);
+
+    public void hideSearch(boolean isHide) {
+        ivSearch.setVisibility(!isHide ? View.VISIBLE : View.GONE);
+        if(menuItemSearch != null) {
+            menuItemSearch.setVisible(isHide);
         }
+
     }
 
-    public void hideSearchIcon() {
-        if (ivSearch != null) {
-            ivSearch.setVisibility(View.GONE);
-        }
+    public void hideToolBar(boolean isHide) {
+        toolbar.setVisibility(!isHide ? View.VISIBLE : View.GONE);
     }
 
-    public void hideSearchView() {
-
-        if (menuItemSearch != null) {
-            menuItemSearch.setVisible(false);
-            } else {
-
-        }
+    public void hideCreateIcon(boolean isHide) {
+        frNewChat.setVisibility(!isHide ? View.VISIBLE : View.GONE);
     }
 
     public void showPAB() {

@@ -42,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
     private ProgressDialog mProgressDialog;
     private NetworkStateReceiver networkStateReceiver;
     public static boolean isDisConnect;
+    public boolean hasChangeStatusBar = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,9 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkS
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-        changeStatusBarColor();
-
+        if(hasChangeStatusBar) {
+            changeStatusBarColor();
+        }
     }
 
     private void changeStatusBarColor() {
