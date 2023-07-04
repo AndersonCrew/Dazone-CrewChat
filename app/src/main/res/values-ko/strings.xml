@@ -124,7 +124,7 @@
 
     <string name="settings_general">일반 설정</string>
     <string name="logout">로그아웃</string>
-    <string name="my_profile">내정보</string>
+    <string name="my_profile">사용자 정보</string>
 
     <!-- Profile page -->
     <string name="personal_id">사용자 ID</string>
@@ -291,4 +291,5 @@
     <string name="string_update_content">최신버전이 존재합니다. 최신버전으로 업데이트 하시길 바랍니다</string>
     <string name="enter_v_duty">직책 표시</string>
     <string name="settings_change_pass">비밀번호 변경</string>
+    <string name="favorite_tab_title">즐겨찾기</string>
 </resources>

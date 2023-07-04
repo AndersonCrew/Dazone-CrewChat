@@ -4,6 +4,7 @@
     android:id="@+id/item_org_main_wrapper"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
@@ -24,24 +25,24 @@
 
             <ImageView
                 android:id="@+id/ic_folder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/selector_trans_to_gray"
                 android:padding="@dimen/padding_small"
-                android:src="@drawable/home_folder_open_ic" />
+                android:src="@drawable/arrow_open" />
 
             <RelativeLayout
                 android:id="@+id/relAvatar"
-                android:layout_width="@dimen/tree_user_avatar_dimen"
-                android:layout_height="@dimen/tree_user_avatar_dimen"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="@dimen/margin_small"
                 android:visibility="visible">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/avatar"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp" />
 
                 <ImageView
                     android:id="@+id/status_imv"

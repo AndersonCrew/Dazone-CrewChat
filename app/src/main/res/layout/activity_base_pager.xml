@@ -18,14 +18,15 @@
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <TextView
-            android:text="@string/app_name"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="12dp"
-            android:textSize="16sp"
-            android:fontFamily="@font/gmarketsans_medium"
+            android:id="@+id/tvTitle"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"/>
+            android:fontFamily="@font/gmarketsans_bold"
+            android:gravity="center_vertical"
+            android:text="@string/app_name"
+            android:textSize="18sp" />
 
         <FrameLayout
             android:id="@+id/iv_search"
@@ -80,7 +81,8 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
-        android:background="@color/white"
+        app:tabIndicatorColor="#EEEEEE"
+        android:background="#EEEEEE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"

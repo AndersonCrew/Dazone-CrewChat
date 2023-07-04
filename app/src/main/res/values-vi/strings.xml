@@ -289,4 +289,5 @@
     <string name="company_phone">Số điện thoại công ty</string>
     <string name="enter_v_duty">Hiển thị cấp bậc</string>
     <string name="settings_change_pass">비밀번호 변경</string>
+    <string name="favorite_tab_title">즐겨찾기</string>
 </resources>

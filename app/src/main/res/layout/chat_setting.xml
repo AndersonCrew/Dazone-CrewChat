@@ -19,6 +19,7 @@
         <LinearLayout
             android:gravity="center"
             android:paddingTop="20dp"
+            android:layout_marginTop="48dp"
             android:paddingBottom="10dp"
             android:background="#F4F4F4"
             android:layout_width="match_parent"
@@ -28,8 +29,8 @@
 
             <androidx.cardview.widget.CardView
                 app:cardCornerRadius="10dp"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="92dp"
+                android:layout_height="92dp"
                 android:src="@drawable/avatar_l" >
                 <ImageView
                     android:id="@+id/iv_avatar"
@@ -67,6 +68,7 @@
             android:textColor="@color/black"
             tools:text="pikakun19@gmail.com"
             android:layout_marginTop="4dp"
+            android:textSize="16sp"
             android:layout_marginStart="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -93,6 +95,7 @@
 
             <TextView
                 android:id="@+id/tvPhone"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 tools:text="0375225146"
                 android:layout_marginTop="4dp"
@@ -126,6 +129,7 @@
                 android:id="@+id/tvPhoneCompany"
                 android:textColor="@color/black"
                 tools:text="0375225146"
+                android:textSize="16sp"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"

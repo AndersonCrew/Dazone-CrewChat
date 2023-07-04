@@ -268,4 +268,5 @@
     <string name ="string_update_content">存在較新的版本。請更新到最新版本</string>
     <string name ="enter_v_duty">顯示標題</string>
     <string name="settings_change_pass">비밀번호 변경</string>
+    <string name="favorite_tab_title">즐겨찾기</string>
 </resources>

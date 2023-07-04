@@ -293,4 +293,5 @@
     <string name="company_phone">Company Phone</string>
     <string name="enter_v_duty">View Duty Title</string>
     <string name="settings_change_pass">Pass change</string>
+    <string name="favorite_tab_title">Favorite</string>
 </resources>

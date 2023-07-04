@@ -173,6 +173,7 @@ public class HttpOauthRequest {
                 Log.d(TAG, "loginV2 response:" + response);
                 Gson gson = new Gson();
                 final UserDto userDto = gson.fromJson(response, UserDto.class);
+                CrewChatApplication.getInstance().getPrefs().putStringValue(Constants.NAME_OF_COMPANY, userDto.NameCompany);
 
                 final String CrewDDSServerIP = userDto.getCrewDDSServerIP();
                 final int CrewDDSServerPort = userDto.getCrewDDSServerPort();

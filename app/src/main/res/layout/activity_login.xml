@@ -17,11 +17,19 @@
 
             <!-- Image logo -->
 
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/iv_logo"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/logo64x64"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:fontFamily="@font/gmarketsans_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
                 android:gravity="center_horizontal"
                 android:text="@string/app_name"
                 android:textColor="#333333"
@@ -122,6 +130,7 @@
 
     <include
         layout="@layout/logo"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true" />

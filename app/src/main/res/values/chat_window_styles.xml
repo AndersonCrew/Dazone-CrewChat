@@ -99,6 +99,7 @@
     <style name="tv_tree_user_style">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="fontFamily">@font/gmarketsans_medium</item>
         <item name="android:textSize">@dimen/tree_user_text_size</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>

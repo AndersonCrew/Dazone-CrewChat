@@ -11,4 +11,5 @@ object Constants {
     const val TYPE_SHARE = "TYPE_SHARE"
     const val HAS_CALL_UNREAD_COUNT = "HAS_CALL_UNREAD_COUNT"
     const val DOWNLOAD_FILE_CODE = 112
+    const val NAME_OF_COMPANY = "NAME_OF_COMPANY"
 }

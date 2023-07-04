@@ -149,7 +149,7 @@ public class AdapterOrganizationCompanyTab extends RecyclerView.Adapter<AdapterO
             params.setMargins(margin, 0, 0, 0);
             item_org_wrapper.setLayoutParams(params);
 
-            folderIcon.setImageResource(treeUserDTO.isFlag() ? R.drawable.home_folder_open_ic : R.drawable.home_folder_close_ic);
+            folderIcon.setImageResource(treeUserDTO.isFlag() ? R.drawable.arrow_open : R.drawable.arrow_close);
             item_org_wrapper.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

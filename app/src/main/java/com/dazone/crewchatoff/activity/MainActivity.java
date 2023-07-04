@@ -23,6 +23,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -182,7 +183,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
                 mViewPager.setAdapter(tabAdapter);
                 mViewPager.setOffscreenPageLimit(3);
                 tabLayout.setupWithViewPager(mViewPager);
-                setupTab();
+                setupTab(0);
             }
 
             setupViewPager();
@@ -525,16 +526,19 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
         mViewPager.addOnPageChangeListener(this);
     }
 
-    protected void setupTab() {
+    protected void setupTab(int tab) {
         if (tabLayout == null) {
             return;
         }
 
         View view = LayoutInflater.from(this).inflate(R.layout.custom_tab_view, null);
-        tabLayout.getTabAt(0).setIcon(R.drawable.user_defalt);
-        tabLayout.getTabAt(1).setIcon(R.drawable.chat_defalt);
-        tabLayout.getTabAt(2).setIcon(R.drawable.favorite_defalt);
-        tabLayout.getTabAt(3).setIcon(R.drawable.option_default);
+        tabLayout.getTabAt(0).setIcon(tab == 0 ? R.drawable.user_active : R.drawable.user_defalt);
+        tabLayout.getTabAt(1).setIcon(tab == 1? R.drawable.chat_active : R.drawable.chat_defalt);
+        tabLayout.getTabAt(2).setIcon(tab == 2 ? R.drawable.favorite_active : R.drawable.favorite_defalt);
+        tabLayout.getTabAt(3).setIcon(tab == 3 ? R.drawable.option_active : R.drawable.option_defalt);
+        TextView tvTitle = findViewById(R.id.tvTitle);
+        tvTitle.setText(tab == 0 || tab == 1 ? CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.NAME_OF_COMPANY, getString(R.string.app_name)): getString(R.string.app_name));
+        tvTitle.setText(tab == 0 || tab == 1 ? CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.NAME_OF_COMPANY, getString(R.string.app_name)): tab == 2 ? getString(R.string.favorite_tab_title): getString(R.string.app_name));
     }
 
     @Override
@@ -592,6 +596,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageSelected(final int position) {
+        setupTab(position);
         if (position != TAB_CHAT) {
             if (CurrentChatListFragment.fragment != null) {
                 CurrentChatListFragment.fragment.justHide();
@@ -606,7 +611,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
         new Prefs().putIntValue("PAGE", position);
         if (position == TAB_CHAT) {
             showPAB();
-            hideSearch(true);
+            hideSearch(false);
             hideToolBar(false);
 
         } else if(position == TAB_FAVORITE) {
