@@ -348,7 +348,12 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         title = roomTitle;
 
         if (title != null && TextUtils.isEmpty(title.trim())) {
-            title = "그룹 재팅";
+            if(userNos.size() > 2) {
+                title = "그룹 채팅";
+            } else {
+                title = mDto.getListTreeUser().get(0).Name;
+            }
+
         }
         this.roomTitle = title;
         setTitle(title);

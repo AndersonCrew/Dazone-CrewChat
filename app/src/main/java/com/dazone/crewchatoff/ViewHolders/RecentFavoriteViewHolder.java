@@ -56,7 +56,6 @@ public class RecentFavoriteViewHolder extends ItemViewHolder<ChattingDto> implem
     }
 
     public TextView tvUserName, tvDate, tvContent, tvTotalUser;
-    public RoundedImageView status_imv;
     private ImageView imgBadge, status_imv_null;
     private ImageView imgAvatar;
     private ImageView ivLastedAttach;

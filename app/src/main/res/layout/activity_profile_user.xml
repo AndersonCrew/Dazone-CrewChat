@@ -305,7 +305,7 @@
                         android:layout_marginTop="8dp"
                         android:textSize="13sp"
                         android:fontFamily="@font/gmarketsans_medium"
-                        android:text="대화하가"
+                        android:text="대화하기"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
