@@ -113,7 +113,7 @@ public abstract class ListFragment<T> extends Fragment {
         return v;
     }
 
-    private ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+    private final ViewTreeObserver.OnGlobalLayoutListener keyboardLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
             Rect rect = new Rect();
@@ -144,7 +144,7 @@ public abstract class ListFragment<T> extends Fragment {
         if (tvUpdateTime != null) tvUpdateTime.setText(timer);
     }
 
-    private TextWatcher mWatcher = new TextWatcher() {
+    private final TextWatcher mWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -160,6 +160,11 @@ public abstract class ListFragment<T> extends Fragment {
         public void afterTextChanged(Editable s) {
         }
     };
+    public void actionSearch(String s) {
+        if (adapterList != null) {
+            adapterList.filterRecentFavorite(s);
+        }
+    }
 
     public void justHide() {
         // Send broadcast to show search view input

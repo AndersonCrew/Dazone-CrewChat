@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,7 +40,7 @@ public abstract class BaseSingleStatusActivity extends BaseActivity {
     protected ImageView ivMore;
     protected ImageView ivCall;
     protected ImageView ivSearch;
-    protected SearchView mSearchView;
+    protected ImageView mSearchView;
     protected RelativeLayout btnGroup;
     protected ImageView ivStatus;
 
@@ -49,8 +52,6 @@ public abstract class BaseSingleStatusActivity extends BaseActivity {
         ivCall = findViewById(R.id.call_menu);
         ivSearch = findViewById(R.id.search_menu);
         mSearchView = findViewById(R.id.searchView);
-        mSearchView.setImeOptions(mSearchView.getImeOptions() | EditorInfo.IME_ACTION_SEARCH | EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
-        mSearchView.setIconified(true);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,6 +69,36 @@ public abstract class BaseSingleStatusActivity extends BaseActivity {
         });
 
         findViewById(R.id.imgBack).setOnClickListener(view -> finish());
+        findViewById(R.id.imgBackSearch).setOnClickListener(view -> finish());
+        findViewById(R.id.imgCloseSearch).setOnClickListener(view -> {
+            findViewById(R.id.llToolBar).setVisibility(View.VISIBLE);
+            findViewById(R.id.llSearch).setVisibility(View.GONE);
+        });
+
+        mSearchView.setOnClickListener(view -> {
+            findViewById(R.id.llToolBar).setVisibility(View.GONE);
+            findViewById(R.id.llSearch).setVisibility(View.VISIBLE);
+        });
+
+        EditText etSearch = findViewById(R.id.etSearch);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(ChattingActivity.instance != null) {
+                    ChattingActivity.instance.actionSearch(etSearch.getText().toString());
+                }
+            }
+        });
     }
     public static String getPath(Context context, Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

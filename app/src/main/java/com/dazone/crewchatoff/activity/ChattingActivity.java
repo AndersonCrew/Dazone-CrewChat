@@ -807,58 +807,11 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
     }
 
     private void showSearchView() {
-        if (isShow) {
-            mSearchView.setIconified(true);
-            isShow = true;
-        } else {
-            mSearchView.setIconified(false);
-            isShow = false;
-        }
+
     }
 
     private void setupSearchView() {
-        if (isAlwaysExpanded()) {
-            mSearchView.setIconifiedByDefault(false);
-        }
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        if (searchManager != null) {
-            List<SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();
-            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
-
-            for (SearchableInfo inf : searchables) {
-                if (inf.getSuggestAuthority() != null
-                        && inf.getSuggestAuthority().startsWith("applications")) {
-                    info = inf;
-                }
-            }
-
-            mSearchView.setSearchableInfo(info);
-        }
-
-        mSearchView.setOnQueryTextListener(this);
-        mSearchView.setOnClickListener(view -> {
-            ChattingFragment.instance.isSearchFocused = true;
-        });
-
-        mSearchView.setOnCloseListener(() -> {
-            ChattingFragment.instance.isSearchFocused = false;
-            return false;
-        });
-
-        mSearchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                Log.d("AC", "A");
-            }
-        });
-        mSearchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ChattingFragment.instance.isSearchFocused = true;
-            }
-        });
     }
 
     protected boolean isAlwaysExpanded() {
@@ -891,6 +844,12 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         ChattingFragment.instance.isFiltering = !TextUtils.isEmpty(strSearch);
         ChattingFragment.instance.strFilter = strSearch;
     };
+
+    public void actionSearch(String s){
+        ChattingFragment.instance.adapterList.filter(s, ChattingFragment.instance.dataSetCopy);
+        ChattingFragment.instance.isFiltering = !TextUtils.isEmpty(s);
+        ChattingFragment.instance.strFilter = s;
+    }
 
     private Handler mHandler = new Handler();
 

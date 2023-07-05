@@ -294,4 +294,7 @@
     <string name="enter_v_duty">View Duty Title</string>
     <string name="settings_change_pass">Pass change</string>
     <string name="favorite_tab_title">Favorite</string>
+    <string name="hint_search_company">User search</string>
+    <string name="hint_search_current_chat_list">Chatting room search</string>
+    <string name="hint_detail_chat">Chatting detail search</string>
 </resources>

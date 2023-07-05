@@ -292,4 +292,7 @@
     <string name="enter_v_duty">직책 표시</string>
     <string name="settings_change_pass">비밀번호 변경</string>
     <string name="favorite_tab_title">즐겨찾기</string>
+    <string name="hint_search_company">사용자 검색</string>
+    <string name="hint_search_current_chat_list">대화방 검색</string>
+    <string name="hint_detail_chat">대화내용 검색</string>
 </resources>

@@ -4,11 +4,14 @@ import static java.lang.Integer.MAX_VALUE;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -29,6 +32,7 @@ import com.dazone.crewchatoff.dto.ErrorDto;
 import com.dazone.crewchatoff.fragment.BaseFavoriteFragment;
 import com.dazone.crewchatoff.fragment.CompanyFragment;
 import com.dazone.crewchatoff.fragment.CurrentChatListFragment;
+import com.dazone.crewchatoff.fragment.RecentFavoriteFragment;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBack;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Prefs;
@@ -75,6 +79,7 @@ public abstract class BasePagerActivity extends BaseActivity {
         setContentView(R.layout.activity_base_pager);
         CrewChatApplication.isAddUser = true;
         toolbar = findViewById(R.id.toolbar);
+        setUpSearch();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
@@ -88,21 +93,24 @@ public abstract class BasePagerActivity extends BaseActivity {
         tabLayout.setupWithViewPager(mViewPager);
         ivSearch = findViewById(R.id.iv_search);
         ivSearch.setOnClickListener(v -> {
-            if (MainActivity.CURRENT_TAB == 0) {
-                if (CurrentChatListFragment.fragment != null) {
-                    CurrentChatListFragment.fragment.searchAction(1);
-                }
-            } else if (MainActivity.CURRENT_TAB == 1) {
+            findViewById(R.id.llSearch).setVisibility(View.VISIBLE);
+            toolbar.setVisibility(View.GONE);
 
-            } else if (MainActivity.CURRENT_TAB == 2) {
-                if (BaseFavoriteFragment.CURRENT_TAB == 0) {
-                    BaseFavoriteFragment.instance.Favorite_left();
-                } else {
-                    BaseFavoriteFragment.instance.Favorite_Right();
-                }
+            EditText etSearch = findViewById(R.id.llSearch).findViewById(R.id.etSearch);
+            switch (MainActivity.CURRENT_TAB) {
+                case 0:
+                case 2:
+                    etSearch.setHint(R.string.hint_search_company);
+                    break;
+                case 1:
+                    etSearch.setHint(R.string.hint_search_current_chat_list);
+                    break;
+                default:
+                    break;
             }
-        });
 
+            if (CompanyFragment.instance != null) CompanyFragment.instance.getListCurrent();
+        });
 
         //fab = findViewById(R.id.fab);
         frNewChat = findViewById(R.id.frNewChat);
@@ -125,6 +133,53 @@ public abstract class BasePagerActivity extends BaseActivity {
         });
         init();
         inItShare();
+    }
+
+    private void setUpSearch() {
+        View searchBar = findViewById(R.id.llSearch);
+        EditText etSearch = findViewById(R.id.etSearch);
+        searchBar.findViewById(R.id.imgCloseSearch).setOnClickListener(view -> {
+            searchBar.setVisibility(View.GONE);
+            toolbar.setVisibility(View.VISIBLE);
+        });
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                switch (MainActivity.CURRENT_TAB) {
+                    case 0:
+                        if(CompanyFragment.instance != null){
+                            CompanyFragment.instance.updateSearch(etSearch.getText().toString());
+                        }
+
+                        break;
+                    case 1:
+                        if (CurrentChatListFragment.fragment != null) {
+                            CurrentChatListFragment.fragment.actionSearch(etSearch.getText().toString());
+                        }
+                        break;
+                    case 2:
+                        if (BaseFavoriteFragment.CURRENT_TAB == 1) {
+                            MultilLevelListviewFragment.instance.actionSearch(etSearch.getText().toString());
+                        } else {
+                            RecentFavoriteFragment.instance.actionSearch(etSearch.getText().toString());
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     // Hide topmenubar search icon(default)

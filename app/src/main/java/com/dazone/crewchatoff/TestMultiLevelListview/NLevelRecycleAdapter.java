@@ -579,7 +579,7 @@ public class NLevelRecycleAdapter extends RecyclerView.Adapter<RecyclerView.View
                 } else {
                     TreeUserDTO object = item.getObject();
                     if (object != null && object.getType() == Statics.TYPE_USER) {
-                        if (object.getName().contains(textString)) {
+                        if (object.getName().toLowerCase().contains(textString.toLowerCase())) {
                             tempfiltered.add(item);
                         }
                     }

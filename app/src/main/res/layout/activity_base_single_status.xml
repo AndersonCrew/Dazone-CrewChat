@@ -7,7 +7,56 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
+
     <LinearLayout
+        android:id="@+id/llSearch"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/chat_list_bg_color">
+        <ImageView
+            android:id="@+id/imgBackSearch"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_icon_search"
+            android:src="@drawable/nav_back_ic"
+            android:tint="@color/colorIcon"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_search"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:padding="10dp"
+                android:src="@drawable/ic_search"
+                android:layout_width="?actionBarSize"
+                android:layout_height="match_parent"/>
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:hint="@string/hint_detail_chat"
+                android:paddingEnd="10dp"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgCloseSearch"
+            android:padding="16dp"
+            android:src="@drawable/ic_cancel"
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/llToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/chat_list_bg_color"
@@ -114,8 +163,9 @@
         <ImageView
             android:id="@+id/imgMembers"
             style="@style/Button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:paddingVertical="12dp"
+            android:layout_width="40dp"
+            android:layout_height="?actionBarSize"
             android:tint="@color/colorIcon"
             android:src="@drawable/ic_gr_member"
             android:visibility="visible" />
@@ -129,15 +179,17 @@
             android:src="@drawable/nav_search_c"
             android:visibility="gone" />
 
-        <androidx.appcompat.widget.SearchView
+        <ImageView
             android:id="@+id/searchView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:layout_width="40dp"
+            android:layout_height="?actionBarSize"
             android:gravity="right"
+            android:src="@drawable/ic_search_black_24dp"
             android:showAsAction="collapseActionView|ifRoom"
             android:visibility="visible">
 
-        </androidx.appcompat.widget.SearchView>
+        </ImageView>
 
         <ImageView
             android:id="@+id/more_menu"

@@ -9,6 +9,11 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.base.BasePagerActivity">
 
+    <include
+        android:id="@+id/llSearch"
+        android:visibility="gone"
+        layout="@layout/layout_search"/>
+
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

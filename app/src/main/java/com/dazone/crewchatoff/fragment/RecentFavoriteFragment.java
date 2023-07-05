@@ -75,7 +75,7 @@ public class RecentFavoriteFragment extends ListFragment<ChattingDto> implements
         getActivity().unregisterReceiver(mReceiverShowSearchInput);
     }
 
-    private BroadcastReceiver mReceiverShowSearchInput = new BroadcastReceiver() {
+    private final BroadcastReceiver mReceiverShowSearchInput = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Statics.ACTION_SHOW_SEARCH_INPUT)) {
@@ -179,13 +179,13 @@ public class RecentFavoriteFragment extends ListFragment<ChattingDto> implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_recent_favorite, container, false);
 
-        progressBar = (LinearLayout) rootView.findViewById(R.id.progressBar);
+        progressBar = rootView.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
         Log.d(TAG, "VISIBLE 1");
-        rvMainList = (RecyclerView) rootView.findViewById(R.id.rv_main);
+        rvMainList = rootView.findViewById(R.id.rv_main);
 
-        tvNodata = (TextView) rootView.findViewById(R.id.tvNodata);
-        etInputSearch = (EditText) rootView.findViewById(R.id.inputSearch);
+        tvNodata = rootView.findViewById(R.id.tvNodata);
+        etInputSearch = rootView.findViewById(R.id.inputSearch);
         etInputSearch.setImeOptions(etInputSearch.getImeOptions() | EditorInfo.IME_ACTION_SEARCH | EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
@@ -232,6 +232,12 @@ public class RecentFavoriteFragment extends ListFragment<ChattingDto> implements
     public void updateUnRead(int finalPos) {
 
         adapterList.notifyItemChanged(finalPos);
+    }
+
+    public void actionSearch(String s) {
+        if (adapterList != null) {
+            adapterList.filterRecentFavorite(s);
+        }
     }
 
     // update data after read msg
@@ -394,42 +400,38 @@ public class RecentFavoriteFragment extends ListFragment<ChattingDto> implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case Statics.RENAME_ROOM:
+            if (requestCode == Statics.RENAME_ROOM) {
+                if (data != null) {
+                    final int roomNo = data.getIntExtra(Statics.ROOM_NO, 0);
+                    final String roomTitle = data.getStringExtra(Statics.ROOM_TITLE);
+                    // Update current chat list
 
-                    if (data != null) {
-                        final int roomNo = data.getIntExtra(Statics.ROOM_NO, 0);
-                        final String roomTitle = data.getStringExtra(Statics.ROOM_TITLE);
-                        // Update current chat list
-
-                        for (ChattingDto a : dataSet) {
-                            if (roomNo == a.getRoomNo()) {
-                                a.setRoomTitle(roomTitle);
-                                adapterList.notifyDataSetChanged();
-                                Log.d(TAG, "adapterList.notifyDataSetChanged 5");
-                                Log.d(TAG, "RENAME_ROOM");
-                                break;
-                            }
-
+                    for (ChattingDto a : dataSet) {
+                        if (roomNo == a.getRoomNo()) {
+                            a.setRoomTitle(roomTitle);
+                            adapterList.notifyDataSetChanged();
+                            Log.d(TAG, "adapterList.notifyDataSetChanged 5");
+                            Log.d(TAG, "RENAME_ROOM");
+                            break;
                         }
-                        if (CurrentChatListFragment.fragment != null) {
-                            CurrentChatListFragment.fragment.updateRenameRoom(roomNo, roomTitle);
-                        }
-                        // Start new thread to update local database
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ChatRoomDBHelper.updateChatRoom(roomNo, roomTitle);
-                            }
-                        }).start();
+
                     }
-                    break;
-
+                    if (CurrentChatListFragment.fragment != null) {
+                        CurrentChatListFragment.fragment.updateRenameRoom(roomNo, roomTitle);
+                    }
+                    // Start new thread to update local database
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChatRoomDBHelper.updateChatRoom(roomNo, roomTitle);
+                        }
+                    }).start();
+                }
             }
         }
     }
 
-    private OnContextMenuSelect mOnContextMenuSelect = new OnContextMenuSelect() {
+    private final OnContextMenuSelect mOnContextMenuSelect = new OnContextMenuSelect() {
         @Override
         public void onSelect(int type, Bundle bundle) {
             Intent intent;

@@ -75,7 +75,7 @@ public class MultilLevelListviewFragment extends Fragment {
     public RecyclerView.LayoutManager layoutManager;
     private TreeUserDTOTemp tempUser = null;
     private int myId;
-    private boolean isCreated = false;
+    private final boolean isCreated = false;
     private NLevelRecycleAdapter mAdapter = null;
     private EditText mInputSearch;
 
@@ -100,7 +100,7 @@ public class MultilLevelListviewFragment extends Fragment {
         getActivity().unregisterReceiver(mReceiverShowSearchInput);
     }
 
-    private BroadcastReceiver mReceiverShowSearchInput = new BroadcastReceiver() {
+    private final BroadcastReceiver mReceiverShowSearchInput = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Statics.ACTION_SHOW_SEARCH_FAVORITE_INPUT)) {
@@ -215,7 +215,7 @@ public class MultilLevelListviewFragment extends Fragment {
         unregisterReceiver();
     }
 
-    private boolean isShowSearchIcon = false;
+    private final boolean isShowSearchIcon = false;
 
     @Override
     public void onResume() {
@@ -326,7 +326,7 @@ public class MultilLevelListviewFragment extends Fragment {
 //        }
 //    }
 
-    private OnGetStatusCallback mStatusCallback = new OnGetStatusCallback() {
+    private final OnGetStatusCallback mStatusCallback = new OnGetStatusCallback() {
         @Override
         public void onGetStatusFinish() {
 
@@ -367,10 +367,10 @@ public class MultilLevelListviewFragment extends Fragment {
         instanceNew = this;
         mListFavoriteGroup = null;
         rootView = inflater.inflate(R.layout.fragment_multil_level_listview, container, false);
-        rvMain = (RecyclerView) rootView.findViewById(R.id.rv_main);
+        rvMain = rootView.findViewById(R.id.rv_main);
 
         // Addition - Search favorite
-        mInputSearch = (EditText) rootView.findViewById(R.id.inputSearch);
+        mInputSearch = rootView.findViewById(R.id.inputSearch);
         mInputSearch.setImeOptions(mInputSearch.getImeOptions() | EditorInfo.IME_ACTION_SEARCH | EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
         mInputSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -408,6 +408,12 @@ public class MultilLevelListviewFragment extends Fragment {
 
     public boolean isLoadDB() {
         return isLoad;
+    }
+
+    public void actionSearch(String s) {
+        if (mAdapter != null) {
+            mAdapter.getFilter().filterUser(s);
+        }
     }
 
 
@@ -678,7 +684,7 @@ public class MultilLevelListviewFragment extends Fragment {
 //        });
 //    }
 
-    private ArrayList<TreeUserDTO> temp = new ArrayList<>();
+    private final ArrayList<TreeUserDTO> temp = new ArrayList<>();
 
     public void convertData(List<TreeUserDTO> treeUserDTOs) {
         if (treeUserDTOs != null && treeUserDTOs.size() != 0) {
@@ -1184,7 +1190,7 @@ public class MultilLevelListviewFragment extends Fragment {
     }
 
     // 유저 추가 화면을 띄웁니다.(Show AddUser Activity)
-    private OnGroupShowContextMenu mOnshowCallback = new OnGroupShowContextMenu() {
+    private final OnGroupShowContextMenu mOnshowCallback = new OnGroupShowContextMenu() {
         @Override
         public void onShow(NLevelItem item, ArrayList<Integer> uNos) {
             mCurrentItemContext = item;
@@ -1252,7 +1258,6 @@ public class MultilLevelListviewFragment extends Fragment {
                     TreeUserDTOTemp tempU = AllUserDBHelper.getAUser(userNo);
                   /*  TreeUserDTOTemp userDtoBelong = new TreeUserDTOTemp();
                     userDtoBelong.setBelongs(BelongsToDBHelper.getBelongs(userNo))*/
-                    ;
                     if (tempU != null) {
                         TreeUserDTO newUser = new TreeUserDTO(tempU.getName(), tempU.getNameEN(), tempU.getCellPhone(), tempU.getAvatarUrl(),
                                 getPositionName(tempU), 2, 1, tempU.getUserNo(), idFolder);
