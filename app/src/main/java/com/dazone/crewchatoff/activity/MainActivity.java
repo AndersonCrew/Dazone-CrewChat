@@ -613,19 +613,23 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
             showPAB();
             hideSearch(false);
             hideToolBar(false);
+            changeIcon(false);
 
         } else if(position == TAB_FAVORITE) {
             hidePAB();
             hideSearch(false);
             hideToolBar(false);
+            changeIcon(true);
         } else if (position == TAB_COMPANY) {
             showPAB();
             hideSearch(false);
             hideToolBar(false);
+            changeIcon(false);
         } else if (position == TAB_SETTING) {
             hidePAB();
             hideSearch(true);
             hideToolBar(true);
+            changeIcon(false);
         }
         if (position == TAB_FAVORITE || position == TAB_COMPANY) {
             if (position == TAB_COMPANY || position == TAB_FAVORITE) {

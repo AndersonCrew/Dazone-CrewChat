@@ -59,6 +59,7 @@
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
+                android:id="@+id/imgAdd"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center"

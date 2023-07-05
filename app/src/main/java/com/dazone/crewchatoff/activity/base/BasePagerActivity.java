@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.SearchView;
@@ -190,7 +191,11 @@ public abstract class BasePagerActivity extends BaseActivity {
         if(menuItemSearch != null) {
             menuItemSearch.setVisible(isHide);
         }
+    }
 
+    public void changeIcon(boolean hasChange) {
+        ImageView imgAdd = findViewById(R.id.imgAdd);
+        imgAdd.setImageResource(hasChange ? R.drawable.group_add : R.drawable.chat_add);
     }
 
     public void hideToolBar(boolean isHide) {
