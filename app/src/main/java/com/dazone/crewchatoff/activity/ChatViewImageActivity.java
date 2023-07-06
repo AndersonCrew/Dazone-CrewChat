@@ -206,7 +206,7 @@ public class ChatViewImageActivity extends BaseActivity implements View.OnClickL
                 avatarUrl += chattingDto.getUser().avatar;
             }
 
-            ImageUtils.showCycleImageFromLink(avatarUrl, imgAvatar, R.dimen.common_avatar);
+            ImageUtils.showImage(avatarUrl, imgAvatar);
 
             if (chattingDto != null && chattingDto.getUser() != null) {
                 tvUserName.setText(chattingDto.getUser().FullName);

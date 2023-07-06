@@ -42,11 +42,12 @@
             android:background="?android:attr/selectableItemBackground">
 
             <ImageView
+                android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_search_black" />
+                android:src="@drawable/ic_find" />
         </FrameLayout>
 
         <FrameLayout
@@ -90,7 +91,7 @@
         app:tabIndicatorColor="#EEEEEE"
         android:background="#EEEEEE"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         app:tabGravity="fill"
         app:tabMode="fixed" />
 

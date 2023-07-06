@@ -58,7 +58,7 @@
     <string name="string_error_code_9">Can not detected Error</string>
     <string name="string_error_code_default">Server Error</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="chat_hint">Enter text</string>
+    <string name="chat_hint">대화입력</string>
     <string name="send">발송</string>
 
 

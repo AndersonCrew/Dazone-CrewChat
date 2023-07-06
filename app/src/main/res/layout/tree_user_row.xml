@@ -32,14 +32,13 @@
                 android:visibility="gone" />
 
             <RelativeLayout
-
                 android:id="@+id/relAvatar"
                 android:layout_width="@dimen/tree_user_avatar_dimen"
                 android:layout_height="@dimen/tree_user_avatar_dimen"
                 android:layout_margin="@dimen/margin_small"
                 android:visibility="visible">
                 <androidx.cardview.widget.CardView
-                    app:cardCornerRadius="24dp"
+                    app:cardCornerRadius="8dp"
                     android:elevation="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

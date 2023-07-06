@@ -162,8 +162,8 @@
 
                 <ImageView
                     android:src="@drawable/chang_pw_120x120"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"/>
 
                 <TextView
                     android:id="@+id/tv_notification_settings"
@@ -186,8 +186,8 @@
                 <ImageView
                     android:id="@+id/imgBack"
                     android:src="@drawable/notifi_120x120"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"/>
 
                 <TextView
                     android:gravity="center"
@@ -208,8 +208,8 @@
 
                 <ImageView
                     android:src="@drawable/chat_set_120x120"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"/>
 
                 <TextView
                     android:gravity="center"
@@ -230,8 +230,8 @@
 
                 <ImageView
                     android:src="@drawable/info_120x120"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"/>
 
                 <TextView
                     android:gravity="center"

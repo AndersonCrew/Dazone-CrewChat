@@ -200,7 +200,7 @@ public class NLevelRecycleAdapter extends RecyclerView.Adapter<RecyclerView.View
         String avatarUrl = new Prefs().getServerSite() + dto.getAvatarUrl();
 
         holder.avatar_imv.setImageResource(R.drawable.avatar_l);
-        ImageUtils.showCycleImageFromLink(avatarUrl, holder.avatar_imv, R.dimen.button_height);
+        ImageUtils.showImage(avatarUrl, holder.avatar_imv);
         setDutyOrPosition(holder.position,dto.DutyName,dto.getPosition());
        /* if (dto.DutyName.isEmpty())
             holder.position.setText(dto.getPosition());

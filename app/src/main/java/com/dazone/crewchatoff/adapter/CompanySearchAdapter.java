@@ -64,7 +64,7 @@ public class CompanySearchAdapter extends RecyclerView.Adapter<CompanySearchAdap
     public void onBindViewHolder(CompanySearchViewHolder holder, int position) {
         TreeUserDTOTemp item = listData.get(position);
         String url = prefs.getServerSite() + item.getAvatarUrl();
-        ImageUtils.showCycleImageFromLink(url, holder.ivAvatar, R.dimen.button_height);
+        ImageUtils.showImage(url, holder.ivAvatar);
 
         holder.tvName.setText(item.getName());
         holder.tvPosition.setText(item.getPosition());

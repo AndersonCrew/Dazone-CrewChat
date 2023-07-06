@@ -39,10 +39,17 @@
                 android:layout_margin="@dimen/margin_small"
                 android:visibility="visible">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/avatar"
+                <androidx.cardview.widget.CardView
+                   app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
                     android:layout_width="60dp"
-                    android:layout_height="60dp" />
+                    android:layout_height="60dp">
+                    <ImageView
+                        android:id="@+id/avatar"
+                        android:scaleType="centerCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </androidx.cardview.widget.CardView>
 
                 <ImageView
                     android:id="@+id/status_imv"

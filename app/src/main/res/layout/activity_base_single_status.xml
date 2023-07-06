@@ -163,11 +163,11 @@
         <ImageView
             android:id="@+id/imgMembers"
             style="@style/Button"
-            android:paddingVertical="12dp"
+            android:paddingVertical="14dp"
             android:layout_width="40dp"
             android:layout_height="?actionBarSize"
             android:tint="@color/colorIcon"
-            android:src="@drawable/ic_gr_member"
+            android:src="@drawable/ic_gr_64"
             android:visibility="visible" />
 
         <ImageView
@@ -181,11 +181,11 @@
 
         <ImageView
             android:id="@+id/searchView"
-            android:paddingVertical="12dp"
+            android:paddingVertical="14dp"
             android:layout_width="40dp"
-            android:layout_height="?actionBarSize"
+            android:layout_height="wrap_content"
             android:gravity="right"
-            android:src="@drawable/ic_search_black_24dp"
+            android:src="@drawable/ic_find"
             android:showAsAction="collapseActionView|ifRoom"
             android:visibility="visible">
 

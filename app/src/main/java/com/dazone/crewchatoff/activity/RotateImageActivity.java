@@ -171,7 +171,7 @@ public class RotateImageActivity extends Activity implements View.OnClickListene
         }
 
         Prefs prefs = new Prefs();
-        ImageUtils.showCycleImageFromLink(prefs.getServerSite() + prefs.getAvatarUrl(), imgAvatar, R.dimen.common_avatar);
+        ImageUtils.showImage(prefs.getServerSite() + prefs.getAvatarUrl(), imgAvatar);
         tvUserName.setText(prefs.getFullName());
         tvDate.setText(TimeUtils.displayTimeWithoutOffset(this, TimeUtils.convertTimeDeviceToTimeServerDefault(regDate), 0, TimeUtils.KEY_FROM_SERVER));
         new LoadbitMap().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

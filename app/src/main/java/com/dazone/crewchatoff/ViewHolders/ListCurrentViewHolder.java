@@ -174,16 +174,20 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
         }
 
         if (TextUtils.isEmpty(dto.getRoomTitle())) {
-            if (dto.getListTreeUser() != null && dto.getListTreeUser().size() > 0) {
-                for (TreeUserDTOTemp treeUserDTOTemp : dto.getListTreeUser()) {
-                    if (treeUserDTOTemp.getUserNo() != myId || dto.getRoomType() == 1) {
-                        if (TextUtils.isEmpty(name)) {
-                            name += treeUserDTOTemp.getName();
-                        } else {
-                            name += "," + treeUserDTOTemp.getName();
+            if(dto.getListTreeUser().size() == 1) {
+                if (dto.getListTreeUser() != null && dto.getListTreeUser().size() > 0) {
+                    for (TreeUserDTOTemp treeUserDTOTemp : dto.getListTreeUser()) {
+                        if (treeUserDTOTemp.getUserNo() != myId || dto.getRoomType() == 1) {
+                            if (TextUtils.isEmpty(name)) {
+                                name += treeUserDTOTemp.getName();
+                            } else {
+                                name += "," + treeUserDTOTemp.getName();
+                            }
                         }
                     }
                 }
+            } else {
+                name = "그룹채팅";
             }
         } else {
             name = dto.getRoomTitle();

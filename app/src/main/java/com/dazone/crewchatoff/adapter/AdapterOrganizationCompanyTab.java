@@ -259,7 +259,7 @@ public class AdapterOrganizationCompanyTab extends RecyclerView.Adapter<AdapterO
                 }
 
                 String url = new Prefs().getServerSite() + treeUserDTO.getAvatarUrl();
-                ImageUtils.showCycleImageFromLink(url, avatar, R.dimen.button_height);
+                ImageUtils.showImage(url, avatar);
                 position.setVisibility(View.VISIBLE);
                 //set duty or position by key
                 setDutyOrPosition(position, namePosition, namePositionCurrent);

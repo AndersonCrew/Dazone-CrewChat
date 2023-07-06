@@ -306,7 +306,7 @@ public class RecentFavoriteViewHolder extends ItemViewHolder<ChattingDto> implem
                 String linkIMG = obj.getImageLink();
                 if (linkIMG != null && linkIMG.length() > 0) {
                     String rootUrl = new Prefs().getServerSite() + linkIMG;
-                    ImageUtils.showCycleImageFromLink(rootUrl, imgAvatar, R.dimen.button_height);
+                    ImageUtils.showImage(rootUrl, imgAvatar);
                 } else {
                     ImageUtils.showRoundImage(dto.getListTreeUser().get(0), imgAvatar);
                 }

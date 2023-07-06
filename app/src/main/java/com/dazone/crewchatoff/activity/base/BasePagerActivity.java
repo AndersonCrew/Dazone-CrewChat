@@ -61,7 +61,7 @@ public abstract class BasePagerActivity extends BaseActivity {
     protected ViewPager mViewPager;
     public TabLayout tabLayout;
     protected FloatingActionButton fab;
-    protected FrameLayout frNewChat;
+    protected ImageView frNewChat;
     private LinearLayout toolbar;
 
     /**
@@ -71,7 +71,7 @@ public abstract class BasePagerActivity extends BaseActivity {
     protected MenuItem menuItemMore;
     protected SearchView searchView;
 
-    protected FrameLayout ivSearch;
+    protected ImageView ivSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public abstract class BasePagerActivity extends BaseActivity {
         });
 
         //fab = findViewById(R.id.fab);
-        frNewChat = findViewById(R.id.frNewChat);
+        frNewChat = findViewById(R.id.imgAdd);
         frNewChat.setOnClickListener(view -> {
             if (MainActivity.CURRENT_TAB == 0) {
                 if (MainActivity.instance != null) {

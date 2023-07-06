@@ -62,7 +62,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:src="@drawable/message_send_ic" />
+            android:src="@drawable/ic_send" />
 
         <Button
             android:id="@+id/btnVoice"

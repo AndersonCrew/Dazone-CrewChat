@@ -33,39 +33,25 @@
             android:text="@string/app_name"
             android:textSize="18sp" />
 
-        <FrameLayout
+        <ImageView
             android:id="@+id/iv_search"
-            android:layout_marginRight="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="right|center"
-            android:background="?android:attr/selectableItemBackground">
+            android:paddingVertical="14dp"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_find" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_search_black" />
-        </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/frNewChat"
-            android:padding="5dp"
-            android:layout_marginRight="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="right|center"
-            android:background="?android:attr/selectableItemBackground">
-
-            <ImageView
-                android:id="@+id/imgAdd"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:src="@drawable/chat_add" />
-        </FrameLayout>
+        <ImageView
+            android:id="@+id/imgAdd"
+            android:layout_marginRight="@dimen/dimen_12_24"
+            android:paddingVertical="14dp"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/chat_add" />
 
     </LinearLayout>
 
@@ -90,7 +76,7 @@
         app:tabIndicatorColor="#EEEEEE"
         android:background="#EEEEEE"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         app:tabGravity="fill"
         app:tabMode="fixed" />
 

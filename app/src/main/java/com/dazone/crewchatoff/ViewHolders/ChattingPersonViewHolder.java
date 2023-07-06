@@ -66,7 +66,7 @@ public class ChattingPersonViewHolder extends ChattingSelfViewHolder {
         }
 
         if (!url.trim().equals("http://core.crewcloud.net")) {
-            ImageUtils.showCycleImageFromLink(url, avatar_imv, R.dimen.button_height);
+            ImageUtils.showImage(url, avatar_imv);
         } else {
             //not have avt
             Glide.with(mContext).load(R.drawable.avatar_l).transform(new CircleTransform(CrewChatApplication.getInstance())).into(avatar_imv);

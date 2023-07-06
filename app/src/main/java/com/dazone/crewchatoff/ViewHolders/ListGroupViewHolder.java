@@ -34,7 +34,7 @@ public class ListGroupViewHolder extends ItemViewHolder<TreeUserDTOTemp> {
             tvPosition.setText(treeUserDTOTemp.getPosition());
 
             //ImageLoader.getInstance().displayImage(new Prefs().getServerSite() + treeUserDTOTemp.getAvatarUrl(), ivAvatar, Statics.options2);
-            ImageUtils.showCycleImageFromLink(new Prefs().getServerSite() + treeUserDTOTemp.getAvatarUrl(), ivAvatar, R.dimen.button_height);
+            ImageUtils.showImage(new Prefs().getServerSite() + treeUserDTOTemp.getAvatarUrl(), ivAvatar);
 
             layoutMain.setTag(treeUserDTOTemp);
             layoutMain.setOnLongClickListener(new View.OnLongClickListener() {
