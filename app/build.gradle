@@ -29,8 +29,8 @@ android {
     defaultConfig {
         applicationId "com.crewcloud.apps.crewchat"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 10421
+        targetSdkVersion 31
+        versionCode 10422
         versionName "4.5.0"
         multiDexEnabled true
     }
@@ -61,6 +61,8 @@ android {
 
         storeVersion {
             applicationId "com.dazone.crewchat"
+
+
         }
     }
 
