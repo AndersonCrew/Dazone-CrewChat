@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -232,7 +233,15 @@ public class ChattingSelfFileViewHolder extends BaseChattingHolder implements Vi
                     }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             } else {
-                PermissionUtil.INSTANCE.requestPermissions(BaseActivity.Instance, RandW_PERMISSIONS_REQUEST_CODE, PermissionUtil.INSTANCE.getPermissionsStorage());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (!Environment.isExternalStorageManager()) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                        BaseActivity.Instance.startActivity(intent);
+                    }
+                } else {
+                    PermissionUtil.INSTANCE.requestPermissions(BaseActivity.Instance, RandW_PERMISSIONS_REQUEST_CODE, PermissionUtil.INSTANCE.getPermissionsStorage());
+                }
+
             }
         } else {
             Toast.makeText(CrewChatApplication.getInstance(), CrewChatApplication.getInstance().getResources().getString(R.string.can_not_check_permission), Toast.LENGTH_SHORT).show();
@@ -273,7 +282,9 @@ public class ChattingSelfFileViewHolder extends BaseChattingHolder implements Vi
     }
 
     public boolean checkPermissionsWandR() {
-        return PermissionUtil.INSTANCE.checkPermissions(BaseActivity.Instance, PermissionUtil.INSTANCE.getPermissionsStorage());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            return Environment.isExternalStorageManager();
+        } else return PermissionUtil.INSTANCE.checkPermissions(BaseActivity.Instance, PermissionUtil.INSTANCE.getPermissionsStorage());
     }
 
     int RandW_PERMISSIONS_REQUEST_CODE = 1;
@@ -301,7 +312,14 @@ public class ChattingSelfFileViewHolder extends BaseChattingHolder implements Vi
                     mProgressDialog.show();
                     DownloadImage(BaseActivity.Instance, url, attachDTOTemp.getFileName(), shareIntent, file);
                 } else {
-                    PermissionUtil.INSTANCE.requestPermissions(BaseActivity.Instance, RandW_PERMISSIONS_REQUEST_CODE, PermissionUtil.INSTANCE.getPermissionsStorage());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        if (!Environment.isExternalStorageManager()) {
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                            BaseActivity.Instance.startActivity(intent);
+                        }
+                    } else {
+                        PermissionUtil.INSTANCE.requestPermissions(BaseActivity.Instance, RandW_PERMISSIONS_REQUEST_CODE, PermissionUtil.INSTANCE.getPermissionsStorage());
+                    }
                 }
             }
 

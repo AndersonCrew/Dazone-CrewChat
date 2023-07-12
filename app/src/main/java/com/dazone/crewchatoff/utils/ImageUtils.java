@@ -143,7 +143,7 @@ public class ImageUtils {
                     ImageUtils.loadImageNormal(url, view);
                 }
             } else {
-                ImageLoader.getInstance().displayImage(new Prefs().getServerSite() + url, view, Statics.options, new ImageLoadingListener() {
+                ImageLoader.getInstance().displayImage(url, view, Statics.options, new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String s, View view) {
 
