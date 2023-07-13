@@ -47,7 +47,7 @@ public class NewOrganizationChart extends BaseActivity {
     private LinearLayoutManager mLayoutManager;
     private AdapterOrganizationChart mAdapter;
     private List<TreeUserDTO> list = new ArrayList<>();
-    private TextView tvCount;
+    private TextView tvCount, tvDone;
     private EditText edRoomName;
     private CheckBox cbCreateNewRoom;
     private RelativeLayout layoutRoomName;
@@ -108,6 +108,7 @@ public class NewOrganizationChart extends BaseActivity {
 
     void initView() {
         ivShare = findViewById(R.id.ivShare);
+        tvDone = findViewById(R.id.tvDone);
         layoutRoomName = findViewById(R.id.layoutRoomName);
         if (isNewChat) {
             layoutRoomName.setVisibility(View.VISIBLE);

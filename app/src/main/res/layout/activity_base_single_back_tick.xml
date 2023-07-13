@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/tvDone"
-            android:text="Done"
+            android:text="@string/done_new"
             android:padding="16dp"
             android:gravity="center"
             android:src="@drawable/nav_back_ic"

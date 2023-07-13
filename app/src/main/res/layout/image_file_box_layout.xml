@@ -4,15 +4,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/llToolBar"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:padding="16dp"
+            android:src="@drawable/nav_back_ic"
+            android:tint="@color/black"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"/>
+
+        <TextView
+
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:text="첨부 파일 박스 와 똑같이 수정"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvIvFileBox"
         android:scrollbars="vertical"
         android:background="@color/white"
+        android:layout_below="@id/llToolBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />

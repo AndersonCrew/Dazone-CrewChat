@@ -24,6 +24,15 @@
             android:fontFamily="@font/gmarketsans_medium"
             android:textSize="16sp"
             android:text="@string/create_chat_room"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/tvDone"
+            android:gravity="center"
+            android:layout_marginEnd="24dp"
+            android:text="@string/done_new"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
     </LinearLayout>

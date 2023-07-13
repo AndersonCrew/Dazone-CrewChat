@@ -76,7 +76,6 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        isDisplayPass = true;
         flag = false;
         attachKeyboardListeners();
     }
@@ -207,66 +206,24 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
                 frPassword.setBackgroundResource(R.drawable.bg_transparent);
             }
 
-            if(isDisplayPass) {
-                if(b) {
-                    iv.setImageResource(R.drawable.eye);
-                } else {
-                    iv.setImageResource(R.drawable.eye_gray);
-                }
-
-            } else {
-                if(b) {
-                    iv.setImageResource(R.drawable.eye_active_60x60);
-                } else {
-                    iv.setImageResource(R.drawable.eye_defalt_60x60);
-                }
-            }
-        });
-
-        edtPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(isDisplayPass) {
-                    if(edtPassword.hasFocus()) {
-                        iv.setImageResource(R.drawable.eye);
-                    } else {
-                        iv.setImageResource(R.drawable.eye_gray);
-                    }
-
-                } else {
-                    if(edtPassword.hasFocus()) {
-                        iv.setImageResource(R.drawable.eye_active_60x60);
-                    } else {
-                        iv.setImageResource(R.drawable.eye_defalt_60x60);
-                    }
-                }
-            }
         });
 
         edtServer.setText(dm);
         edtPassword.setText(prefs.getPass());
     }
 
-    boolean isDisplayPass = true;
+    boolean isDisplayPass = false;
 
     void displayPass() {
         if (isDisplayPass) {
             isDisplayPass = false;
-            edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            iv.setImageResource(R.drawable.eye_off_60x60);
 
         } else {
             isDisplayPass = true;
-            edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            iv.setImageResource(R.drawable.eye_gray);
         }
     }
 

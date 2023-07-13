@@ -233,7 +233,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void logoutV2() {
-        Utils.customAlertDialog(getActivity(), getResources().getString(R.string.app_name),Utils.getString(R.string.logout_confirm_title), Utils.getString(R.string.yes), Utils.getString(R.string.no), new DialogUtils.OnAlertDialogViewClickEvent() {
+        Utils.customAlertDialog(getActivity(), getResources().getString(R.string.app_name),Utils.getString(R.string.logout_confirm), Utils.getString(R.string.yes), Utils.getString(R.string.no), new DialogUtils.OnAlertDialogViewClickEvent() {
             @Override
             public void onOkClick(DialogInterface alertDialog) {
                 doLogout();

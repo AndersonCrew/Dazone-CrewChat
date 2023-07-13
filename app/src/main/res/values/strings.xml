@@ -135,7 +135,7 @@
     <string name="phone_number">CELL PHONE </string>
 
     <string name="contact">Contact</string>
-    <string name="logout_confirm">Are you sure?</string>
+    <string name="logout_confirm">Do you want to logout?</string>
     <string name="logout_confirm_title">Logout confirm</string>
     <!-- Attach Latest MSG-->
     <string name="attach_image">Photo</string>
@@ -297,4 +297,5 @@
     <string name="hint_search_company">User search</string>
     <string name="hint_search_current_chat_list">Chatting room search</string>
     <string name="hint_detail_chat">Chatting detail search</string>
+    <string name="done_new">Done</string>
 </resources>

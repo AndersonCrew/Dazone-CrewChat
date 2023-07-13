@@ -163,11 +163,11 @@
         <ImageView
             android:id="@+id/imgMembers"
             style="@style/Button"
-            android:paddingVertical="14dp"
+            android:paddingVertical="16dp"
             android:layout_width="40dp"
             android:layout_height="?actionBarSize"
             android:tint="@color/colorIcon"
-            android:src="@drawable/ic_gr_64"
+            android:src="@drawable/user_64x64"
             android:visibility="visible" />
 
         <ImageView

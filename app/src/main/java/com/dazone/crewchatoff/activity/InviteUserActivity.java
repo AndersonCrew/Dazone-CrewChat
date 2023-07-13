@@ -64,8 +64,6 @@ public class InviteUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invite_user_layout);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
         getDataFromBundler();
         initView();
         initDB();

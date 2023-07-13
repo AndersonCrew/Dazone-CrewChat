@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
+import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.adapter.ImageFileBoxAdapter;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.AttachImageList;
@@ -28,7 +29,7 @@ import java.util.List;
  * Created by maidinh on 6/2/2017.
  */
 
-public class ImageFileBoxActivity extends AppCompatActivity {
+public class ImageFileBoxActivity extends BaseActivity {
     String TAG = "ImageFileBoxActivity";
     RecyclerView rvIvFileBox;
     GridLayoutManager lLayout;
@@ -42,8 +43,6 @@ public class ImageFileBoxActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_file_box_layout);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         init();
     }
 
@@ -66,6 +65,11 @@ public class ImageFileBoxActivity extends AppCompatActivity {
         lLayout = new GridLayoutManager(ImageFileBoxActivity.this, 3);
         rvIvFileBox.setLayoutManager(lLayout);
         rvIvFileBox.setAdapter(mAdapter);
+
+        findViewById(R.id.imgBack).setOnClickListener(view -> {
+            finish();
+        });
+
         HttpRequest.getInstance().getAttachFileList(new GetIvFileBox() {
             @Override
             public void onSuccess(List<AttachImageList> lst) {

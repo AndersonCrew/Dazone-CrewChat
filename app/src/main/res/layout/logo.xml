@@ -1,34 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
     android:id="@+id/logo"
     android:orientation="vertical">
 
-    <LinearLayout
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-                  android:layout_height="wrap_content">
-
-        <ImageView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/iv_logo"
-                android:src="@drawable/logo64x64"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        <TextView
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:id="@+id/tv_crewchat"
-            android:fontFamily="@font/gmarketsans_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:textColor="#000000"
-                android:text="@string/app_name"/>
-    </LinearLayout>
+    <ImageView
+        android:layout_gravity="center"
+        android:src="@drawable/logo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
-</RelativeLayout>
+</FrameLayout>
