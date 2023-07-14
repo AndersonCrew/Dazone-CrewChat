@@ -178,6 +178,13 @@ public class NewOrganizationChart extends BaseActivity {
             }
         });
 
+        tvDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToGroupChat();
+            }
+        });
+
     }
 
     void handleSendImage(Intent intent) {

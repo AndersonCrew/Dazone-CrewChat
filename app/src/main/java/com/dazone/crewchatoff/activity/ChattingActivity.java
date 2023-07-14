@@ -271,17 +271,20 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
         HttpRequest.getInstance().GetChatRoom(roomNo, new OnGetChatRoom() {
             @Override
             public void OnGetChatRoomSuccess(ChatRoomDTO chatRoomDTO) {
-                userNos = Constant.removeDuplicatePosition(chatRoomDTO.getUserNos());
-                boolean isExistMe = false;
-                for (int u = 0; u < userNos.size(); u++) {
-                    if (userNos.get(u) == myId) {
-                        if (!isExistMe) {
-                            isExistMe = true;
-                        } else {
-                            userNos.remove(u);
+                if(chatRoomDTO != null && chatRoomDTO.getUserNos() != null && chatRoomDTO.getUserNos().size() > 0) {
+                    userNos = Constant.removeDuplicatePosition(chatRoomDTO.getUserNos());
+                    boolean isExistMe = false;
+                    for (int u = 0; u < userNos.size(); u++) {
+                        if (userNos.get(u) == myId) {
+                            if (!isExistMe) {
+                                isExistMe = true;
+                            } else {
+                                userNos.remove(u);
+                            }
                         }
                     }
                 }
+
 
                 isOne = userNos.size() == 2;
                 String subTitle = "";

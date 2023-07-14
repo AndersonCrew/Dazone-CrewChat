@@ -24,7 +24,7 @@
             android:gravity="center_vertical"
             android:textSize="16sp"
             android:fontFamily="@font/gmarketsans_medium"
-            android:text="첨부 파일 박스 와 똑같이 수정"
+            android:text="@string/image_box_title"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>

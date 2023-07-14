@@ -5,9 +5,14 @@ import static java.lang.Integer.MAX_VALUE;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
+import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.adapter.AdapterOrganizationChart;
 import com.dazone.crewchatoff.constant.Constants;
 import com.dazone.crewchatoff.constant.Statics;
@@ -45,7 +51,7 @@ import java.util.List;
  * Created by maidinh on 4/12/2017.
  */
 
-public class InviteUserActivity extends AppCompatActivity {
+public class InviteUserActivity extends BaseActivity {
     private String TAG = "InviteUserActivity";
     private RecyclerView recyclerView;
     private ArrayList<TreeUserDTO> temp = new ArrayList<>();
@@ -58,6 +64,7 @@ public class InviteUserActivity extends AppCompatActivity {
     private String oldTitle = "";
     private int currentUserNo = 0;
     public Prefs prefs;
+    private TextView tvTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,12 +106,61 @@ public class InviteUserActivity extends AppCompatActivity {
 
     void initView() {
         recyclerView = findViewById(R.id.rv);
+        tvTitle = findViewById(R.id.tvTitle);
         InviteUserActivity instance = this;
         mAdapter = new AdapterOrganizationChart(null, instance, userNos);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+        tvTitle.setText(oldTitle);
+        findViewById(R.id.imgBackSearch).setOnClickListener(view -> {
+            finish();
+        });
+
+        findViewById(R.id.imgBack).setOnClickListener(view -> {
+            finish();
+        });
+
+        findViewById(R.id.searchView).setOnClickListener(view -> {
+            findViewById(R.id.llSearch).setVisibility(View.VISIBLE);
+            findViewById(R.id.llToolBar).setVisibility(View.GONE);
+        });
+
+        findViewById(R.id.imgCloseSearch).setOnClickListener(view -> {
+            findViewById(R.id.llSearch).setVisibility(View.GONE);
+            findViewById(R.id.llToolBar).setVisibility(View.VISIBLE);
+        });
+
+        findViewById(R.id.tvDone).setOnClickListener(view -> {
+            addToGroupChat();
+        });
+
+        EditText etSearch = findViewById(R.id.etSearch);
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (etSearch.getText().toString().length() == 0) {
+                    mAdapter.updateIsSearch(0);
+                    updateCurrentList();
+                } else {
+                    mAdapter.updateIsSearch(1);
+                    Log.d(TAG, "onQueryTextChange:" + etSearch.getText().toString());
+                    mAdapter.actionSearch(etSearch.getText().toString());
+                }
+            }
+        });
     }
 
     public void scrollToEndList(int size) {

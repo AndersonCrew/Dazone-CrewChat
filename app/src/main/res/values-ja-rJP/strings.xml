@@ -274,4 +274,5 @@
     <string name="settings_change_pass">비밀번호 변경</string>
     <string name="favorite_tab_title">즐겨찾기</string>
     <string name="done_new">Done</string>
+    <string name="image_box_title">이미지 파일 박스</string>
 </resources>

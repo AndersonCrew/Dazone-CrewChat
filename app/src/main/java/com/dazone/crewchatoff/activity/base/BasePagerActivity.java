@@ -116,7 +116,7 @@ public abstract class BasePagerActivity extends BaseActivity {
         //fab = findViewById(R.id.fab);
         frNewChat = findViewById(R.id.imgAdd);
         frNewChat.setOnClickListener(view -> {
-            if (MainActivity.CURRENT_TAB == 0) {
+            if (MainActivity.CURRENT_TAB == 1) {
                 if (MainActivity.instance != null) {
                     MainActivity.instance.gotoOrganizationChart();
                 }

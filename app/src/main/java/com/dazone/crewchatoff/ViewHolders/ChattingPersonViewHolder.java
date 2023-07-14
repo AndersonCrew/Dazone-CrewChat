@@ -9,18 +9,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.activity.ProfileUserActivity;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.constant.Constants;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.ChattingDto;
-import com.dazone.crewchatoff.utils.CircleTransform;
 import com.dazone.crewchatoff.utils.Constant;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ChattingPersonViewHolder extends ChattingSelfViewHolder {
     private TextView user_name_tv;
@@ -60,16 +64,22 @@ public class ChattingPersonViewHolder extends ChattingSelfViewHolder {
         try {
             if (dto.getImageLink() != null) {
                 url = new Prefs().getServerSite() + dto.getImageLink();
+                ImageUtils.ShowRoundImage(url, avatar_imv);
+            } else {
+                Glide.with(mContext)
+                        .load(R.drawable.avatar_l)
+                        .transform(new RoundedCorners(12))
+                        .into(avatar_imv);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (!url.trim().equals("http://core.crewcloud.net")) {
-            ImageUtils.ShowRoundImage(url, avatar_imv);
+        if (url.trim().equals("http://core.crewcloud.net")) {
+
         } else {
             //not have avt
-            Glide.with(mContext).load(R.drawable.avatar_l).transform(new CircleTransform(CrewChatApplication.getInstance())).into(avatar_imv);
+
         }
 
         String strUnReadCount = dto.getUnReadCount() + "";

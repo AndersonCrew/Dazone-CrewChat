@@ -3,22 +3,17 @@ package com.dazone.crewchatoff.utils;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.dazone.crewchatoff.R;
 import com.dazone.crewchatoff.constant.Statics;
 import com.dazone.crewchatoff.dto.DrawImageItem;
@@ -32,6 +27,7 @@ import com.squareup.picasso.Target;
 import java.io.File;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ImageUtils {
     public static String TAG = "ImageUtils";
@@ -48,12 +44,7 @@ public class ImageUtils {
     }
 
     public static void setImgFromUrl(String url, final ImageView img) {
-        Glide.with(CrewChatApplication.getInstance()).load(url).asBitmap().placeholder(R.drawable.loading).error(R.drawable.error_image).diskCacheStrategy(DiskCacheStrategy.ALL).override(200, 200).into(new BitmapImageViewTarget(img) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                img.setImageBitmap(resource);
-            }
-        });
+        Glide.with(CrewChatApplication.getInstance()).load(url).into(img);
     }
 
     public static void showRoundImage(DrawImageItem dto, ImageView view) {
@@ -62,16 +53,26 @@ public class ImageUtils {
         }
 
         try {
-            ShowRoundImage(dto.getImageLink(), view);
+            if(dto.getImageLink() != null) {
+                ShowRoundImage(new Prefs().getServerSite() + dto.getImageLink(), view);
+            } else {
+                Glide.with(view.getContext())
+                        .load(R.drawable.avatar_l)
+                        .transform(new RoundedCorners(12))
+                        .into(view);
+            }
+
         } catch (Exception e) {
             Log.d("lchTest", e.toString());
-            Glide.with(CrewChatApplication.getInstance()).load(Constant.UriDefaultAvatar).bitmapTransform(mCropCircleTransformation).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(view);
+            Glide.with(CrewChatApplication.getInstance()).load(Constant.UriDefaultAvatar).transform(new RoundedCorners(12)).diskCacheStrategy(DiskCacheStrategy.ALL).into(view);
         }
     }
 
     public static void ShowRoundImage(String url, ImageView view) {
-        String rootUrl = new Prefs().getServerSite() + url;
-        Glide.with(CrewChatApplication.getInstance()).load(rootUrl).bitmapTransform(mCropCircleTransformation).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(view);
+        Glide.with(CrewChatApplication.getInstance())
+                .load(url)
+                .transform(new RoundedCorners(12))
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(view);
     }
 
     public static void showBadgeImage(int count, ImageView view) {
@@ -105,27 +106,15 @@ public class ImageUtils {
     public static void loadImageNormal(String url, final ImageView view) {
         Glide.with(CrewChatApplication.getInstance())
                 .load(url)
-                .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        view.setImageBitmap(resource);
-                    }
-                });
+                .into(view);
     }
 
     public static void loadImageNormalNoCache(String url, final ImageView view) {
         Glide.with(CrewChatApplication.getInstance())
                 .load(url)
-                .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        view.setImageBitmap(resource);
-                    }
-                });
+                .into(view);
     }
 
     public static void showImage(final String url, final ImageView view) {
@@ -143,27 +132,7 @@ public class ImageUtils {
                     ImageUtils.loadImageNormal(url, view);
                 }
             } else {
-                ImageLoader.getInstance().displayImage(url, view, Statics.options, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String s, View view) {
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String s, View view2, FailReason failReason) {
-                        ImageUtils.loadImageNormal("http://www.blogto.com/upload/2009/02/20090201-dazone.jpg", view);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String s, View view2, Bitmap bitmap) {
-                        view.setImageBitmap(bitmap);
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String s, View view) {
-
-                    }
-                });
+                ShowRoundImage(url, view);
             }
         }
     }
@@ -203,64 +172,16 @@ public class ImageUtils {
 
     }
 
-    public static void showCycleImageFromLink(String link, final ImageView imageview, int dimen_id) {
-        final int size = (Utils.getDimenInPx(dimen_id));
-        Glide.with(CrewChatApplication.getInstance()).load(link).asBitmap().placeholder(R.drawable.avatar_l).error(R.drawable.avatar_l).fitCenter().diskCacheStrategy(DiskCacheStrategy.ALL).override(size, size).into(new BitmapImageViewTarget(imageview) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(CrewChatApplication.getInstance().getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                imageview.setImageDrawable(circularBitmapDrawable);
-            }
-        });
-    }
-
-    public static void showCycle(String link, final ImageView imageview, int dimen_id) {
-        final int size = (Utils.getDimenInPx(dimen_id));
-
-        Picasso.with(CrewChatApplication.getInstance())
-                .load(link)
-                .resize(size, size).onlyScaleDown()
-                .error(R.drawable.avatar_l)
-                .placeholder(R.drawable.avatar_l)
-
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                        //Set it in the ImageView
-                        imageview.setImageBitmap(bitmap);
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
-
-    }
-
     public static void showCycleImageFromLinkScale(Context context, String link, final ImageView imageview, int dimen_id) {
         final int size = (Utils.getDimenInPx(dimen_id));
         Glide.with(context)
                 .load(link)
-                .asBitmap()
                 .override(size, size)
                 .placeholder(R.drawable.avatar_l)
                 .fallback(R.drawable.avatar_l)
                 .error(R.drawable.avatar_l)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .transform(new CircleTransform(CrewChatApplication.getInstance()))
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        imageview.setImageBitmap(resource);
-                    }
-                });
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new CropCircleTransformation(context))
+                .into(imageview);
     }
 }

@@ -621,7 +621,7 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
             hideToolBar(false);
             changeIcon(true);
         } else if (position == TAB_COMPANY) {
-            showPAB();
+            hidePAB();
             hideSearch(false);
             hideToolBar(false);
             changeIcon(false);
@@ -778,52 +778,6 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
             // based on the current position you can then cast the page to the correct
             // class and call the method:
             // 탭 화면이 스크롤 되어 질 때에 이벤트 처리(좌우), 화면에 보이는 검색 아이콘등을 설정
-
-            if (position != TAB_COMPANY) {
-                hideMenuSearch();
-            } else {
-                if (menuItemSearch != null && searchView != null) {
-                    menuItemSearch.setVisible(true);
-                    searchView.setVisibility(View.VISIBLE);
-                } else {
-                    Log.d(TAG, "menuItemSearch null");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (menuItemSearch != null && searchView != null) {
-                                menuItemSearch.setVisible(true);
-                                searchView.setVisibility(View.VISIBLE);
-                            } else {
-                                Log.d(TAG, "still null");
-                            }
-                        }
-                    }, 2000);
-                }
-            }
-
-            if (mViewPager.getCurrentItem() == TAB_CHAT && page != null) {
-                if (menuItemSearch != null) {
-                    searchView.setIconified(true);
-                    searchView.setVisibility(View.GONE);
-                    menuItemMore.setVisible(false);
-                    menuItemSearch.collapseActionView();
-                    menuItemSearch.setVisible(false);
-                }
-            } else if (mViewPager.getCurrentItem() == TAB_COMPANY && page != null) {
-            } else if (mViewPager.getCurrentItem() == TAB_FAVORITE && page != null) {
-                if (menuItemSearch != null && menuItemMore != null) {
-                    menuItemSearch.collapseActionView();
-                    menuItemSearch.setVisible(false);
-                }
-            } else {
-                if (menuItemSearch != null && menuItemMore != null) {
-                    searchView.setIconified(true);
-                    searchView.setVisibility(View.GONE);
-                    menuItemMore.setVisible(false);
-                    menuItemSearch.collapseActionView();
-                    menuItemSearch.setVisible(false);
-                }
-            }
         }
     }
 
