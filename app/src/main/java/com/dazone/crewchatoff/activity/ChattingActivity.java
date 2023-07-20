@@ -283,45 +283,47 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
                             }
                         }
                     }
-                }
 
+                    isOne = userNos.size() == 2;
+                    String subTitle = "";
 
-                isOne = userNos.size() == 2;
-                String subTitle = "";
+                    if (isOne) { // Get user status
+                        int userId = 0;
 
-                if (isOne) { // Get user status
-                    int userId = 0;
+                        try {
+                            userId = (userNos.get(0) != myId) ? userNos.get(0) : userNos.get(1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                    try {
-                        userId = (userNos.get(0) != myId) ? userNos.get(0) : userNos.get(1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        String userStatus = AllUserDBHelper.getAUserStatus(userId);
+
+                        if (userStatus != null && userStatus.length() > 0) {
+                            subTitle = userStatus;
+                        }
+                    } else { // set default title
+                        int roomSize = 0;
+
+                        if (chatRoomDTO.getUserNos() != null) {
+                            roomSize = userNos.size();
+                        }
+
+                        subTitle = CrewChatApplication.getInstance().getResources().getString(R.string.room_info_participant_count, String.valueOf(roomSize));
                     }
 
-                    String userStatus = AllUserDBHelper.getAUserStatus(userId);
+                    setupTitleRoom(chatRoomDTO.getUserNos(), chatRoomDTO.getRoomTitle(), subTitle);
 
-                    if (userStatus != null && userStatus.length() > 0) {
-                        subTitle = userStatus;
+                    // May be update unread count
+                    if (CurrentChatListFragment.fragment != null) {
+                        CurrentChatListFragment.fragment.updateRoomUnread(roomNo, chatRoomDTO.getUnReadCount());
                     }
-                } else { // set default title
-                    int roomSize = 0;
-
-                    if (chatRoomDTO.getUserNos() != null) {
-                        roomSize = userNos.size();
+                    if (RecentFavoriteFragment.instance != null) {
+                        RecentFavoriteFragment.instance.updateRoomUnread(roomNo, chatRoomDTO.getUnReadCount());
                     }
-
-                    subTitle = CrewChatApplication.getInstance().getResources().getString(R.string.room_info_participant_count, String.valueOf(roomSize));
                 }
 
-                setupTitleRoom(chatRoomDTO.getUserNos(), chatRoomDTO.getRoomTitle(), subTitle);
 
-                // May be update unread count
-                if (CurrentChatListFragment.fragment != null) {
-                    CurrentChatListFragment.fragment.updateRoomUnread(roomNo, chatRoomDTO.getUnReadCount());
-                }
-                if (RecentFavoriteFragment.instance != null) {
-                    RecentFavoriteFragment.instance.updateRoomUnread(roomNo, chatRoomDTO.getUnReadCount());
-                }
+
             }
 
             @Override
@@ -354,7 +356,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
             if(userNos.size() > 2) {
                 title = "그룹 채팅";
             } else {
-                title = mDto.getListTreeUser().get(0).Name;
+                title = getGroupTitleName(userNos);
             }
 
         }

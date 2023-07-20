@@ -311,6 +311,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llFavorite"
                     android:layout_marginLeft="32dp"
                     android:gravity="center"
                     android:orientation="vertical"

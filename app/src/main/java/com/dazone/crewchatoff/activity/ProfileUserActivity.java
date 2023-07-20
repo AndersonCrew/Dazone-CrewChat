@@ -1,26 +1,40 @@
 package com.dazone.crewchatoff.activity;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
+import com.dazone.crewchatoff.TestMultiLevelListview.MultilLevelListviewFragment;
 import com.dazone.crewchatoff.Tree.Dtos.TreeUserDTO;
 import com.dazone.crewchatoff.activity.base.BaseActivity;
 import com.dazone.crewchatoff.constant.Statics;
+import com.dazone.crewchatoff.database.FavoriteGroupDBHelper;
+import com.dazone.crewchatoff.database.FavoriteUserDBHelper;
 import com.dazone.crewchatoff.dto.BelongDepartmentDTO;
 import com.dazone.crewchatoff.dto.ChattingDto;
 import com.dazone.crewchatoff.dto.ErrorDto;
 import com.dazone.crewchatoff.dto.ProfileUserDTO;
+import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
+import com.dazone.crewchatoff.dto.userfavorites.FavoriteGroupDto;
+import com.dazone.crewchatoff.dto.userfavorites.FavoriteUserDto;
+import com.dazone.crewchatoff.interfaces.BaseHTTPCallbackWithJson;
 import com.dazone.crewchatoff.interfaces.ICreateOneUserChatRom;
 import com.dazone.crewchatoff.interfaces.OnGetUserCallBack;
 import com.dazone.crewchatoff.utils.Constant;
@@ -29,6 +43,7 @@ import com.dazone.crewchatoff.utils.ImageUtils;
 import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.TimeUtils;
 import com.dazone.crewchatoff.utils.Utils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -49,7 +64,7 @@ public class ProfileUserActivity extends BaseActivity implements View.OnClickLis
     private TextView tvEntranceDate;
     private LinearLayout tvEntranceDate_Label;
     private TextView tvBirthday;
-    private LinearLayout tvBirthday_Label, llChat;
+    private LinearLayout tvBirthday_Label, llChat, llFavorite;
     private TextView tvBelongToDepartment;
 
     private int userNo = 0;
@@ -74,7 +89,9 @@ public class ProfileUserActivity extends BaseActivity implements View.OnClickLis
         btnCall = findViewById(R.id.btn_call);
         btnEmail = findViewById(R.id.btn_email);
         llChat = findViewById(R.id.llChat);
+        llFavorite = findViewById(R.id.llFavorite);
         llChat.setOnClickListener(this);
+        llFavorite.setOnClickListener(this);
 
         lnExPhone = findViewById(R.id.ln_ex_phone);
         lnPhone = findViewById(R.id.ln_phone);
@@ -216,6 +233,8 @@ public class ProfileUserActivity extends BaseActivity implements View.OnClickLis
         btnCall.setTag(phoneNumber);
     }
 
+    private ArrayList<TreeUserDTO> selectedPersonList = new ArrayList<>();
+
     @Override
     public void onClick(View v) {
         String phoneNumber;
@@ -224,11 +243,153 @@ public class ProfileUserActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.llChat:
-                ArrayList<TreeUserDTO> selectedPersonList = new ArrayList<>();
                 TreeUserDTO obj = new TreeUserDTO("", "", "", "", "", 1, 3, userNo, 0);
                 selectedPersonList.add(obj);
                 createChatRoom(selectedPersonList);
                 break;
+            case R.id.llFavorite:
+                selectedPersonList = new ArrayList<>();
+                TreeUserDTO userInfo = new TreeUserDTO("", "", "", "", "", 1, 3, userNo, 0);
+                selectedPersonList.add(userInfo);
+                chooseGroup();
+                break;
+
+        }
+    }
+
+    private void getSelectedPersonList(TreeUserDTO treeUserDTO) {
+        if (treeUserDTO.getType() == 2) {
+            selectedPersonList.add(treeUserDTO);
+        } else {
+            ArrayList<TreeUserDTO> subordinates = treeUserDTO.getSubordinates();
+            if (subordinates != null) {
+                for (TreeUserDTO treeUserDTO1 : subordinates) {
+                    getSelectedPersonList(treeUserDTO1);
+                }
+            }
+        }
+    }
+
+    private void chooseGroup() {
+        getGroupFromClient();
+    }
+
+    private void getGroupFromClient() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<FavoriteGroupDto> groupArr = FavoriteGroupDBHelper.getFavoriteGroup();
+                Message message = Message.obtain();
+                message.what = 2;
+                Bundle args = new Bundle();
+                args.putParcelableArrayList("groupList", groupArr);
+                message.setData(args);
+                mHandler.sendMessage(message);
+
+            }
+        }).start();
+    }
+
+    @SuppressLint("HandlerLeak")
+    protected final android.os.Handler mHandler = new android.os.Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                // initDepartment();
+            } else if (msg.what == 2) {
+                Bundle args = msg.getData();
+                ArrayList<FavoriteGroupDto> groups = args.getParcelableArrayList("groupList");
+
+                if (groups == null) {
+                    groups = new ArrayList<>();
+                }
+
+                groups.add(0, new FavoriteGroupDto("Favorite", 0));
+
+                createDialog(groups);
+            }
+        }
+    };
+
+    private void createDialog(final ArrayList<FavoriteGroupDto> groups) {
+        String[] AlertDialogItems = new String[groups.size()];
+
+        for (int i = 0; i < groups.size(); i++) {
+            AlertDialogItems[i] = groups.get(i).getName();
+        }
+
+        AlertDialog popup;
+        final ArrayList<FavoriteGroupDto> selectedItems = new ArrayList<>();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(mContext.getResources().getString(R.string.choose_group));
+
+        builder.setMultiChoiceItems(AlertDialogItems, null,
+                (dialog, indexSelected, isChecked) -> {
+                    if (isChecked) {
+                        selectedItems.add(groups.get(indexSelected));
+                    } else if (selectedItems.contains(indexSelected)) {
+                        selectedItems.remove(indexSelected);
+                    }
+                });
+
+        builder.setPositiveButton(R.string.yes, (dialog, id) -> {
+            if (selectedItems.size() == 0) {
+                String msg = mContext.getResources().getString(R.string.msg_select_item);
+                Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
+            } else {
+                // Send user to server
+                insertFavoriteUser(selectedItems);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(R.string.no, (dialog, id) -> dialog.dismiss());
+
+        popup = builder.create();
+        popup.show();
+        Button b = popup.getButton(DialogInterface.BUTTON_NEGATIVE);
+        if (b != null) {
+            b.setTextColor(Color.BLACK);
+        }
+
+        Button b2 = popup.getButton(DialogInterface.BUTTON_POSITIVE);
+        if (b2 != null) {
+            b2.setTextColor(Color.BLACK);
+        }
+    }
+
+    private void insertFavoriteUser(ArrayList<FavoriteGroupDto> groups) {
+        for (FavoriteGroupDto group : groups) {
+
+            for (TreeUserDTO user : selectedPersonList) {
+                HttpRequest.getInstance().insertFavoriteUser(group.getGroupNo(), user.getId(), new BaseHTTPCallbackWithJson() {
+                    @Override
+                    public void onHTTPSuccess(String jsonData) {
+                        Toast.makeText(CrewChatApplication.getInstance(), "Insert to favorite successfully", Toast.LENGTH_LONG).show();
+
+                        // Ok, if tab multi level user is visible, let's add current user to it
+                        final FavoriteUserDto user = new Gson().fromJson(jsonData, FavoriteUserDto.class);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG, "user.getGroupNo():" + user.getGroupNo());
+                                if (user.getGroupNo() == 0) {
+                                    user.setIsTop(1);
+                                }
+                                FavoriteUserDBHelper.addFavoriteUser(user);
+                            }
+                        }).start();
+
+                        if (MultilLevelListviewFragment.instanceNew != null && MultilLevelListviewFragment.instanceNew.isVisible()) {
+                            MultilLevelListviewFragment.instanceNew.addNewFavorite(user);
+                        }
+                    }
+
+                    @Override
+                    public void onHTTPFail(ErrorDto errorDto) {
+                        Toast.makeText(CrewChatApplication.getInstance(), "Insert to favorite failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
 
         }
     }
@@ -267,6 +428,7 @@ public class ProfileUserActivity extends BaseActivity implements View.OnClickLis
             }
         });
     }
+
 
     @Override
     protected void onDestroy() {
