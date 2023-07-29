@@ -56,7 +56,7 @@ public class RecentFavoriteViewHolder extends ItemViewHolder<ChattingDto> implem
     }
 
     public TextView tvUserName, tvDate, tvContent, tvTotalUser;
-    private ImageView imgBadge, status_imv_null;
+    private ImageView imgBadge;
     private ImageView imgAvatar;
     private ImageView ivLastedAttach;
     private View view;
@@ -86,7 +86,6 @@ public class RecentFavoriteViewHolder extends ItemViewHolder<ChattingDto> implem
         tvDate = v.findViewById(R.id.date_tv);
         tvContent = v.findViewById(R.id.content_tv);
         imgAvatar = v.findViewById(R.id.avatar_imv);
-        status_imv_null = v.findViewById(R.id.status_imv_null);
         layoutAvatar = v.findViewById(R.id.layoutAvatar);
         ivStatus = v.findViewById(R.id.status_imv);
 
@@ -233,8 +232,6 @@ public class RecentFavoriteViewHolder extends ItemViewHolder<ChattingDto> implem
         if (dto.getListTreeUser() == null || dto.getListTreeUser().size() == 0) {
             tvUserName.setTextColor(ContextCompat.getColor(CrewChatApplication.getInstance(), R.color.gray));
             tvUserName.setText(CrewChatApplication.getInstance().getResources().getString(R.string.unknown));
-            if (status_imv_null != null)
-                status_imv_null.setImageResource(R.drawable.home_big_status_03);
             if (ivStatus != null)
                 ivStatus.setImageResource(R.drawable.home_big_status_03);
 //            if (dto.getRoomType() == 1) {

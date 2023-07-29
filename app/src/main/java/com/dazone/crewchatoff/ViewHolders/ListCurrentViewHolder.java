@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,8 +56,7 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
     private TextView tvUserName, tvDate, tvContent, tvTotalUser;
     public RoundedImageView status_imv;
     private ImageView imgBadge;
-    private ImageView imgAvatar, status_imv_null;
-    private RelativeLayout avatar_null;
+    private ImageView imgAvatar;
     private ImageView ivLastedAttach;
     private ImageView ivFavorite;
     private ImageView ivNotification;
@@ -83,7 +83,6 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
         tvUserName = v.findViewById(R.id.user_name_tv);
         tvDate = v.findViewById(R.id.date_tv);
         tvContent = v.findViewById(R.id.content_tv);
-        status_imv_null = v.findViewById(R.id.status_imv_null);
         imgAvatar = v.findViewById(R.id.avatar_imv);
         ivStatus = v.findViewById(R.id.status_imv);
         layoutAvatar = v.findViewById(R.id.layoutAvatar);
@@ -91,7 +90,6 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
         imgBadge = v.findViewById(R.id.image_badge);
         ivLastedAttach = v.findViewById(R.id.iv_lasted_attach);
         tvTotalUser = v.findViewById(R.id.tv_user_total);
-        avatar_null = v.findViewById(R.id.avatar_null);
         layoutGroupAvatar = v.findViewById(R.id.avatar_group);
         imgGroupAvatar1 = v.findViewById(R.id.avatar_group_1);
         imgGroupAvatar2 = v.findViewById(R.id.avatar_group_2);
@@ -189,6 +187,7 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
             } else {
                 name = "그룹채팅";
             }
+
         } else {
             name = dto.getRoomTitle();
         }
@@ -197,14 +196,13 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
         roomTitle = name;
         roomNo = dto.getRoomNo();
 
-        if (dto.getListTreeUser() == null || dto.getListTreeUser().size() == 0) {
-            tvUserName.setTextColor(ContextCompat.getColor(CrewChatApplication.getInstance(), R.color.gray));
-            tvUserName.setText(CrewChatApplication.getInstance().getResources().getString(R.string.unknown));
-            status_imv_null.setImageResource(R.drawable.home_big_status_03);
+        tvUserName.setTextColor(ContextCompat.getColor(CrewChatApplication.getInstance(), R.color.black));
+        if(dto.getRoomType() == 1) {
+            tvUserName.setText(CrewChatApplication.getInstance().getPrefs().getFullName());
         } else {
-            tvUserName.setTextColor(ContextCompat.getColor(CrewChatApplication.getInstance(), R.color.black));
             tvUserName.setText(name);
         }
+
 
         String strLastMsg = "";
         Resources res = CrewChatApplication.getInstance().getResources();
@@ -267,7 +265,13 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
             tvDate.setText(TimeUtils.displayTimeWithoutOffset(CrewChatApplication.getInstance().getApplicationContext(), dto.getLastedMsgDate(), 0, TimeUtils.KEY_FROM_SERVER));
         }
 
-        if (dto.getListTreeUser() != null && dto.getListTreeUser().size() > 0) {
+        if (dto.getRoomType() == 1) {
+            String url = CrewChatApplication.getInstance().getPrefs().getServerSite() + CrewChatApplication.getInstance().getPrefs().getAvatarUrl();
+            ImageUtils.showImage(url, imgAvatar);
+            ivStatus.setImageResource(R.drawable.home_status_me);
+            layoutAvatar.setVisibility(View.VISIBLE);
+            layoutGroupAvatar.setVisibility(View.GONE);
+        } else if (dto.getListTreeUser() != null && dto.getListTreeUser().size() > 0) {
             if (dto.getListTreeUser().size() < 2) {
                 layoutGroupAvatar.setVisibility(View.GONE);
                 layoutAvatar.setVisibility(View.VISIBLE);
@@ -283,6 +287,7 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
                     ImageUtils.showRoundImage(dto.getListTreeUser().get(0), imgAvatar);
                 }
 
+
                 int status = dto.getStatus();
                 if (status == Statics.USER_LOGIN) {
                     ivStatus.setImageResource(R.drawable.home_big_status_01);
@@ -290,10 +295,6 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
                     ivStatus.setImageResource(R.drawable.home_big_status_02);
                 } else { // Logout state
                     ivStatus.setImageResource(R.drawable.home_big_status_03);
-                }
-
-                if (dto.getRoomType() == 1) {
-                    ivStatus.setImageResource(R.drawable.home_status_me);
                 }
             } else {
                 layoutGroupAvatar.setVisibility(View.VISIBLE);
@@ -383,16 +384,6 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
                         break;
                 }
             }
-        }
-
-        if (dto.getListTreeUser() == null || dto.getListTreeUser().size() == 0) {
-            layoutGroupAvatar.setVisibility(View.GONE);
-            layoutAvatar.setVisibility(View.GONE);
-            avatar_null.setVisibility(View.VISIBLE);
-
-
-        } else {
-            avatar_null.setVisibility(View.GONE);
         }
 
         view.setTag(dto.getRoomNo());

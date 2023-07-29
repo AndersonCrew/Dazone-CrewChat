@@ -162,6 +162,10 @@ public class Prefs implements Serializable {
         putStringValue(USER_NAME, username);
     }
 
+    public String getUserName() {
+        return getStringValue(USER_NAME, "");
+    }
+
     public String getUserID() {
         return getStringValue(USER_ID, "");
     }

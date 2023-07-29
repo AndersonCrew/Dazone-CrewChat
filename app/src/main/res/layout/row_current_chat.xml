@@ -20,37 +20,6 @@
             android:layout_width="@dimen/common_avatar"
             android:layout_height="@dimen/common_avatar">
 
-            <RelativeLayout
-                android:id="@+id/avatar_null"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <androidx.cardview.widget.CardView
-                    android:elevation="0dp"
-                    app:cardElevation="0dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_width="@dimen/common_avatar"
-                    android:layout_height="@dimen/common_avatar">
-
-                    <ImageView
-                        android:elevation="0dp"
-                        style="@style/default_avatar_medium"
-                        android:src="@drawable/avatar_l" />
-
-                </androidx.cardview.widget.CardView>
-
-                <ImageView
-                    android:id="@+id/status_imv_null"
-                    android:elevation="20dp"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/home_big_status_03" />
-            </RelativeLayout>
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/avatar_group"
                 app:cardCornerRadius="8dp"
@@ -115,9 +84,6 @@
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/text_size_avatar_group" />
                 </RelativeLayout>
-
-
-
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -144,7 +110,6 @@
                         android:layout_alignParentRight="true"
                         android:src="@drawable/home_big_status_01" />
                 </RelativeLayout>
-
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
