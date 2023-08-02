@@ -27,6 +27,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -41,6 +42,7 @@ import com.dazone.crewchatoff.customs.IconButton;
 import com.dazone.crewchatoff.database.ServerSiteDBHelper;
 import com.dazone.crewchatoff.dto.ErrorDto;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBack;
+import com.dazone.crewchatoff.interfaces.ICheckLogin;
 import com.dazone.crewchatoff.interfaces.ICheckSSL;
 import com.dazone.crewchatoff.interfaces.OnCheckDevice;
 import com.dazone.crewchatoff.utils.Constant;
@@ -170,7 +172,22 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
                     @Override
                     public void hasSSL(boolean hasSSL) {
                         Utils.setServerSite(domain);
-                        HttpOauthRequest.getInstance().loginV2(LoginActivity.this, mUsername, mPassword, Build.VERSION.RELEASE);
+                        HttpRequest.getInstance().checkLoginCrewChat(new ICheckLogin() {
+                            @Override
+                            public void onSuccess(boolean api) {
+                                if(api) {
+                                    HttpOauthRequest.getInstance().loginNewAPI(LoginActivity.this, mUsername, mPassword, Build.VERSION.RELEASE);
+                                } else {
+                                    HttpOauthRequest.getInstance().loginV5(LoginActivity.this, mUsername, mPassword, Build.VERSION.RELEASE);
+                                }
+                            }
+
+                            @Override
+                            public void onError(@NonNull ErrorDto errorData) {
+
+                            }
+                        });
+
                     }
 
                     @Override

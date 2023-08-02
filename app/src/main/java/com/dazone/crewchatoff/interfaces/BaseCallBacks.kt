@@ -7,6 +7,11 @@ interface ICheckSSL {
     fun checkSSLError(errorData: ErrorDto)
 }
 
+interface ICheckLogin {
+    fun onSuccess(api: Boolean)
+    fun onError(errorData: ErrorDto)
+}
+
 public interface WatingUpload {
     fun onFinish()
 }

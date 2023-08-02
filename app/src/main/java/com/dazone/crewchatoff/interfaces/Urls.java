@@ -51,4 +51,6 @@ public class Urls {
     public static String HOST_STATUS = "122.41.175.77";
     public static final String URL_CHECK_UPDATE = "http://mobileupdate.crewcloud.net/WebServiceMobile.asmx/Mobile_Version";
     public static final String URL_CHECK_SSL = "http://mobileupdate.crewcloud.net/WebServiceMobile.asmx/SSL_Check";
+
+    public static final String CHECK_LOGIN = "http://mobileupdate.crewcloud.net/WebServiceMobile.asmx/API_Check";
 }

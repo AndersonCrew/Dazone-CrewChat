@@ -157,8 +157,61 @@ public class HttpOauthRequest {
     }
 
     // Login function V2
-    public void loginV2(final BaseHTTPCallBack baseHTTPCallBack, final String userID, final String password, String mobileOSVersion) {
+    public void loginNewAPI(final BaseHTTPCallBack baseHTTPCallBack, final String userID, final String password, String mobileOSVersion) {
         final String url = CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.DOMAIN, "") + OAUTHUrls.URL_GET_LOGIN_NEW_API;
+        Map<String, String> params = new HashMap<>();
+        params.put("companyDomain", CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.COMPANY_NAME, ""));
+        params.put("languageCode", Locale.getDefault().getLanguage().toUpperCase());
+        params.put("timeZoneOffset", TimeUtils.getTimezoneOffsetInMinutes());
+        params.put("userID", userID);
+        params.put("password", password);
+        params.put("mobileOSVersion", mobileOSVersion);
+        WebServiceManager webServiceManager = new WebServiceManager();
+        webServiceManager.doJsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new WebServiceManager.RequestListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                Log.d(TAG, "loginV2 response:" + response);
+                Gson gson = new Gson();
+                final UserDto userDto = gson.fromJson(response, UserDto.class);
+
+                final String CrewDDSServerIP = userDto.getCrewDDSServerIP();
+                final int CrewDDSServerPort = userDto.getCrewDDSServerPort();
+                final String CrewChatFileServerIP = userDto.getCrewChatFileServerIP();
+                final int CrewChatFileServerPort = userDto.getCrewChatFileServerPort();
+                final boolean CrewChatLocalDatabase = userDto.isCrewChatLocalDatabase();
+
+                if (!Constant.isIp(CrewDDSServerIP) || !Constant.isIp(CrewChatFileServerIP)) {
+                    if (!Constant.isIp(CrewDDSServerIP)) {
+                        new getIpFromDomain(CrewDDSServerIP, ip -> {
+                            if (ip.length() > 0) {
+                                if (!Constant.isIp(CrewChatFileServerIP)) {
+                                    FileServerNotIP(userDto, CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.COMPANY_NAME, ""), password, userID, ip, CrewDDSServerPort,
+                                            CrewChatFileServerPort, CrewChatFileServerIP, baseHTTPCallBack, CrewChatLocalDatabase);
+                                } else {
+                                    _httpSuccess(userDto, CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.COMPANY_NAME, ""), password, userID, ip, CrewDDSServerPort,
+                                            CrewChatFileServerPort, CrewChatFileServerIP, baseHTTPCallBack, CrewChatLocalDatabase);
+                                }
+                            }
+                        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+                        FileServerNotIP(userDto, CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.COMPANY_NAME, ""), password, userID, CrewDDSServerIP, CrewDDSServerPort,
+                                CrewChatFileServerPort, CrewChatFileServerIP, baseHTTPCallBack, CrewChatLocalDatabase);
+                    }
+                } else {
+                    _httpSuccess(userDto, CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.COMPANY_NAME, ""), password, userID, CrewDDSServerIP, CrewDDSServerPort,
+                            CrewChatFileServerPort, CrewChatFileServerIP, baseHTTPCallBack, CrewChatLocalDatabase);
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorDto error) {
+                baseHTTPCallBack.onHTTPFail(error);
+            }
+        });
+    }
+
+    public void loginV5(final BaseHTTPCallBack baseHTTPCallBack, final String userID, final String password, String mobileOSVersion) {
+        final String url = CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.DOMAIN, "") + OAUTHUrls.URL_GET_LOGIN_V5;
         Map<String, String> params = new HashMap<>();
         params.put("companyDomain", CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.COMPANY_NAME, ""));
         params.put("languageCode", Locale.getDefault().getLanguage().toUpperCase());

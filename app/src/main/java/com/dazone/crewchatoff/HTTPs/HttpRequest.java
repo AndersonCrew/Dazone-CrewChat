@@ -1439,4 +1439,34 @@ public class HttpRequest {
             }
         });
     }
+
+    public void checkLoginCrewChat(final ICheckLogin checkSSL) {
+        final String url = Urls.CHECK_LOGIN;
+        Map<String, String> params = new HashMap<>();
+        params.put("Domain", CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.DOMAIN, ""));
+        params.put("Applications", "CrewChat");
+        params.put("Mobile_OS", "Android");
+        params.put("ApiName", "Login_CrewChat");
+
+
+        WebServiceManager webServiceManager = new WebServiceManager();
+        webServiceManager.doJsonObjectRequest(Request.Method.POST, url, new JSONObject(params), new WebServiceManager.RequestListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean hasSSL = jsonObject.getBoolean("API");
+                    CrewChatApplication.getInstance().getPrefs().putBooleanValue(Constants.HAS_SSL, hasSSL);
+                    checkSSL.onSuccess(hasSSL);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(ErrorDto error) {
+                checkSSL.onError(error);
+            }
+        });
+    }
 }
