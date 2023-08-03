@@ -1443,7 +1443,7 @@ public class HttpRequest {
     public void checkLoginCrewChat(final ICheckLogin checkSSL) {
         final String url = Urls.CHECK_LOGIN;
         Map<String, String> params = new HashMap<>();
-        params.put("Domain", CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.DOMAIN, ""));
+        params.put("Domain", CrewChatApplication.getInstance().getPrefs().getStringValue(Constants.COMPANY_NAME, ""));
         params.put("Applications", "CrewChat");
         params.put("Mobile_OS", "Android");
         params.put("ApiName", "Login_CrewChat");
