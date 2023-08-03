@@ -137,7 +137,9 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
                 }
             }
 
-            dto.setListTreeUser(list1);
+            if(myId != dto.getMakeUserNo()) {
+                dto.setListTreeUser(list1);
+            }
         }
 
         if (totalUser > 2) {
@@ -197,12 +199,7 @@ public class ListCurrentViewHolder extends ItemViewHolder<ChattingDto> implement
         roomNo = dto.getRoomNo();
 
         tvUserName.setTextColor(ContextCompat.getColor(CrewChatApplication.getInstance(), R.color.black));
-        if(dto.getRoomType() == 1) {
-            tvUserName.setText(CrewChatApplication.getInstance().getPrefs().getFullName());
-        } else {
-            tvUserName.setText(name);
-        }
-
+        tvUserName.setText(name);
 
         String strLastMsg = "";
         Resources res = CrewChatApplication.getInstance().getResources();
