@@ -182,7 +182,7 @@
     <string name="signup_note">입력하신 메일 주소로 크루클라우드에 단체(회사) 생성을 할 수 있는 링크를 보내 드리겠습니다.</string>
     <string name="note_heading">메일 주소를 입력해주세요.</string>
     <string name="title_sign_up_screen">단체(회사) 생성</string>
-    <string name="choose_group">Choose Groups</string>
+    <string name="choose_group">그룹 선택</string>
     <string name="room_info_participant_count">%1$s participants</string>
 
     <string name="confirm">확인</string>

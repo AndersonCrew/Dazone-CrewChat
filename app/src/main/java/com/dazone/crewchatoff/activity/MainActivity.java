@@ -52,6 +52,7 @@ import com.dazone.crewchatoff.dto.StatusItemDto;
 import com.dazone.crewchatoff.dto.TreeUserDTOTemp;
 import com.dazone.crewchatoff.dto.UserInfoDto;
 import com.dazone.crewchatoff.eventbus.ReloadActivity;
+import com.dazone.crewchatoff.fragment.BaseFavoriteFragment;
 import com.dazone.crewchatoff.fragment.CompanyFragment;
 import com.dazone.crewchatoff.fragment.CurrentChatListFragment;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBackWithString;
@@ -616,12 +617,16 @@ public class MainActivity extends BasePagerActivity implements ViewPager.OnPageC
             changeIcon(false);
 
         } else if(position == TAB_FAVORITE) {
-            hidePAB();
+            if(BaseFavoriteFragment.CURRENT_TAB == 1) {
+                showPAB();
+            } else {
+                hidePAB();
+            }
             hideSearch(false);
             hideToolBar(false);
             changeIcon(true);
         } else if (position == TAB_COMPANY) {
-            hidePAB();
+            showPAB();
             hideSearch(false);
             hideToolBar(false);
             changeIcon(false);
