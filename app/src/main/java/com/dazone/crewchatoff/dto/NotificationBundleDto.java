@@ -19,6 +19,15 @@ public class NotificationBundleDto {
     private int MessageType;
     private String RegDate;
     private String strRegDate;
+    private String strBaseDate;
+
+    public String getStrBaseDate() {
+        return strBaseDate;
+    }
+
+    public void setStrBaseDate(String strBaseDate) {
+        this.strBaseDate = strBaseDate;
+    }
 
     public int getUnreadTotalCountAtAll() {
         return UnreadTotalCountAtAll;

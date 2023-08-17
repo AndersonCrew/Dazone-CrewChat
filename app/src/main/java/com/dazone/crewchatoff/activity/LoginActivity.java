@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -76,6 +79,7 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        FirebaseApp.initializeApp(this);
         flag = false;
         attachKeyboardListeners();
     }
@@ -635,7 +639,20 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
     }
 
     private void registerInBackground() {
-        new register().execute("");
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+            if (!TextUtils.isEmpty(token)) {
+                regId = token;
+                new Prefs().setGCMregistrationid(regId);
+                insertDevice(regId);
+            } else{
+
+            }
+        }).addOnFailureListener(e -> {
+            //handle e
+        }).addOnCanceledListener(() -> {
+            //handle cancel
+        }).addOnCompleteListener(task -> Log.v("TAG", "This is the token : " + task.getResult()));
+
     }
 
     public class register extends AsyncTask<String, Void, Void> {
@@ -659,8 +676,7 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
         }
 
         protected void onPostExecute(Void unused) {
-            new Prefs().setGCMregistrationid(regId);
-            insertDevice(regId);
+
         }
     }
 

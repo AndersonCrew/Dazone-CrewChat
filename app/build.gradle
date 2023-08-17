@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.2.1'
 }
 
 android {
@@ -120,7 +121,17 @@ android {
         // (Java only)
         implementation "androidx.work:work-runtime:2.7.0"
 
+        // Import the Firebase BoM
+        implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
 
+        // When using the BoM, you don't specify versions in Firebase library dependencies
 
+        // Add the dependency for the Firebase SDK for Google Analytics
+        implementation("com.google.firebase:firebase-analytics")
+
+        // (Java only)
+        implementation "androidx.work:work-runtime:2.7.0"
     }
 }
+
+apply plugin: 'com.google.gms.google-services'
