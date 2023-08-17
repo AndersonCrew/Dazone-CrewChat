@@ -22,6 +22,7 @@ import com.dazone.crewchatoff.dto.userfavorites.FavoriteGroupDto;
 import com.dazone.crewchatoff.dto.userfavorites.FavoriteUserDto;
 import com.dazone.crewchatoff.interfaces.OnSetNotification;
 import com.dazone.crewchatoff.interfaces.Urls;
+import com.google.firebase.FirebaseApp;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -68,6 +69,7 @@ public class CrewChatApplication extends MultiDexApplication {
         isAddUser = true;
         _instance = this;
         handleSSLHandshake();
+        FirebaseApp.initializeApp(this);
         init();
         imageLoader.init(new ImageLoaderConfiguration.Builder(getApplicationContext())
                 .threadPoolSize(5)

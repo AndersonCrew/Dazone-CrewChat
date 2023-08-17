@@ -7,8 +7,7 @@
     <com.dazone.crewchatoff.customs.ImageViewZoomSupport
         android:id="@+id/main_vpg_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/powered_by_google_light" />
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/view_header"

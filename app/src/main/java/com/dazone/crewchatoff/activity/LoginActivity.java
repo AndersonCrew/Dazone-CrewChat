@@ -51,8 +51,7 @@ import com.dazone.crewchatoff.utils.Prefs;
 import com.dazone.crewchatoff.utils.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -586,14 +585,12 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
     }
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private GoogleCloudMessaging gcm;
     private Context context;
     private String regId;
 
     private void createGMC() {
         context = getApplicationContext();
         if (checkPlayServices()) {
-            gcm = GoogleCloudMessaging.getInstance(this);
             regId = new Prefs().getGCMregistrationid();
             if (regId.isEmpty()) {
                 registerInBackground();
@@ -625,33 +622,11 @@ public class LoginActivity extends BaseActivity implements BaseHTTPCallBack, OnC
     }
 
     private void registerInBackground() {
-        new register().execute("");
-    }
-
-    public class register extends AsyncTask<String, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-            try {
-
-                InstanceID instanceID = InstanceID.getInstance(CrewChatApplication.getInstance());
-
-                regId = instanceID.getToken(Statics.GOOGLE_SENDER_ID,
-                        GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-
-            } catch (IOException ex) {
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Void unused) {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            regId = task.getResult();
             new Prefs().setGCMregistrationid(regId);
             insertDevice(regId);
-        }
+        });
     }
 
     private void insertDevice(final String regId) {

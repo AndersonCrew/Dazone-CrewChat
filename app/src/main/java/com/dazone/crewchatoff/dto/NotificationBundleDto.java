@@ -20,6 +20,25 @@ public class NotificationBundleDto {
     private String RegDate;
     private String strRegDate;
 
+    private String BaseDate;
+    private String strBaseDate;
+
+    public String getStrBaseDate() {
+        return strBaseDate;
+    }
+
+    public void setStrBaseDate(String strBaseDate) {
+        this.strBaseDate = strBaseDate;
+    }
+
+    public String getBaseDate() {
+        return BaseDate;
+    }
+
+    public void setBaseDate(String baseDate) {
+        BaseDate = baseDate;
+    }
+
     public int getUnreadTotalCountAtAll() {
         return UnreadTotalCountAtAll;
     }

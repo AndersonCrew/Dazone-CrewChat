@@ -32,7 +32,6 @@ import com.dazone.crewchatoff.fragment.CurrentChatListFragment;
 import com.dazone.crewchatoff.interfaces.BaseHTTPCallBack;
 import com.dazone.crewchatoff.utils.CrewChatApplication;
 import com.dazone.crewchatoff.utils.Prefs;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -201,12 +200,6 @@ public abstract class BasePagerActivity extends BaseActivity {
                 HttpRequest.getInstance().DeleteDevice(ids, new BaseHTTPCallBack() {
                     @Override
                     public void onHTTPSuccess() {
-                        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(getBaseContext());
-                        try {
-                            gcm.unregister();
-                        } catch (IOException e) {
-                            System.out.println("Error Message: " + e.getMessage());
-                        }
                         new Prefs().setGCMregistrationid("");
                         HttpOauthRequest.getInstance().logout(new BaseHTTPCallBack() {
                             @Override

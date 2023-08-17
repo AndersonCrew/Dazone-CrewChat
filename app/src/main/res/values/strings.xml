@@ -292,4 +292,5 @@
     <string name="settings_notification_time_value">Enable Notification time</string>
     <string name="company_phone">Company Phone</string>
     <string name="enter_v_duty">View Duty Title</string>
+    <string name="default_notification_channel_id">CrewChat Notification Chanel</string>
 </resources>

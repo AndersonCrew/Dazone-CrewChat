@@ -155,7 +155,7 @@
             android:name="io.fabric.ApiKey"
             android:value="e6dc8dc44d50c707a1d41e554996e4e01de83774" />
 
-        <receiver
+        <!--<receiver
             android:exported="true"
             android:name="com.dazone.crewchatoff.gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -166,7 +166,7 @@
 
                 <category android:name="com.dazone.crewchatoff" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
         <receiver
             android:exported="true"
             android:name="com.dazone.crewchatoff.services.NetworkStateReceiver"
@@ -176,9 +176,9 @@
             </intent-filter>
         </receiver>
 
-        <service
+       <!-- <service
             android:name="com.dazone.crewchatoff.gcm.GcmIntentService"
-            android:enabled="true" />
+            android:enabled="true" />-->
 
         <service
             android:name="com.dazone.crewchatoff.services.SyncStatusService"
@@ -286,6 +286,36 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <service
+            android:name=".FCMCloudMessage"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+        See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/color_1" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
 
     </application>
 
