@@ -691,7 +691,8 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
         switch (chattingDto.getType()) {
             case ChatMessageType.Normal:
                 if (chattingDto.getWriterUser() == userID) {
-                    user = new UserDto(String.valueOf(temp.Id), temp.FullName, temp.avatar);
+                    TreeUserDTOTemp treeUserDTOTemp = Utils.GetUserFromDatabase(listTemp, chattingDto.getWriterUser());
+                    user = new UserDto(String.valueOf(temp.Id), treeUserDTOTemp.getName(), temp.avatar);
                     boolean isCheck = false;
                     if (dataSet != null && dataSet.size() > 0) {
                         isCheck = Utils.getChattingType(chattingDto, dataSet.get(dataSet.size() - 1));
@@ -725,7 +726,8 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
 
             case ChatMessageType.Group:
                 if (chattingDto.getWriterUser() == userID) {
-                    user = new UserDto(String.valueOf(temp.Id), temp.FullName, temp.avatar);
+                    TreeUserDTOTemp treeUserDTOTemp = Utils.GetUserFromDatabase(listTemp, chattingDto.getWriterUser());
+                    user = new UserDto(String.valueOf(temp.Id), treeUserDTOTemp.getName(), temp.avatar);
                 } else {
                     TreeUserDTOTemp treeUserDTOTemp = Utils.GetUserFromDatabase(listTemp, chattingDto.getWriterUser());
 
@@ -738,7 +740,8 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
 
             case ChatMessageType.Attach:
                 if (chattingDto.getWriterUser() == userID) {
-                    user = new UserDto(String.valueOf(temp.Id), temp.FullName, temp.avatar);
+                    TreeUserDTOTemp treeUserDTOTemp = Utils.GetUserFromDatabase(listTemp, chattingDto.getWriterUser());
+                    user = new UserDto(String.valueOf(temp.Id), treeUserDTOTemp.getName(), temp.avatar);
 
                     if (chattingDto.getAttachInfo() != null) {
                         if (chattingDto.getAttachInfo().getType() == 1) {
@@ -817,7 +820,8 @@ public class ChattingFragment extends ListFragment<ChattingDto> implements View.
 
             default:
                 if (chattingDto.getWriterUser() == userID) {
-                    user = new UserDto(String.valueOf(temp.Id), temp.FullName, temp.avatar);
+                    TreeUserDTOTemp treeUserDTOTemp = Utils.GetUserFromDatabase(listTemp, chattingDto.getWriterUser());
+                    user = new UserDto(String.valueOf(temp.Id), treeUserDTOTemp.getName(), temp.avatar);
                     chattingDto.setmType(Statics.CHATTING_VIEW_TYPE_SELF);
                 } else {
                     TreeUserDTOTemp treeUserDTOTemp = Utils.GetUserFromDatabase(listTemp, chattingDto.getWriterUser());

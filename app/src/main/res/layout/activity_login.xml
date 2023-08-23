@@ -65,6 +65,7 @@
                         android:paddingEnd="48dp"
                         android:textColorHint="#BBBBBB"
                         android:textColor="#BBBBBB"
+                        android:inputType="textNoSuggestions"
                         android:hint="@string/login_username"
                         android:background="@android:color/transparent"
                         android:layout_width="match_parent"

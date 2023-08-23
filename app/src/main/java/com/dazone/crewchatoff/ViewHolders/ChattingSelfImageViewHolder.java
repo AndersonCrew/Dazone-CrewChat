@@ -40,10 +40,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.transition.Transition;
 import com.dazone.crewchatoff.BuildConfig;
 import com.dazone.crewchatoff.HTTPs.HttpRequest;
 import com.dazone.crewchatoff.R;
@@ -250,12 +257,14 @@ public class ChattingSelfImageViewHolder extends BaseChattingHolder implements V
                                 new Prefs().getaccesstoken(), dto.getAttachNo());
                         final String fullUrl = new Prefs().getServerSite() + urlT;
                         Log.d("sssDebug2018", fullUrl);
+                        //ImageUtils.showImageFull(itemView.getContext(), url, chatting_imv);
 
-                        Picasso.with(CrewChatApplication.getInstance())
+                        Glide.with(CrewChatApplication.getInstance())
+                                .asBitmap()
                                 .load(fullUrl)
-                                .into(new Target() {
+                                .into(new SimpleTarget<Bitmap>() {
                                     @Override
-                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    public void onResourceReady(@NonNull Bitmap bitmap, @Nullable Transition<? super Bitmap> transition) {
                                         int srcWidth = bitmap.getWidth();
                                         int srcHeight = bitmap.getHeight();
                                         int dstWidth = (int) ((srcWidth * ratio) / 2);
@@ -268,17 +277,8 @@ public class ChattingSelfImageViewHolder extends BaseChattingHolder implements V
                                         if (iLoadImage != null)
                                             iLoadImage.onLoaded(dto);
                                     }
+                                });
 
-                                    @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
-                                        if (progressBarImageLoading != null)
-                                            progressBarImageLoading.setVisibility(View.GONE);
-                                    }
-
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                    }});
                     } else {
                         ImageUtils.showImage(url, chatting_imv);
                     }
