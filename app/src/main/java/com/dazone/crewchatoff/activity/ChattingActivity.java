@@ -947,7 +947,7 @@ public class ChattingActivity extends BaseSingleStatusActivity implements View.O
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
-        } else return Environment.isExternalStorageManager();
+        }
         return true;
     }
 
