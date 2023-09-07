@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
@@ -64,10 +65,6 @@ public class UnreadActivity extends AppCompatActivity {
     }
 
     void init() {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         Intent intent = getIntent();
         MessageNo = intent.getLongExtra(Statics.MessageNo, 0);
         Log.d(TAG,"MessageNo:"+MessageNo);
@@ -81,6 +78,8 @@ public class UnreadActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        findViewById(R.id.back_imv).setOnClickListener(view -> finish());
 
     }
 
@@ -195,15 +194,5 @@ public class UnreadActivity extends AppCompatActivity {
             temp = new ArrayList<>();
         }
         return temp;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return false;
     }
 }

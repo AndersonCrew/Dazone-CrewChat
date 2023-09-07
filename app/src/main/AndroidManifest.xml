@@ -269,7 +269,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:name="com.dazone.crewchatoff.activity.ChangePasswordActivity"
             android:label="@string/change_password" />
-        <activity android:name="com.dazone.crewchatoff.activity.UnreadActivity" />
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name="com.dazone.crewchatoff.activity.UnreadActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

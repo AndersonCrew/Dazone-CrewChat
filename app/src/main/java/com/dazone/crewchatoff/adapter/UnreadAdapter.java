@@ -52,7 +52,8 @@ public class UnreadAdapter extends RecyclerView.Adapter<UnreadAdapter.MyViewHold
 
         public void handler(TreeUserDTO dto) {
             String url = new Prefs().getServerSite() + dto.getAvatarUrl();
-            ImageUtils.showCycleImageFromLinkScale(context, url, ivIcon, R.dimen.button_height);
+            //ImageUtils.showCycleImageFromLinkScale(context, url, ivIcon, R.dimen.button_height);
+            ImageUtils.showImage(url, ivIcon);
 
             String nameString = dto.getName();
             tvName.setText(nameString);
@@ -74,7 +75,7 @@ public class UnreadAdapter extends RecyclerView.Adapter<UnreadAdapter.MyViewHold
                 SimpleDateFormat formatter = new SimpleDateFormat(Statics.yyyy_MM_dd_HH_mm_ss_SSS, Locale.getDefault());
                 try {
                     Date date = formatter.parse(dto.getStrModDate());
-                    SimpleDateFormat formatterDate = new SimpleDateFormat(Statics.DATE_FORMAT_YYYY_MM_DD_AM_PM_HH_MM, Locale.getDefault());
+                    SimpleDateFormat formatterDate = new SimpleDateFormat(Statics.yyyy_MM_dd_HH_mm_ss_SS, Locale.getDefault());
                     tvTime.setText(formatterDate.format(date));
                 } catch (ParseException e) {
                     e.printStackTrace();
