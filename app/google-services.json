@@ -29,7 +29,10 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD7v00BNp_bUsqOIH1gYiZ1ZOEh6QC6NBY"
+          "current_key": "AIzaSyABo1iJhGcVqY9lk7s-oBGIDOiMcA7mHJc"
+        },
+        {
+          "current_key": "AIzaSyDSTPgQtGRDc1tvuWhY8z7h1PlH8jPdRsw"
         }
       ],
       "services": {
@@ -38,6 +41,52 @@
             {
               "client_id": "360611512660-4cf98jvsgkr3io58dpa06lo83uds3v84.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "360611512660-94u6aeh889877smru6pjj5sbnqdoks4i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dazone.dCrewChat"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360611512660:android:db468f53f12b044ef648c1",
+        "android_client_info": {
+          "package_name": "com.dazone.crewchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "360611512660-4cf98jvsgkr3io58dpa06lo83uds3v84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABo1iJhGcVqY9lk7s-oBGIDOiMcA7mHJc"
+        },
+        {
+          "current_key": "AIzaSyDSTPgQtGRDc1tvuWhY8z7h1PlH8jPdRsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "360611512660-4cf98jvsgkr3io58dpa06lo83uds3v84.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "360611512660-94u6aeh889877smru6pjj5sbnqdoks4i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dazone.dCrewChat"
+              }
             }
           ]
         }
