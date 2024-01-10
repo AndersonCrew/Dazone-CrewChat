@@ -42,7 +42,6 @@
             android:autoLink="all"
             android:background="#00000000"
             android:cursorVisible="true"
-            android:hint="@string/chat_hint"
             android:linksClickable="true"
             android:maxLines="4"
             android:paddingBottom="@dimen/dimen_4_8"

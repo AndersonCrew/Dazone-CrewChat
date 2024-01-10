@@ -32,7 +32,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 10427
-        versionName "4.5.9"
+        versionName "4.6.2"
         multiDexEnabled true
     }
 
